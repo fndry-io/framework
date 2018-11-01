@@ -1,5 +1,5 @@
 {
-    "name": "Foundry/laravel",
+    "name": "foundry/laravel",
     "description": "Foundry Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
@@ -28,7 +28,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Foundry\\Tests\\": "tests/"
         }
     },
     "extra": {
