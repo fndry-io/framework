@@ -1,6 +1,6 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
+    "name": "Foundry/laravel",
+    "description": "Foundry Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
