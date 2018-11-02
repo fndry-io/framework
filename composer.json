@@ -1,5 +1,5 @@
 {
-    "name": "foundry/laravel",
+    "name": "foundry/core",
     "description": "Foundry Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
