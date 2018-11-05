@@ -4,6 +4,7 @@ namespace Foundry\Console\Commands;
 
 
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class GenerateModelCommand extends BaseCommand
 {
@@ -27,13 +28,11 @@ class GenerateModelCommand extends BaseCommand
      */
     public function handle()
     {
-        $module = $this->laravel['modules']->findOrFail($this->argument('module'));
-
-        if ($module->enabled()) {
-            $this->info("Module [{$module}] is enabled.");
-        } else {
-            $this->comment("Module [{$module}] is disabled.");
-        }
+        $this->call('module:make-model', array(
+            'module' => $this->argument('plugin'),
+            'model' => $this->argument('model'),
+            '-m' => true
+        ));
     }
 
     /**
@@ -44,7 +43,20 @@ class GenerateModelCommand extends BaseCommand
     protected function getArguments()
     {
         return [
-            ['module', InputArgument::REQUIRED, 'Module name.'],
+            ['model', InputArgument::REQUIRED, 'The name of the model that will be created.'],
+            ['plugin', InputArgument::OPTIONAL, 'The name of the plugin that will be used.'],
+        ];
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['fillable', null, InputOption::VALUE_OPTIONAL, 'The fillable attributes.', null],
         ];
     }
 }
