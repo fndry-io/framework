@@ -120,6 +120,7 @@ return [
             'emails' => ['path' => 'app/Emails', 'generate' => false],
             'notifications' => ['path' => 'app/Notifications', 'generate' => false],
             'resource' => ['path' => 'app/Transformers', 'generate' => false],
+            'services' => ['path' => 'app/Services', 'generate' => true],
         ],
     ],
     /*
