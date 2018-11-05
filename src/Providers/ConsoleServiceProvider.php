@@ -2,7 +2,7 @@
 
 namespace Foundry\Providers;
 
-use Foundry\Console\Commands\GenerateEntityCommand;
+use Foundry\Console\Commands\GenerateModelCommand;
 use Illuminate\Support\ServiceProvider;
 
 class ConsoleServiceProvider extends ServiceProvider
@@ -15,7 +15,7 @@ class ConsoleServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        GenerateEntityCommand::class,
+        GenerateModelCommand::class,
     ];
 
     /**
