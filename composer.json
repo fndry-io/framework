@@ -11,7 +11,8 @@
         }
     ],
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "nwidart/laravel-modules":"dev-features"
     },
     "require-dev": {
         "fideloper/proxy": "^4.0",
@@ -34,8 +35,12 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-            ]
+            "providers": [
+                "Foundry\\FoundryServiceProvider"
+            ],
+            "aliases": {
+
+            }
         }
     },
     "scripts": {
