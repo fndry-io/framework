@@ -5,7 +5,7 @@ namespace Foundry;
 use Foundry\Providers\ConsoleServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
-abstract class FoundryServiceProvider extends ServiceProvider
+class FoundryServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
