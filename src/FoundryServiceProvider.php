@@ -19,6 +19,7 @@ class FoundryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerNamespaces();
     }
 
     /**
@@ -26,6 +27,8 @@ class FoundryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerServices();
+        $this->registerProviders();
     }
 
     /**
