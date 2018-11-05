@@ -33,6 +33,11 @@ class GenerateModelCommand extends BaseCommand
             'model' => $this->argument('model'),
             '-m' => true
         ));
+
+        $this->call('module:make-request', array(
+            'name' => $this->argument('model'),
+            'module' => $this->argument('plugin'),
+        ));
     }
 
     /**
