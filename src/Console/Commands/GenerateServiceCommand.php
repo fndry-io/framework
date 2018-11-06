@@ -70,8 +70,20 @@ class GenerateServiceCommand extends BaseCommand
             'NAME'              => $this->getModuleName(),
             'STUDLY_NAME'       => $module->getStudlyName(),
             'FORM_NAMESPACE'    => $this->getFormRequestNamespace(),
+            'MODEL_NAMESPACE'    => $this->getModelNamespace(),
             'MODULE_NAMESPACE'  => $this->laravel['modules']->config('namespace'),
         ]))->render();
+    }
+
+    protected function getModelNamespace()
+    {
+        $file = $this->getDir().'/app/Models/'.$this->getFileName().'.php';
+
+        // TODO throw exception if no model exists
+        if(file_exists(base_path($file)))
+            return str_replace('/','\\', $this->getDir()).'\Models\\'.$this->getFileName();
+        else
+            return null;
     }
 
     protected function getFormRequestNamespace()
