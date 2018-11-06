@@ -24,7 +24,7 @@ class GenerateServiceCommand extends BaseCommand
      *
      * @var string
      */
-    protected $argumentName = 'name';
+    protected $argumentName = 'service';
 
     /**
      * The console command name.
@@ -76,14 +76,11 @@ class GenerateServiceCommand extends BaseCommand
 
     protected function getFormRequestNamespace()
     {
-        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $file = $this->getDir().'/app/Http/Requests/'.$this->getFileName().'.php';
 
-        $requestPath = GenerateConfigReader::read('request');
-
-        $file = $path . $requestPath->getPath() . '/' . $this->getFileName() . '.php';
-
-        if(is_dir($file))
-            return $path . $requestPath->getPath() . '/' . $this->getFileName();
+        // TODO throw exception if no form request exists
+        if(file_exists(base_path($file)))
+            return str_replace('/','\\', $this->getDir()).'\Http\Requests\\'.$this->getFileName();
         else
             return null;
     }
@@ -97,7 +94,7 @@ class GenerateServiceCommand extends BaseCommand
     {
         return [
             ['service', InputArgument::REQUIRED, 'The name of the service class to be created.'],
-            ['plugin', InputArgument::OPTIONAL, 'The name of the plugin to be used.'],
+            ['module', InputArgument::OPTIONAL, 'The name of the plugin to be used.'],
         ];
     }
 

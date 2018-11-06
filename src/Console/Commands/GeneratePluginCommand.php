@@ -36,8 +36,8 @@ class GeneratePluginCommand extends Command
     {
         $this->call('module:make', array(
             'name' => $this->argument('name'),
-            '-plain' => $this->option('plain'),
-            '-force' => $this->option('force'),
+            '--plain' => $this->option('plain'),
+            '--force' => $this->option('force'),
         ));
     }
 
