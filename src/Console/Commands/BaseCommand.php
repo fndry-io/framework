@@ -4,8 +4,9 @@ namespace Foundry\Console\Commands;
 
 
 use Illuminate\Console\Command;
+use Nwidart\Modules\Commands\GeneratorCommand;
 
-class BaseCommand extends Command
+abstract class BaseCommand extends GeneratorCommand
 {
 
 }

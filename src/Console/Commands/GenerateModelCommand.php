@@ -38,6 +38,11 @@ class GenerateModelCommand extends BaseCommand
             'name' => $this->argument('model'),
             'module' => $this->argument('plugin'),
         ));
+
+        $this->call('foundry:service', array(
+            'service' => $this->argument('model'),
+            'module' => $this->argument('plugin'),
+        ));
     }
 
     /**
@@ -63,5 +68,25 @@ class GenerateModelCommand extends BaseCommand
         return [
             ['fillable', null, InputOption::VALUE_OPTIONAL, 'The fillable attributes.', null],
         ];
+    }
+
+    /**
+     * Get template contents.
+     *
+     * @return string
+     */
+    protected function getTemplateContents()
+    {
+        // TODO: Implement getTemplateContents() method.
+    }
+
+    /**
+     * Get the destination file path.
+     *
+     * @return string
+     */
+    protected function getDestinationFilePath()
+    {
+        // TODO: Implement getDestinationFilePath() method.
     }
 }
