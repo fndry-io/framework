@@ -6,6 +6,14 @@ namespace Foundry\Console\Commands;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
+
+/**
+ * Class GenerateModelCommand
+ *
+ * @package Foundry\Console\Commands
+ *
+ * @author Medard Ilunga
+ */
 class GenerateModelCommand extends BaseCommand
 {
 

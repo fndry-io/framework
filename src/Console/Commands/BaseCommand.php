@@ -3,9 +3,15 @@
 namespace Foundry\Console\Commands;
 
 
-use Illuminate\Console\Command;
 use Nwidart\Modules\Commands\GeneratorCommand;
 
+/**
+ * Class BaseCommand
+ *
+ * @package Foundry\Console\Commands
+ *
+ * @author Medard Ilunga
+ */
 abstract class BaseCommand extends GeneratorCommand
 {
 

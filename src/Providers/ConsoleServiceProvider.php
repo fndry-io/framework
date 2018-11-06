@@ -3,6 +3,8 @@
 namespace Foundry\Providers;
 
 use Foundry\Console\Commands\GenerateModelCommand;
+use Foundry\Console\Commands\GeneratePluginCommand;
+use Foundry\Console\Commands\GenerateServiceCommand;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -23,6 +25,8 @@ class ConsoleServiceProvider extends ServiceProvider
      */
     protected $commands = [
         GenerateModelCommand::class,
+        GenerateServiceCommand::class,
+        GeneratePluginCommand::class,
     ];
 
     /**

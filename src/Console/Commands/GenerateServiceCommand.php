@@ -8,6 +8,13 @@ use Nwidart\Modules\Support\Stub;
 use Nwidart\Modules\Traits\ModuleCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 
+/**
+ * Class GenerateServiceCommand
+ *
+ * @package Foundry\Console\Commands
+ *
+ * @author Medard Ilunga
+ */
 class GenerateServiceCommand extends BaseCommand
 {
     use ModuleCommandTrait;
