@@ -63,3 +63,13 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+##To Be arranged
+
+- Create plugin with command: `php artisan foundry:plugin Project/Name` e.g: `php artisan foundry:plugin Foundry/User` or
+`php artisan foundry:plugin User` if it is to be in root folder without a project.
+
+- `composer dump-autoload` Once a new plugin has been initialised. (Should probably call it automatically after plugin creation.)
+
+- Create model, service, migration, form request for a given plugin: `php artisan foundry:model modelName PluginName` e.g `php artisan foundry:model user Foundry/User`

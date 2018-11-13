@@ -35,7 +35,7 @@ abstract class Form
      *
      * @return array
      */
-    public abstract function fields();
+    static abstract function fields();
 
     /**
      * Get custom error messages for rules
