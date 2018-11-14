@@ -10,14 +10,14 @@ namespace Foundry\Requests\Types;
  */
 class HiddenType extends Type{
 
-    public function __construct(string $name,
-                                string $label = '',
-                                bool $required = true,
-                                string $value = '',
-                                string $position = 'full',
-                                string $rules = '',
-                                string $id = '',
-                                string $placeholder = '')
+    public function __construct(\string $name,
+                                \string $label = '',
+                                \bool $required = true,
+                                \string $value = '',
+                                \string $position = 'full',
+                                \string $rules = '',
+                                \string $id = '',
+                                \string $placeholder = '')
     {
         $type = 'hidden';
         parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
