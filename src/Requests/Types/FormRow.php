@@ -33,4 +33,26 @@ class FormRow{
         }
     }
 
+    /**
+     * Serialize Object
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $f = array();
+
+        /**
+         * @var $field Type
+         */
+        foreach ($this->fields as $field){
+            array_push($f, $field->jsonSerialize());
+        }
+
+        $json = array(
+            'fields' => (array) $f
+        );
+
+        return $json;
+    }
 }

@@ -90,8 +90,11 @@ abstract class Type {
         $this->setValue($value);
         $this->setPosition($position);
         $this->setRules($rules);
+
+        $id = $id? $id: $name.'_field';
+
         $this->setId($id);
-        $this->setPlaceholder($placeholder);
+        $this->setPlaceholder($placeholder ? $placeholder: $label? $label: $name);
     }
 
     /**
@@ -238,4 +241,19 @@ abstract class Type {
         $this->placeholder = $placeholder;
     }
 
+    /**
+     * Json serialise field
+     *
+     * @return array
+     */
+    public function jsonSerialize() : array{
+
+        $field = array();
+
+        foreach ($this as $key => $value) {
+            $field[$key] = $value;
+        }
+
+        return $field;
+    }
 }
