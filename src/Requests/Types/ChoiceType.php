@@ -24,17 +24,17 @@ class ChoiceType extends Type{
      */
     protected $options;
 
-    public function __construct(\string $name,
-                                \bool $expanded,
-                                \bool $multiple,
+    public function __construct(string $name,
+                                bool $expanded,
+                                bool $multiple,
                                 array $options,
-                                \string $label = '',
-                                \bool $required = true,
-                                \string $value = '',
-                                \string $position = 'full',
-                                \string $rules = '',
-                                \string $id = '',
-                                \string $placeholder = '')
+                                string $label = '',
+                                bool $required = true,
+                                string $value = '',
+                                string $position = 'full',
+                                string $rules = '',
+                                string $id = '',
+                                string $placeholder = '')
     {
         $this->setMultiple($multiple);
         $this->setOptions($options);

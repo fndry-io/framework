@@ -73,15 +73,15 @@ abstract class Type {
     protected $placeholder;
 
 
-    public function __construct(\string $name,
-                                \string $label = '',
-                                \bool $required = true,
-                                \string $value = '',
-                                \string $position = 'full',
-                                \string $rules = '',
-                                \string $id = '',
-                                \string $placeholder = '',
-                                \string $type = 'text')
+    public function __construct(string $name,
+                                string $label = '',
+                                bool $required = true,
+                                string $value = '',
+                                string $position = 'full',
+                                string $rules = '',
+                                string $id = '',
+                                string $placeholder = '',
+                                string $type = 'text')
     {
         $this->setName($name);
         $this->setLabel($label? $label: $name);
