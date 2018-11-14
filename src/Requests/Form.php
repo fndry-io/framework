@@ -44,7 +44,7 @@ abstract class Form
      */
     public abstract function messages();
 
-    public abstract function getFormView();
+    static abstract function getFormView();
 
     /**
      * Get values provided by user
