@@ -3,6 +3,8 @@
 namespace Foundry\Requests\Types;
 
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * Class FormView
  *
@@ -37,15 +39,18 @@ class FormView{
     protected $deleteUrl;
 
     /**
+     * @var Model $model
+     */
+    protected $model;
+
+    /**
      * FormView constructor.
      *
      * @param $name
-     * @param array $rows
      */
-    public function __construct($name, $rows = array())
+    public function __construct($name)
     {
         $this->name = $name;
-        $this->rows = $rows;
     }
 
     /**
@@ -127,9 +132,26 @@ class FormView{
     public function addRow(FormRow $row)
     {
         if(!in_array($row, $this->rows)){
+            $row->setForm($this);
             array_push($this->rows, $row);
         }
 
+    }
+
+    /**
+     * @return Model
+     */
+    public function getModel(): Model
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param Model $model
+     */
+    public function setModel(Model $model): void
+    {
+        $this->model = $model;
     }
 
     /**

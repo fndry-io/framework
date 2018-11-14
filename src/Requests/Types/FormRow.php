@@ -11,6 +11,7 @@ namespace Foundry\Requests\Types;
 class FormRow{
 
     protected $fields;
+    protected $form;
 
     /**
      * FormRow constructor.
@@ -29,8 +30,25 @@ class FormRow{
      */
     public function addField(Type $field){
         if(!in_array($field, $this->fields)){
+            $field->setRow($this);
             array_push($this->fields, $field);
         }
+    }
+
+    /**
+     * @return FormView
+     */
+    public function getForm() : FormView
+    {
+        return $this->form;
+    }
+
+    /**
+     * @param FormView $form
+     */
+    public function setForm(FormView $form): void
+    {
+        $this->form = $form;
     }
 
     /**

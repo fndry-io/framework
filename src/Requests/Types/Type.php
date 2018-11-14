@@ -3,6 +3,8 @@
 namespace Foundry\Requests\Types;
 
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * Class Type
  *
@@ -72,6 +74,12 @@ abstract class Type {
      */
     protected $placeholder;
 
+    /**
+     * The form row this field belongs to
+     *
+     * @var FormRow $row
+     */
+    protected $row;
 
     public function __construct(string $name,
                                 string $label = '',
@@ -242,6 +250,22 @@ abstract class Type {
     }
 
     /**
+     * @return FormRow
+     */
+    public function getRow(): FormRow
+    {
+        return $this->row;
+    }
+
+    /**
+     * @param FormRow $row
+     */
+    public function setRow(FormRow $row): void
+    {
+        $this->row = $row;
+    }
+
+    /**
      * Json serialise field
      *
      * @return array
@@ -249,11 +273,30 @@ abstract class Type {
     public function jsonSerialize() : array{
 
         $field = array();
+        $model = $this->getRow()->getForm()->getModel();
 
         foreach ($this as $key => $value) {
-            $field[$key] = $value;
+
+            if($key !== 'row'){
+                if($key === 'value' && $model)
+                    $field[$key] = $this->getModelValue($model);
+                else
+                    $field[$key] = $value;
+            }
+
         }
 
         return $field;
+    }
+
+    /**
+     * Get previously provided value from model
+     *
+     * @param Model $model
+     * @return mixed
+     */
+    private function getModelValue(Model $model){
+
+        return $model[$this->getName()];
     }
 }
