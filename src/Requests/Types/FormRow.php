@@ -27,12 +27,17 @@ class FormRow{
      * Add a field to row
      *
      * @param Type $field
+     *
+     * @return FormRow
      */
-    public function addField(Type $field){
+    public function addField(Type $field) : FormRow
+    {
         if(!in_array($field, $this->fields)){
             $field->setRow($this);
             array_push($this->fields, $field);
         }
+
+        return $this;
     }
 
     /**
