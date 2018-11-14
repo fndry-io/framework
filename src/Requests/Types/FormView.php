@@ -51,6 +51,7 @@ class FormView{
     public function __construct($name)
     {
         $this->name = $name;
+        $this->rows = array();
     }
 
     /**
@@ -167,9 +168,9 @@ class FormView{
     }
 
     /**
-     * @return Model
+     * @return null | Model
      */
-    public function getModel(): Model
+    public function getModel()
     {
         return $this->model;
     }
