@@ -63,10 +63,14 @@ class FormView{
 
     /**
      * @param string $name
+     *
+     * @return FormView
      */
-    public function setName($name)
+    public function setName($name): FormView
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -79,10 +83,14 @@ class FormView{
 
     /**
      * @param string $postUrl
+     *
+     * @return FormView
      */
-    public function setPostUrl($postUrl)
+    public function setPostUrl($postUrl) : FormView
     {
         $this->postUrl = $postUrl;
+
+        return $this;
     }
 
     /**
@@ -95,10 +103,14 @@ class FormView{
 
     /**
      * @param string $putUrl
+     *
+     * @return FormView
      */
-    public function setPutUrl($putUrl)
+    public function setPutUrl($putUrl) : FormView
     {
         $this->putUrl = $putUrl;
+
+        return $this;
     }
 
     /**
@@ -111,31 +123,47 @@ class FormView{
 
     /**
      * @param string $deleteUrl
+     *
+     * @return FormView
      */
-    public function setDeleteUrl($deleteUrl)
+    public function setDeleteUrl($deleteUrl) : FormView
     {
         $this->deleteUrl = $deleteUrl;
+
+        return $this;
     }
 
-    public function setFormUrls($postUrl = '', $putUrl = '', $deleteUrl = '')
+    /**
+     * @param string $postUrl
+     * @param string $putUrl
+     * @param string $deleteUrl
+     *
+     * @return FormView
+     */
+    public function setFormUrls($postUrl = '', $putUrl = '', $deleteUrl = '') : FormView
     {
         $this->setPostUrl($postUrl);
         $this->setPutUrl($putUrl);
         $this->setDeleteUrl($deleteUrl);
+
+        return $this;
     }
 
     /**
      * Add a form row
      *
      * @param FormRow $row
+     *
+     * @return FormView
      */
-    public function addRow(FormRow $row)
+    public function addRow(FormRow $row) : FormView
     {
         if(!in_array($row, $this->rows)){
             $row->setForm($this);
             array_push($this->rows, $row);
         }
 
+        return $this;
     }
 
     /**
@@ -148,10 +176,14 @@ class FormView{
 
     /**
      * @param Model $model
+     *
+     * @return FormView
      */
-    public function setModel(Model $model): void
+    public function setModel(Model $model): FormView
     {
         $this->model = $model;
+
+        return $this;
     }
 
     /**

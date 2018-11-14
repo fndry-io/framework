@@ -115,10 +115,14 @@ abstract class Type {
 
     /**
      * @param string $name
+     *
+     * @return Type
      */
-    public function setName(string $name): void
+    public function setName(string $name): Type
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -131,10 +135,14 @@ abstract class Type {
 
     /**
      * @param string $label
+     *
+     * @return Type
      */
-    public function setLabel(string $label): void
+    public function setLabel(string $label): Type
     {
         $this->label = $label;
+
+        return $this;
     }
 
     /**
@@ -147,10 +155,14 @@ abstract class Type {
 
     /**
      * @param mixed $type
+     *
+     * @return Type
      */
-    public function setType($type): void
+    public function setType($type): Type
     {
         $this->type = $type;
+
+        return $this;
     }
 
     /**
@@ -163,10 +175,14 @@ abstract class Type {
 
     /**
      * @param string $rules
+     *
+     * @return Type
      */
-    public function setRules(string $rules): void
+    public function setRules(string $rules): Type
     {
         $this->rules = $rules;
+
+        return $this;
     }
 
     /**
@@ -179,10 +195,14 @@ abstract class Type {
 
     /**
      * @param bool $required
+     *
+     * @return Type
      */
-    public function setRequired(bool $required): void
+    public function setRequired(bool $required): Type
     {
         $this->required = $required;
+
+        return $this;
     }
 
     /**
@@ -195,10 +215,14 @@ abstract class Type {
 
     /**
      * @param string $position
+     *
+     * @return Type
      */
-    public function setPosition(string $position): void
+    public function setPosition(string $position): Type
     {
         $this->position = $position;
+
+        return $this;
     }
 
     /**
@@ -211,10 +235,14 @@ abstract class Type {
 
     /**
      * @param string $id
+     *
+     * @return Type
      */
-    public function setId(string $id): void
+    public function setId(string $id): Type
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -227,10 +255,14 @@ abstract class Type {
 
     /**
      * @param mixed $value
+     *
+     * @return Type
      */
-    public function setValue($value): void
+    public function setValue($value): Type
     {
         $this->value = $value;
+
+        return $this;
     }
 
     /**
@@ -243,10 +275,14 @@ abstract class Type {
 
     /**
      * @param mixed $placeholder
+     *
+     * @return Type
      */
-    public function setPlaceholder($placeholder): void
+    public function setPlaceholder($placeholder): Type
     {
         $this->placeholder = $placeholder;
+
+        return $this;
     }
 
     /**
@@ -259,10 +295,14 @@ abstract class Type {
 
     /**
      * @param FormRow $row
+     *
+     * @return Type
      */
-    public function setRow(FormRow $row): void
+    public function setRow(FormRow $row): Type
     {
         $this->row = $row;
+
+        return $this;
     }
 
     /**

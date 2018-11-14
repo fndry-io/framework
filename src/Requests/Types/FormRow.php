@@ -45,10 +45,14 @@ class FormRow{
 
     /**
      * @param FormView $form
+     *
+     * @return FormRow
      */
-    public function setForm(FormView $form): void
+    public function setForm(FormView $form): FormRow
     {
         $this->form = $form;
+
+        return $this;
     }
 
     /**

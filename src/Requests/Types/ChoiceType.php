@@ -55,10 +55,14 @@ class ChoiceType extends Type{
 
     /**
      * @param bool $multiple
+     *
+     * @return Type
      */
-    public function setMultiple(bool $multiple): void
+    public function setMultiple(bool $multiple): Type
     {
         $this->multiple = $multiple;
+
+        return $this;
     }
 
     /**
@@ -71,10 +75,14 @@ class ChoiceType extends Type{
 
     /**
      * @param array $options
+     *
+     * @return Type
      */
-    public function setOptions(array $options): void
+    public function setOptions(array $options): Type
     {
         $this->options = $options;
+
+        return $this;
     }
 
 }
