@@ -58,12 +58,12 @@ abstract class Form
             $validator = Validator::make($this->inputs, $this->rules(), $this->messages());
 
             if ($validator->fails()) {
-                return Response::errorResponse($validator->errors()->getMessages(), 422);
+                return Response::error($validator->errors()->getMessages(), 422);
             }else{
-                return Response::response($this->inputs);
+                return Response::success($this->inputs);
             }
         }else{
-            return Response::errorResponse(APIException::NOT_AUTHORIZED, 403);
+            return Response::error(APIException::NOT_AUTHORIZED, 403);
         }
     }
 
