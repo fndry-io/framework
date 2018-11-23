@@ -74,6 +74,13 @@ abstract class Type {
      */
     protected $placeholder;
 
+
+    protected $error;
+
+    protected $help;
+
+    protected $class;
+
     /**
      * The form row this field belongs to
      *
@@ -285,7 +292,39 @@ abstract class Type {
         return $this;
     }
 
-    /**
+    public function getHelp()
+    {
+    	return $this->help;
+    }
+
+    public function setHelp($help): Type
+	{
+		$this->help = $help;
+		return $this;
+	}
+
+	public function isInvalid()
+	{
+		return $this->getRow()->getForm()->isFieldInvalid($this->name);
+	}
+
+	public function getError()
+	{
+		return $this->getRow()->getForm()->getFieldError($this->name);
+	}
+
+	public function setClass($class) : Type
+	{
+		$this->class = $class;
+		return $this;
+	}
+
+	public function getClass()
+	{
+		return $this->class;
+	}
+
+	/**
      * @return FormRow
      */
     public function getRow(): FormRow

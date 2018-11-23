@@ -21,7 +21,7 @@ abstract class Form
      *
      * @return array
      */
-    public abstract function rules();
+    static abstract function rules();
 
     /**
      * Determine if the user is authorized to make this request.

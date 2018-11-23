@@ -13,25 +13,39 @@ use Illuminate\Database\Eloquent\Model;
 class FormView{
 
     /**
-     * form rows
-     * @var array
-     */
-    protected $rows;
-    /**
      * form name
      * @var string
      */
     protected $name;
+
+	/**
+	 * form id
+	 * @var string
+	 */
+    protected $id;
+
+    protected $action;
+
+    protected $method;
+
+    protected $submit;
+
+    protected $links;
+
+    protected $submitClass;
+
     /**
      * Form POST url
      * @var string
      */
     protected $postUrl;
+
     /**
      * Form PUT url
      * @var string
      */
     protected $putUrl;
+
     /**
      * Form DELETE url
      * @var string
@@ -43,7 +57,17 @@ class FormView{
      */
     protected $model;
 
-    /**
+	/**
+	 * form rows
+	 * @var array
+	 */
+	protected $rows;
+
+	/**
+	 * @var array
+	 */
+	protected $errors;
+	/**
      * FormView constructor.
      *
      * @param $name
@@ -74,7 +98,49 @@ class FormView{
         return $this;
     }
 
-    /**
+	/**
+	 * @return string
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	/**
+	 * @param string $id
+	 *
+	 * @return FormView
+	 */
+	public function setId($id): FormView
+	{
+		$this->id = $id;
+		return $this;
+	}
+
+
+	public function setAction($action): FormView
+	{
+		$this->action = $action;
+		return $this;
+	}
+
+	public function getAction()
+	{
+		return $this->action;
+	}
+
+	public function setMethod($method): FormView
+	{
+		$this->method = $method;
+		return $this;
+	}
+
+	public function getMethod()
+	{
+		return $this->method;
+	}
+
+	/**
      * @return string
      */
     public function getPostUrl()
@@ -167,7 +233,21 @@ class FormView{
         return $this;
     }
 
-    /**
+	public function getField($name)
+	{
+		/**
+		 * @var FormRow $row
+		 */
+		foreach ($this->rows as $row) {
+			if ($field = $row->getField($name)) {
+				return $field;
+			}
+		}
+		return null;
+	}
+
+
+	/**
      * @return null | Model
      */
     public function getModel()
@@ -183,11 +263,67 @@ class FormView{
     public function setModel(Model $model): FormView
     {
         $this->model = $model;
-
         return $this;
     }
 
-    /**
+    public function setSubmit($submit): FormView
+    {
+    	$this->submit = $submit;
+    	return $this;
+    }
+
+	public function getSubmit($submit): FormView
+	{
+		return $this->submit;
+	}
+
+	public function setSubmitClass($class): FormView
+	{
+		$this->submitClass = $class;
+		return $this;
+	}
+
+	public function getSubmitClass($class): FormView
+	{
+		return $this->submitClass;
+	}
+
+	public function addLink($url, $label): FormView
+	{
+		$this->links[] = ['url' => $url, 'label' => $label];
+		return $this;
+	}
+
+	public function getLinks()
+	{
+		return $this->links;
+	}
+
+	public function hasLinks()
+	{
+		return !empty($this->links);
+	}
+
+	public function setErrors($errors): FormView
+	{
+		$this->errors = $errors;
+		return $this;
+	}
+
+	public function getFieldError($field)
+	{
+		if (!empty($this->errors) && isset($this->errors[$field])) {
+			return $this->errors[$field];
+		}
+		 return null;
+	}
+
+	public function isFieldInvalid($field)
+	{
+		return (!empty($this->errors) && isset($this->errors[$field]));
+	}
+
+	/**
      * Serialize Object
      *
      * @return array
@@ -214,10 +350,17 @@ class FormView{
         }
 
         $json = array(
+	        'id' => $this->id,
             'name' => $this->name,
-            'methods' => (array) $u,
             'rows' => (array) $r
         );
+
+        if ($u) $json['methods'] = (array) $u;
+	    if ($this->action) $json['action'] = $this->action;
+	    if ($this->method) $json['method'] = $this->method;
+	    if ($this->errors) $json['errors'] = $this->errors;
+	    if ($this->submit) $json['submit'] = $this->submit;
+	    if ($this->links)  $json['links'] = $this->links;
 
         return $json;
     }

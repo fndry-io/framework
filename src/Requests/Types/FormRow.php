@@ -40,6 +40,19 @@ class FormRow{
         return $this;
     }
 
+    public function getField($name)
+    {
+	    /**
+	     * @var Type $field
+	     */
+    	foreach ($this->fields as $field) {
+    		if ($field->getName() === $name) {
+    			return $field;
+		    }
+	    }
+	    return null;
+    }
+
     /**
      * @return FormView
      */

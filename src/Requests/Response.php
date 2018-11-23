@@ -22,7 +22,7 @@ class Response
 	/**
 	 * Response Constructor
 	 *
-	 * @param array $data
+	 * @param mixed $data
 	 * @param bool $status
 	 * @param int $code
 	 * @param null $error
@@ -91,11 +91,6 @@ class Response
     public function getError()
     {
     	return $this->error;
-    }
-
-    public function getErrorString()
-    {
-	    return is_array($this->error) ? implode("\n\r", $this->error) : $this->error;
     }
 
 	public function getCode()
