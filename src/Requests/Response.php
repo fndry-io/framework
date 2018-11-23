@@ -48,7 +48,7 @@ class Response
 	/**
 	 * Response
 	 * @param array $data
-	 * @return mixed
+	 * @return Response
 	 */
 	static function success($data = []){
 		return new Response($data);
@@ -59,7 +59,7 @@ class Response
 	 *
 	 * @param $error
 	 * @param $code
-	 * @return mixed
+	 * @return Response
 	 */
 	static function error($error, $code){
 		return new Response([], false, $code, $error);
@@ -91,6 +91,11 @@ class Response
     public function getError()
     {
     	return $this->error;
+    }
+
+    public function getErrorString()
+    {
+	    return is_array($this->error) ? implode("\n\r", $this->error) : $this->error;
     }
 
 	public function getCode()
