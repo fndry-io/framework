@@ -2,15 +2,18 @@
 
 namespace Foundry\Requests\Types;
 
-
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\MessageBag as MessageBagContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\MessageBag;
 
 /**
  * Class FormView
  *
  * @package Foundry\Requests\Types
  */
-class FormView{
+class FormView implements Arrayable {
+
 
     /**
      * form name
@@ -64,9 +67,15 @@ class FormView{
 	protected $rows;
 
 	/**
-	 * @var array
+	 * @var MessageBag
 	 */
 	protected $errors;
+
+	/**
+	 * @var string The view to render this Form View
+	 */
+	protected $view;
+
 	/**
      * FormView constructor.
      *
@@ -304,23 +313,95 @@ class FormView{
 		return !empty($this->links);
 	}
 
-	public function setErrors($errors): FormView
+	/**
+	 * Set the errors
+	 *
+	 * @param MessageBagContract $errors
+	 *
+	 * @return FormView
+	 */
+	public function setErrors(MessageBagContract $errors): FormView
 	{
 		$this->errors = $errors;
 		return $this;
 	}
 
-	public function getFieldError($field)
+	/**
+	 * Get the errors
+	 *
+	 * @return MessageBagContract
+	 */
+	public function getErrors(): MessageBagContract
 	{
-		if (!empty($this->errors) && isset($this->errors[$field])) {
-			return $this->errors[$field];
-		}
-		 return null;
+		return ($this->errors) ? $this->errors : new MessageBag();
 	}
 
+	/**
+	 * Get the errors for the invalid field
+	 *
+	 * @param $field
+	 *
+	 * @return array|null
+	 */
+	public function getFieldError($field)
+	{
+		if ($this->isFieldInvalid($field)) {
+			return $this->errors->get($field);
+		}
+		return null;
+	}
+
+	/**
+	 * Determine if a field is invalid
+	 *
+	 * @param $field
+	 *
+	 * @return bool
+	 */
 	public function isFieldInvalid($field)
 	{
-		return (!empty($this->errors) && isset($this->errors[$field]));
+		return ($this->errors && $this->errors->has($field));
+	}
+
+	/**
+	 * Set the view
+	 *
+	 * @param $view
+	 *
+	 * @return $this
+	 */
+	public function setView($view)
+	{
+		$this->view = $view;
+		return $this;
+	}
+
+	/**
+	 * Render the view for the form
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function view()
+	{
+		return view($this->view, [
+			'form' => $this
+		]);
+	}
+
+	/**
+	 * Set the request
+	 *
+	 * @param $request
+	 *
+	 * @return $this
+	 */
+	public function setRequest($request)
+	{
+		$this->request = $request;
+		if ($request->session()->has('errors') && $request->session()->get('errors')->hasBag('form')) {
+			$this->setErrors($request->session()->get('errors')->getBag('form'));
+		}
+		return $this;
 	}
 
 	/**
@@ -358,10 +439,15 @@ class FormView{
         if ($u) $json['methods'] = (array) $u;
 	    if ($this->action) $json['action'] = $this->action;
 	    if ($this->method) $json['method'] = $this->method;
-	    if ($this->errors) $json['errors'] = $this->errors;
+	    if ($this->errors) $json['errors'] = $this->errors->toArray();
 	    if ($this->submit) $json['submit'] = $this->submit;
 	    if ($this->links)  $json['links'] = $this->links;
 
         return $json;
+    }
+
+    public function toArray()
+    {
+    	return $this->jsonSerialize();
     }
 }

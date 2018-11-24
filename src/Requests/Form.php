@@ -2,18 +2,78 @@
 
 namespace Foundry\Requests;
 
-
-use Foundry\Exceptions\APIException;
+use Foundry\Requests\Types\FormView;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
 
 abstract class Form
 {
-
+	/**
+	 * @var array form inputs
+	 */
     protected $inputs = [];
 
-    public function __construct($inputs)
+	/**
+	 * @var Response The response received after calling the hanlde method
+	 */
+    protected $response;
+
+	/**
+	 * @var \Closure The on success handler
+	 */
+    protected $onSuccess;
+
+	/**
+	 * @var \Closure The on error handler
+	 */
+	protected $onError;
+
+	/**
+	 * @var string The view for rendering the form
+	 */
+	protected $view;
+
+	/**
+	 * @var string The action url to submit to
+	 */
+	protected $action;
+
+	/**
+	 * @var string POST, GET, PUT, DELETE
+	 */
+	protected $method;
+
+	public function __construct($inputs)
     {
         $this->inputs = $inputs;
+    }
+
+	/**
+	 * @param $request
+	 *
+	 * @return Form
+	 */
+    static public function fromRequest($request)
+    {
+    	$form = new static($request->only(static::fields()));
+    	$form->setRequest($request);
+    	return $form;
+    }
+
+	/**
+	 * Set the request
+	 *
+	 * @param $request
+	 *
+	 * @return $this
+	 */
+    public function setRequest($request)
+    {
+    	$this->request = $request;
+	    return $this;
     }
 
     /**
@@ -44,27 +104,211 @@ abstract class Form
      */
     public abstract function messages();
 
-    static abstract function getFormView();
+	/**
+	 * Gets the form view object for rendering the form
+	 *
+	 * @return FormView
+	 */
+    static abstract function getFormView(): FormView;
 
     /**
      * Get values provided by user
      * Validate the values first before returning
      *
-     * @return array
+     * @return Response
      */
     public function inputs()
     {
         if($this->authorize()){
             $validator = Validator::make($this->inputs, $this->rules(), $this->messages());
-
             if ($validator->fails()) {
                 return Response::error($validator->errors()->getMessages(), 422);
             }else{
                 return Response::success($this->inputs);
             }
         }else{
-            return Response::error(APIException::NOT_AUTHORIZED, 403);
+            return Response::error(__("You are not authorized to view the requested data"), 403);
         }
     }
+
+	/**
+	 * Extract only the wanted keys from the input
+	 *
+	 * @param $keys
+	 *
+	 * @return array
+	 */
+    public function only($keys)
+    {
+	    $results = [];
+
+	    $placeholder = new \stdClass();
+
+	    foreach (is_array($keys) ? $keys : func_get_args() as $key) {
+		    $value = data_get($this->inputs, $key, $placeholder);
+
+		    if ($value !== $placeholder) {
+			    Arr::set($results, $key, $value);
+		    }
+	    }
+
+	    return $results;
+    }
+
+	/**
+	 * Handle the form using the given service
+	 *
+	 * @param string $service The Service class name to the use
+	 * @param string $method The static method to call against the service class
+	 *
+	 * @return mixed|Response|View
+	 */
+    public function handle($service, $method)
+    {
+    	$this->setResponse(call_user_func([$service, $method], $this));
+    	if ($this->response->isSuccess()) {
+    		return $this->handleOnSuccess();
+	    } else {
+    		return $this->handleOnError();
+	    }
+    }
+
+	/**
+	 * Set the foundry response object
+	 *
+	 * @param Response $response
+	 *
+	 * @return $this
+	 */
+    public function setResponse($response)
+    {
+    	$this->response = $response;
+    	return $this;
+    }
+
+	/**
+	 * Get the foundry response object
+	 *
+	 * @return Response
+	 */
+    public function getResponse()
+    {
+    	return $this->response;
+    }
+
+	/**
+	 * Set the view for rendering this form
+	 *
+	 * @param $view
+	 *
+	 * @return Form
+	 */
+    public function setView($view) : Form
+    {
+    	$this->view = $view;
+    	return $this;
+    }
+
+	/**
+	 * Set the on Success handler
+	 *
+	 * @param \Closure $closure
+	 *
+	 * @return Form
+	 */
+    public function onSuccess(\Closure $closure) : Form
+    {
+    	$this->onSuccess = $closure;
+	    return $this;
+    }
+
+	/**
+	 * @return mixed|Response|View
+	 */
+	protected function handleOnSuccess()
+    {
+    	if (isset($this->onSuccess) && is_callable($this->onSuccess)) {
+    		return call_user_func($this->onSuccess, $this);
+	    } else {
+    		return $this->response;
+	    }
+    }
+
+	/**
+	 * Set the on Error handling
+	 *
+	 * @param \Closure $closure
+	 *
+	 * @return Form
+	 */
+	public function onError(\Closure $closure) : Form
+	{
+		$this->onError = $closure;
+		return $this;
+	}
+
+	/**
+	 * Handle On Error
+	 *
+	 * @return mixed|Response|View
+	 */
+	protected function handleOnError()
+	{
+		if (isset($this->onError) && is_callable($this->onError)) {
+			$return = call_user_func($this->onError, $this);
+			if ($return instanceof RedirectResponse) {
+				$error = $this->response->getError();
+				if (is_string($error)) {
+					$return->with('status', $error);
+				} elseif (is_array($error)) {
+					$return->withErrors($error, 'form');
+				}
+			}
+			return $return;
+		} elseif (!empty($this->view)) {
+			$form = $this->getFormView();
+			$form
+				->setAction($this->action)
+				->setMethod($this->method)
+			;
+			$error = $this->response->getError();
+			if ($this->response->getCode() === 422) {
+				$form->setErrors(new MessageBag($error));
+			} elseif(is_string($error)) {
+				app('session')->flash('status', $error);
+			}
+			return view($this->view, [
+				'form' => $form
+			]);
+		} else {
+			return $this->response;
+		}
+	}
+
+	/**
+	 * Set the form action
+	 *
+	 * @param $action
+	 *
+	 * @return $this
+	 */
+	public function setAction($action)
+	{
+		$this->action = $action;
+		return $this;
+	}
+
+	/**
+	 * Set the method of the form
+	 *
+	 * @param $method
+	 *
+	 * @return $this
+	 */
+	public function setMethod($method)
+	{
+		$this->method = $method;
+		return $this;
+	}
 
 }
