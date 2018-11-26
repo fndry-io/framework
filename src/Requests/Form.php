@@ -120,7 +120,7 @@ abstract class Form
     public function inputs()
     {
         if($this->authorize()){
-            $validator = Validator::make($this->inputs, self::rules(), $this->messages());
+            $validator = Validator::make($this->inputs, $this->rules(), $this->messages());
             if ($validator->fails()) {
                 return Response::error($validator->errors()->getMessages(), 422);
             }else{
