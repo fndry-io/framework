@@ -4,6 +4,7 @@ namespace Foundry\Requests;
 
 use Foundry\Requests\Types\FormView;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
@@ -46,9 +47,25 @@ abstract class Form
 	 */
 	protected $method;
 
+	/**
+	 * @var Model The associated model instance
+	 */
+	protected $model = null;
+
 	public function __construct($inputs)
     {
-        $this->inputs = $inputs;
+        $this->setInputs($inputs);
+    }
+
+    public function setInputs($inputs)
+    {
+    	$this->inputs = $inputs;
+    	return $this;
+    }
+
+    public function getInputs()
+    {
+    	return $this->inputs;
     }
 
 	/**
@@ -111,16 +128,39 @@ abstract class Form
 	 */
     static abstract function getFormView(): FormView;
 
+	/**
+	 * Set the model to use with this form Form Request
+	 */
+    public function setModel(Model $model): Form
+    {
+    	$this->model = $model;
+    	return $this;
+    }
+
+	/**
+	 * Get the associated model
+	 *
+	 * @return mixed
+	 */
+    public function getModel()
+    {
+    	return $this->model;
+    }
+
     /**
      * Get values provided by user
      * Validate the values first before returning
      *
      * @return Response
      */
-    public function inputs()
+    public function validate($rules = null)
     {
+    	if ($rules === null) {
+		    $rules = $this->rules();
+	    }
+    	$rules = array_merge($this->rules(), $rules);
         if($this->authorize()){
-            $validator = Validator::make($this->inputs, $this->rules(), $this->messages());
+            $validator = Validator::make($this->inputs, $rules, $this->messages());
             if ($validator->fails()) {
                 return Response::error($validator->errors()->getMessages(), 422);
             }else{
@@ -156,6 +196,18 @@ abstract class Form
     }
 
 	/**
+	 * Extract only the wanted keys from the input
+	 *
+	 * @param $keys
+	 *
+	 * @return array
+	 */
+	public function except($keys)
+	{
+		return array_diff_key($this->inputs, array_flip($keys));
+	}
+
+	/**
 	 * Handle the form using the given service
 	 *
 	 * @param string $service The Service class name to the use
@@ -163,9 +215,9 @@ abstract class Form
 	 *
 	 * @return mixed|Response|View
 	 */
-    public function handle($service, $method)
+    public function handle($service, $method, ...$params)
     {
-    	$this->setResponse(call_user_func([$service, $method], $this));
+    	$this->setResponse(call_user_func([$service, $method], $this, ...$params));
     	if ($this->response->isSuccess()) {
     		return $this->handleOnSuccess();
 	    } else {

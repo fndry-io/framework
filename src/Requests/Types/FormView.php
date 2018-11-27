@@ -5,6 +5,7 @@ namespace Foundry\Requests\Types;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\MessageBag as MessageBagContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\MessageBag;
 
 /**
@@ -27,36 +28,48 @@ class FormView implements Arrayable {
 	 */
     protected $id;
 
+	/**
+	 * @var string The form action url
+	 */
     protected $action;
 
+	/**
+	 * @var string The form method POST, GET
+	 */
     protected $method;
 
+	/**
+	 * @var string The submit button text
+	 */
     protected $submit;
 
+	/**
+	 * @var string The submit button class
+	 */
+	protected $submitClass;
+
+	/**
+	 * @var array Any links for the form which should be displayed with the submit button
+	 */
     protected $links;
 
-    protected $submitClass;
-
     /**
-     * Form POST url
-     * @var string
+     * @var string Form POST url
      */
     protected $postUrl;
 
     /**
-     * Form PUT url
-     * @var string
+     * @var string Form PUT url
      */
     protected $putUrl;
 
     /**
-     * Form DELETE url
-     * @var string
+     * @var string Form DELETE url
      */
     protected $deleteUrl;
 
     /**
-     * @var Model $model
+     * @var Model The associated model for the form view
      */
     protected $model;
 
@@ -125,7 +138,6 @@ class FormView implements Arrayable {
 		$this->id = $id;
 		return $this;
 	}
-
 
 	public function setAction($action): FormView
 	{
@@ -242,6 +254,27 @@ class FormView implements Arrayable {
         return $this;
     }
 
+    public function getRows()
+    {
+    	return $this->rows;
+    }
+
+    public function setValues($values) : FormView
+    {
+	    /**
+	     * @var FormRow $row
+	     */
+	    foreach ($this->getRows() as &$row) {
+	    	foreach ($row->getFields() as &$field) {
+	    		$name = $field->getName();
+	    		if (isset($values[$name])) {
+				    $field->setValue($values[$name]);
+			    }
+		    }
+	    }
+	    return $this;
+    }
+
 	public function getField($name)
 	{
 		/**
@@ -254,7 +287,6 @@ class FormView implements Arrayable {
 		}
 		return null;
 	}
-
 
 	/**
      * @return null | Model
@@ -272,6 +304,7 @@ class FormView implements Arrayable {
     public function setModel(Model $model): FormView
     {
         $this->model = $model;
+        $this->setValues($model->toArray());
         return $this;
     }
 
@@ -281,7 +314,7 @@ class FormView implements Arrayable {
     	return $this;
     }
 
-	public function getSubmit($submit): FormView
+	public function getSubmit()
 	{
 		return $this->submit;
 	}
@@ -292,7 +325,7 @@ class FormView implements Arrayable {
 		return $this;
 	}
 
-	public function getSubmitClass($class): FormView
+	public function getSubmitClass()
 	{
 		return $this->submitClass;
 	}
@@ -379,7 +412,7 @@ class FormView implements Arrayable {
 	/**
 	 * Render the view for the form
 	 *
-	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 * @return View
 	 */
 	public function view()
 	{

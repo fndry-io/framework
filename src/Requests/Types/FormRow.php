@@ -10,7 +10,14 @@ namespace Foundry\Requests\Types;
  */
 class FormRow{
 
+	/**
+	 * @var array The fields
+	 */
     protected $fields;
+
+	/**
+	 * @var FormView The wrapping form
+	 */
     protected $form;
 
     /**
@@ -18,7 +25,7 @@ class FormRow{
      *
      * @param $fields
      */
-    public function __construct($fields = array())
+    public function __construct($fields = [])
     {
         $this->fields = $fields;
     }
@@ -40,6 +47,13 @@ class FormRow{
         return $this;
     }
 
+	/**
+	 * Get the field by its name
+	 *
+	 * @param $name
+	 *
+	 * @return Type|null
+	 */
     public function getField($name)
     {
 	    /**
@@ -54,6 +68,8 @@ class FormRow{
     }
 
     /**
+     * Get the FormView object
+     *
      * @return FormView
      */
     public function getForm() : FormView
@@ -69,11 +85,20 @@ class FormRow{
     public function setForm(FormView $form): FormRow
     {
         $this->form = $form;
-
         return $this;
     }
 
-    /**
+	/**
+	 * The the fields for this row
+	 *
+	 * @return array
+	 */
+	public function getFields()
+	{
+		return $this->fields;
+	}
+
+	/**
      * Serialize Object
      *
      * @return array
