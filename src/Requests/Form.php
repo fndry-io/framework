@@ -50,19 +50,37 @@ abstract class Form
 	/**
 	 * @var Model The associated model instance
 	 */
-	protected $model = null;
+	protected $model;
+
+	/**
+	 * @var array The loaded rules
+	 */
+	protected $rules;
 
 	public function __construct($inputs)
     {
         $this->setInputs($inputs);
+        $this->rules = static::rules();
     }
 
+	/**
+	 * Set the inputs
+	 *
+	 * @param $inputs
+	 *
+	 * @return $this
+	 */
     public function setInputs($inputs)
     {
     	$this->inputs = $inputs;
     	return $this;
     }
 
+	/**
+	 * Get the inputs
+	 *
+	 * @return array
+	 */
     public function getInputs()
     {
     	return $this->inputs;
@@ -93,8 +111,32 @@ abstract class Form
 	    return $this;
     }
 
+	/**
+	 * Set the rules
+	 *
+	 * @param $rules
+	 */
+    public function setRules($rules)
+    {
+    	$this->rules = $rules;
+    }
+
+	/**
+	 * Get the set rules
+	 *
+	 * @return array
+	 */
+    public function getRules()
+    {
+    	return $this->rules;
+    }
+
     /**
      * Get the validation rules that apply to the request.
+     *
+     * These are the initial default rules
+     *
+     * Call getRules and setRules to modify when and if needed
      *
      * @return array
      */
@@ -156,9 +198,8 @@ abstract class Form
     public function validate($rules = null)
     {
     	if ($rules === null) {
-		    $rules = $this->rules();
+		    $rules = $this->getRules();
 	    }
-    	$rules = array_merge($this->rules(), $rules);
         if($this->authorize()){
             $validator = Validator::make($this->inputs, $rules, $this->messages());
             if ($validator->fails()) {
@@ -217,11 +258,41 @@ abstract class Form
 	 */
     public function handle($service, $method, ...$params)
     {
-    	$this->setResponse(call_user_func([$service, $method], $this, ...$params));
+	    $this->handleBeforeHandle();
+
+	    $this->setResponse(call_user_func([$service, $method], $this, ...$params));
+
     	if ($this->response->isSuccess()) {
     		return $this->handleOnSuccess();
 	    } else {
     		return $this->handleOnError();
+	    }
+    }
+
+	/**
+	 * Set the onBeforeHandle closure
+	 *
+	 * @param \Closure $closure
+	 *
+	 * @return Form
+	 */
+    public function onBeforeHandle(\Closure $closure) : Form
+    {
+	    $this->onBeforeHandle = $closure;
+	    return $this;
+    }
+
+	/**
+	 * Call the onBeforeHandle
+	 *
+	 * @return Response|mixed
+	 */
+    protected function handleBeforeHandle()
+    {
+	    if (isset($this->onBeforeHandle) && is_callable($this->onBeforeHandle)) {
+		    return call_user_func($this->onBeforeHandle, $this);
+	    } else {
+		    return true;
 	    }
     }
 
