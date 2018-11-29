@@ -397,12 +397,15 @@ class FormView implements Arrayable {
 	/**
 	 * Set the errors
 	 *
-	 * @param MessageBagContract $errors
+	 * @param MessageBagContract|array $errors
 	 *
 	 * @return FormView
 	 */
-	public function setErrors(MessageBagContract $errors): FormView
+	public function setErrors($errors): FormView
 	{
+		if (is_array($errors)) {
+			$errors = new MessageBag($errors);
+		}
 		$this->errors = $errors;
 		return $this;
 	}
@@ -461,6 +464,20 @@ class FormView implements Arrayable {
 	{
 		$this->rules = $rules;
 		return $this;
+	}
+
+	/**
+	 * Return the number of fields in this form
+	 *
+	 * @return int
+	 */
+	public function fieldCount(): int
+	{
+		$count = 0;
+		foreach ($this->getRows() as $row) {
+			$count = $count + $row->fieldCount();
+		}
+		return $count;
 	}
 
 	/**

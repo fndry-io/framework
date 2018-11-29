@@ -1,5 +1,6 @@
 <?php
 namespace Foundry\Requests;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Foundry Simple Response Object
@@ -107,4 +108,15 @@ class Response
 	{
 		return json_encode($this->jsonSerialize());
 	}
+
+	public function redirect(RedirectResponse $redirect)
+	{
+		if ( $this->getCode() == 422 ) {
+			$redirect->withErrors( $this->getError() );
+		} else {
+			$redirect->with( 'status', $this->getError() );
+		}
+		return $redirect;
+	}
+
 }

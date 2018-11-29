@@ -99,6 +99,16 @@ class FormRow{
 	}
 
 	/**
+	 * Return the number of fields in this row
+	 *
+	 * @return int
+	 */
+	public function fieldCount(): int
+	{
+		return count($this->fields);
+	}
+
+	/**
      * Serialize Object
      *
      * @return array
