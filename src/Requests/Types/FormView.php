@@ -294,6 +294,25 @@ class FormView implements Arrayable {
 	}
 
 	/**
+	 * Gets a flat list of all the fields
+	 *
+	 * @return array
+	 */
+	public function getFields()
+	{
+		$fields = [];
+		/**
+		 * @var FormRow $row
+		 */
+		foreach ($this->getRows() as &$row) {
+			foreach ($row->getFields() as &$field) {
+				$fields[] = $field;
+			}
+		}
+		return $fields;
+	}
+
+	/**
      * @return null | Model
      */
     public function getModel()

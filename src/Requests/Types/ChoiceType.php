@@ -30,7 +30,7 @@ class ChoiceType extends Type{
                                 array $options,
                                 string $label = null,
                                 bool $required = true,
-                                string $value = null,
+                                $value = null,
                                 string $position = 'full',
                                 string $rules = null,
                                 string $id = null,
@@ -41,8 +41,9 @@ class ChoiceType extends Type{
 
         $type = $expanded? $multiple? 'checkbox': 'radio' : 'select';
 
-        parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
+        parent::__construct($name, $label, $required, null, $position, $rules, $id, $placeholder, $type);
 
+        $this->setValue($value);
     }
 
     /**
@@ -85,4 +86,21 @@ class ChoiceType extends Type{
         return $this;
     }
 
+	/**
+	 * Determines if a value is selected
+	 *
+	 * @param $key
+	 *
+	 * @return bool
+	 */
+    public function isOptionChecked($key)
+    {
+    	if (is_array($this->value)) {
+		    return in_array($key, $this->value);
+	    } elseif (is_string($this->value)) {
+    		return $key == $this->value;
+	    }
+    	return false;
+    }
+    
 }

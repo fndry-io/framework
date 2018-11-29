@@ -109,7 +109,7 @@ abstract class Type {
         $this->setPosition($position);
         $this->setRules($rules);
 
-        $id = $id? $id: $name.'_field';
+        $id = $id? $id: camel_case(str_slug($name.'_field'));
 
         $this->setId($id);
         $this->setPlaceholder($placeholder ? $placeholder: $label? $label: $name);

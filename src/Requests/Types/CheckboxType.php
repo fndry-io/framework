@@ -24,6 +24,8 @@ class CheckboxType extends Type{
 	{
 		$type = 'checkbox';
 		parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
+		
+		$this->setChecked($checked);
 	}
 
 	public function isChecked()
