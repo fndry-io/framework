@@ -90,6 +90,11 @@ class FormView implements Arrayable {
 	protected $view;
 
 	/**
+	 * @var array The rules to be applied
+	 */
+	protected $rules;
+
+	/**
      * FormView constructor.
      *
      * @param $name
@@ -308,6 +313,49 @@ class FormView implements Arrayable {
         return $this;
     }
 
+    public function isFieldVisible($key)
+    {
+    	if ($this->model) {
+		    $hidden = $this->model->getHidden();
+    		$visible = $this->model->getVisible();
+    		if (!in_array($key, $hidden) && in_array($key, $visible)) {
+    			return true;
+		    } elseif (in_array($key, $hidden)) {
+    			return false;
+		    }
+	    }
+	    return true;
+    }
+
+    public function isFieldHidden($key)
+    {
+	    return ($this->model && in_array($key, $this->model->getHidden()));
+    }
+
+	public function isFieldGuarded($key)
+	{
+		if ($this->model) {
+			return $this->model->isGuarded($key);
+		}
+		return false;
+	}
+
+	public function isFieldFillable($key)
+	{
+		if ($this->model) {
+			return $this->model->isFillable($key);
+		}
+		return true;
+	}
+
+	public function getValue($key)
+    {
+    	if ($this->model) {
+    		return $this->model->getAttribute($key);
+	    }
+	    return null;
+    }
+
     public function setSubmit($submit): FormView
     {
     	$this->submit = $submit;
@@ -396,6 +444,25 @@ class FormView implements Arrayable {
 		return ($this->errors && $this->errors->has($field));
 	}
 
+	public function getRule($key)
+	{
+		if (isset($this->rules[$key])) {
+			return $this->rules[$key];
+		}
+		return null;
+	}
+
+	public function getRules()
+	{
+		return $this->rules();
+	}
+
+	public function setRules($rules): FormView
+	{
+		$this->rules = $rules;
+		return $this;
+	}
+
 	/**
 	 * Set the view
 	 *
@@ -412,7 +479,7 @@ class FormView implements Arrayable {
 	/**
 	 * Render the view for the form
 	 *
-	 * @return View
+	 * @return \Illuminate\Contracts\View\View
 	 */
 	public function view()
 	{
@@ -431,8 +498,8 @@ class FormView implements Arrayable {
 	public function setRequest($request)
 	{
 		$this->request = $request;
-		if ($request->session()->has('errors') && $request->session()->get('errors')->hasBag('form')) {
-			$this->setErrors($request->session()->get('errors')->getBag('form'));
+		if ($request->session()->has('errors') && $request->session()->get('errors')->hasBag('default')) {
+			$this->setErrors($request->session()->get('errors')->getBag('default'));
 		}
 		return $this;
 	}

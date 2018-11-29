@@ -3,9 +3,11 @@
 namespace Foundry\Requests;
 
 use Foundry\Requests\Types\FormView;
+use Foundry\Services\Service;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
@@ -57,6 +59,10 @@ abstract class Form
 	 */
 	protected $rules;
 
+	protected $service;
+	
+	protected $request;
+
 	public function __construct($inputs)
     {
         $this->setInputs($inputs);
@@ -87,15 +93,32 @@ abstract class Form
     }
 
 	/**
-	 * @param $request
+	 * @param Request $request
 	 *
 	 * @return Form
 	 */
-    static public function fromRequest($request)
+    static public function fromRequest(Request $request, $id = null)
     {
     	$form = new static($request->only(static::fields()));
     	$form->setRequest($request);
+    	if ($id && $model = static::model($id)) {
+		    $form->setModel($model);
+	    }
     	return $form;
+    }
+
+	/**
+	 * Handle the request
+	 *
+	 * @param Request $request
+	 * @param $id
+	 *
+	 * @return Response
+	 */
+    static public function handleRequest(Request $request, $id = null)
+    {
+    	$form = static::fromRequest($request, $id);
+    	return $form->handle();
     }
 
 	/**
@@ -138,9 +161,11 @@ abstract class Form
      *
      * Call getRules and setRules to modify when and if needed
      *
+     * @param Model $model The model if rules need modifying
+     *
      * @return array
      */
-    static abstract function rules();
+    static abstract function rules(Model $model = null): array;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -161,21 +186,45 @@ abstract class Form
      *
      * @return array
      */
-    public abstract function messages();
+    public function messages() {
+    	return [];
+    }
+
+	/**
+	 * Returns the service for this form
+	 *
+	 * @return Service
+	 */
+    static abstract function service();
 
 	/**
 	 * Gets the form view object for rendering the form
 	 *
+	 * @param int $id
+	 * 
 	 * @return FormView
 	 */
-    static abstract function getFormView(): FormView;
+    static abstract function getFormView($id = null): FormView;
 
+	/**
+	 * Get the model for a given id
+	 *
+	 * @param $id
+	 *
+	 * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null|object
+	 */
+    static public function model($id)
+    {
+    	return call_user_func([static::service(), 'model'], $id);
+    }
+    
 	/**
 	 * Set the model to use with this form Form Request
 	 */
     public function setModel(Model $model): Form
     {
     	$this->model = $model;
+    	$this->setRules(static::rules($model));
     	return $this;
     }
 
@@ -245,9 +294,16 @@ abstract class Form
 	 */
 	public function except($keys)
 	{
-		return array_diff_key($this->inputs, array_flip($keys));
+		return array_except($this->inputs, $keys);
 	}
 
+	/**
+	 * Handle the form request
+	 *
+	 * @return Response
+	 */
+	abstract public function handle() : Response;
+	
 	/**
 	 * Handle the form using the given service
 	 *
@@ -256,43 +312,13 @@ abstract class Form
 	 *
 	 * @return mixed|Response|View
 	 */
-    public function handle($service, $method, ...$params)
+    protected function response($response)
     {
-	    $this->handleBeforeHandle();
-
-	    $this->setResponse(call_user_func([$service, $method], $this, ...$params));
-
+	    $this->setResponse($response);
     	if ($this->response->isSuccess()) {
     		return $this->handleOnSuccess();
 	    } else {
     		return $this->handleOnError();
-	    }
-    }
-
-	/**
-	 * Set the onBeforeHandle closure
-	 *
-	 * @param \Closure $closure
-	 *
-	 * @return Form
-	 */
-    public function onBeforeHandle(\Closure $closure) : Form
-    {
-	    $this->onBeforeHandle = $closure;
-	    return $this;
-    }
-
-	/**
-	 * Call the onBeforeHandle
-	 *
-	 * @return Response|mixed
-	 */
-    protected function handleBeforeHandle()
-    {
-	    if (isset($this->onBeforeHandle) && is_callable($this->onBeforeHandle)) {
-		    return call_user_func($this->onBeforeHandle, $this);
-	    } else {
-		    return true;
 	    }
     }
 

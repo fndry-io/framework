@@ -28,13 +28,13 @@ class ChoiceType extends Type{
                                 bool $expanded,
                                 bool $multiple,
                                 array $options,
-                                string $label = '',
+                                string $label = null,
                                 bool $required = true,
-                                string $value = '',
+                                string $value = null,
                                 string $position = 'full',
-                                string $rules = '',
-                                string $id = '',
-                                string $placeholder = '')
+                                string $rules = null,
+                                string $id = null,
+                                string $placeholder = null)
     {
         $this->setMultiple($multiple);
         $this->setOptions($options);

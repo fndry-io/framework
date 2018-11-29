@@ -81,6 +81,8 @@ abstract class Type {
 
     protected $class;
 
+    protected $fillable;
+
     /**
      * The form row this field belongs to
      *
@@ -89,19 +91,20 @@ abstract class Type {
     protected $row;
 
     public function __construct(string $name,
-                                string $label = '',
+                                string $label = null,
                                 bool $required = true,
-                                string $value = '',
+                                string $value = null,
                                 string $position = 'full',
-                                string $rules = '',
-                                string $id = '',
-                                string $placeholder = '',
+                                string $rules = null,
+                                string $id = null,
+                                string $placeholder = null,
                                 string $type = 'text')
     {
         $this->setName($name);
+	    $this->setType($type);
+	    $this->setRequired($required);
+
         $this->setLabel($label? $label: $name);
-        $this->setType($type);
-        $this->setRequired($required);
         $this->setValue($value);
         $this->setPosition($position);
         $this->setRules($rules);
@@ -145,7 +148,7 @@ abstract class Type {
      *
      * @return Type
      */
-    public function setLabel(string $label): Type
+    public function setLabel(string $label = null): Type
     {
         $this->label = $label;
 
@@ -177,7 +180,11 @@ abstract class Type {
      */
     public function getRules(): string
     {
-        return $this->rules;
+	    if (isset($this->rules[$key])) {
+		    return $this->rules[$key];
+	    } else {
+		    return $this->getRow()->getForm()->getRule($this->name);
+	    }
     }
 
     /**
@@ -185,10 +192,9 @@ abstract class Type {
      *
      * @return Type
      */
-    public function setRules(string $rules): Type
+    public function setRules(string $rules = null): Type
     {
         $this->rules = $rules;
-
         return $this;
     }
 
@@ -225,7 +231,7 @@ abstract class Type {
      *
      * @return Type
      */
-    public function setPosition(string $position): Type
+    public function setPosition(string $position = null): Type
     {
         $this->position = $position;
 
@@ -252,11 +258,42 @@ abstract class Type {
         return $this;
     }
 
-    /**
+    public function isFillable()
+    {
+    	if ($this->fillable === true) {
+    		return true;
+	    } else {
+		    return $this->getRow()->getForm()->isFieldFillable($this->name);
+	    }
+    }
+
+	public function isGuarded()
+	{
+		return $this->getRow()->getForm()->isFieldGuarded($this->name);
+	}
+
+	public function isVisible()
+	{
+		return $this->getRow()->getForm()->isFieldVisible($this->name);
+	}
+
+	public function isHidden()
+	{
+		return $this->getRow()->getForm()->isFieldHidden($this->name);
+	}
+
+	/**
      * @return mixed
      */
     public function getValue()
     {
+    	if (old($this->name)) {
+    		return old($this->name);
+	    } elseif ($this->value !== null) {
+		    return $this->value;
+	    } else {
+		    return $this->getRow()->getForm()->getValue($this->name);
+	    }
         return $this->value;
     }
 
@@ -285,10 +322,9 @@ abstract class Type {
      *
      * @return Type
      */
-    public function setPlaceholder($placeholder): Type
+    public function setPlaceholder(string $placeholder = null): Type
     {
         $this->placeholder = $placeholder;
-
         return $this;
     }
 
@@ -377,5 +413,10 @@ abstract class Type {
     private function getModelValue(Model $model){
 
         return $model[$this->getName()];
+    }
+
+    public function makeFillable()
+    {
+    	$this->fillable = true;
     }
 }
