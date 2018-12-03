@@ -6,6 +6,7 @@ use Foundry\Config\SettingRepository;
 use Foundry\Contracts\Repository;
 use Foundry\Models\Setting;
 use Foundry\Providers\ConsoleServiceProvider;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
@@ -70,7 +71,12 @@ class FoundryServiceProvider extends ServiceProvider
 
        $this->app->singleton(Repository::class, function () {
 
-           $settings = $this->getSettingsItems();
+           if (Cache::has('settings')) {
+               $settings = Cache::get('settings');
+           }else{
+               $settings = $this->getSettingsItems();
+               Cache::put('settings', $settings, now()->addDays(30));
+           }
 
            return new SettingRepository($settings);
        });
@@ -146,6 +152,7 @@ class FoundryServiceProvider extends ServiceProvider
         Setting::saved(function(){
 
             $settings = $this->getSettingsItems();
+            Cache::put('settings', $settings, now()->addDays(30));
 
             setting()->set($settings);
         });
