@@ -20,7 +20,10 @@ class CreateSettingsTable extends Migration
             $table->string('name', 100)->comment('Setting name');
             $table->enum('type', ['bool', 'int', 'integer', 'boolean', 'string', 'double', 'array'])->comment('Type of value');
             $table->string('default')->comment('Setting default value');
-            $table->string('value')->comment('Changed Setting value');
+            $table->string('value')->comment('Changed Setting value')->nullable();
+
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
