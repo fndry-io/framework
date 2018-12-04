@@ -21,14 +21,25 @@ class Setting extends Model{
     use SoftDeletes;
 
     //Possible values for the type field
-    protected $types = [
-        'bool',
-        'int',
-        'integer',
-        'boolean',
-        'string',
-        'double',
-        'array'
+    static $types = [
+        'bool' => 'bool',
+        'int' => 'int',
+        'integer' => 'integer',
+        'boolean' => 'boolean',
+        'string' => 'string',
+        'double' => 'double',
+        'array' => 'array'
+    ];
+
+    /**
+     * Various properties of the respective setting
+     *
+     * e.g '{$domain}.{$name}' => array('description' => 'Human readable description', 'default' => '{$default}', 'type' => '{$type[i]}', 'options' => 'array of available options')
+     *
+     * @var array
+     */
+    static $settings = [
+
     ];
 
     /**
