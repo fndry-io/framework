@@ -24,6 +24,11 @@ class ChoiceType extends Type{
      */
     protected $options;
 
+	/**
+	 * @var mixed The empty option. Null or false for none. True for default text or a string for the displayed text
+	 */
+    protected $empty;
+
     public function __construct(string $name,
                                 bool $expanded,
                                 bool $multiple,
@@ -71,6 +76,7 @@ class ChoiceType extends Type{
      */
     public function getOptions(): array
     {
+    	$options = $this->options;
         return $this->options;
     }
 
@@ -102,5 +108,34 @@ class ChoiceType extends Type{
 	    }
     	return false;
     }
+
+    public function setEmpty($value)
+    {
+    	$this->empty = $value;
+    	return $this;
+    }
+
+	public function getEmpty($value)
+	{
+		return $this->empty;
+	}
+
+	public function getEmptyLabel($default = null)
+	{
+		if ($this->empty === true) {
+			if ($default !== null) {
+				return $default;
+			} else {
+				return __('Select one');
+			}
+		} elseif (is_string($this->empty)) {
+			return $this->empty;
+		}
+	}
+
+	public function hasEmptyOption()
+	{
+		return !!($this->empty);
+	}
     
 }

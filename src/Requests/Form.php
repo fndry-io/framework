@@ -217,6 +217,17 @@ abstract class Form
     {
     	return call_user_func([static::service(), 'model'], $id);
     }
+
+	/**
+	 * Set the types to cast inputs to
+	 *
+	 * @see http://php.net/manual/en/function.settype.php
+	 * @return array
+	 */
+    static public function types()
+    {
+    	return [];
+    }
     
 	/**
 	 * Set the model to use with this form Form Request
@@ -283,6 +294,28 @@ abstract class Form
 	    }
 
 	    return $results;
+    }
+
+	/**
+	 * Converst the values to their typed equivilents
+	 *
+	 * @param $values
+	 *
+	 * @return mixed
+	 */
+    static public function typedValues($values)
+    {
+    	$cast = static::types();
+    	foreach ($values as $key => $value) {
+    		if (isset($cast[$key])) {
+    			if ($value === "" || $value === null) {
+				    $values[$key] = null;
+			    } else {
+				    settype($values[$key], $cast[$key]);
+			    }
+		    }
+	    }
+	    return $values;
     }
 
 	/**

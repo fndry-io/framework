@@ -287,14 +287,13 @@ abstract class Type {
      */
     public function getValue()
     {
-    	if (old($this->name)) {
+    	if (old($this->name) !== null) {
     		return old($this->name);
 	    } elseif ($this->value !== null) {
 		    return $this->value;
 	    } else {
 		    return $this->getRow()->getForm()->getValue($this->name);
 	    }
-        return $this->value;
     }
 
     /**
