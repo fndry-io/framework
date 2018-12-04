@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Artisan;
 use Plugins\Foundry\Users\Models\Setting;
 
+/**
+ * Class SettingSeeder
+ *
+ * Extends this class if the Plugin has a Setting model and requires seeding
+ *
+ * @package Foundry\Seeders
+ */
 abstract class SettingSeeder extends Seeder{
 
     /**
@@ -67,7 +74,12 @@ abstract class SettingSeeder extends Seeder{
 
     }
 
-    private function getDefaultBasedOnType($type){
+    /**
+     * @param $type
+     * @return array|int|string
+     */
+    private function getDefaultBasedOnType($type)
+    {
         switch ($type){
             case 'int':
             case 'integer':
@@ -84,5 +96,7 @@ abstract class SettingSeeder extends Seeder{
                 return 0;
                 break;
         }
+
+        return '';
     }
 }
