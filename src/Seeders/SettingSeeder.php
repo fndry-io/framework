@@ -23,8 +23,6 @@ abstract class SettingSeeder extends Seeder{
      */
     public function run()
     {
-        $this->command->info(sizeof($this->getSettings()));
-
         $table = SettingRepository::getTable();
 
         if(!Schema::hasTable($table)){
@@ -64,7 +62,7 @@ abstract class SettingSeeder extends Seeder{
 
 
         if($illegal > 0){
-            $this->command->error('There were '. $illegal. ' settings with illegal names');
+            $this->command->error('There was/were '. $illegal. ' setting(s) with illegal names');
         }
 
     }
