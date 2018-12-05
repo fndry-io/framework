@@ -74,6 +74,8 @@ abstract class Type {
      */
     protected $placeholder;
 
+    protected $readonly = false;
+
 
     protected $error;
 
@@ -101,8 +103,8 @@ abstract class Type {
                                 string $type = 'text')
     {
         $this->setName($name);
-	    $this->setType($type);
-	    $this->setRequired($required);
+        $this->setType($type);
+        $this->setRequired($required);
 
         $this->setLabel($label? $label: $name);
         $this->setValue($value);
@@ -180,11 +182,11 @@ abstract class Type {
      */
     public function getRules(): string
     {
-	    if (isset($this->rules[$key])) {
-		    return $this->rules[$key];
-	    } else {
-		    return $this->getRow()->getForm()->getRule($this->name);
-	    }
+        if (isset($this->rules[$key])) {
+            return $this->rules[$key];
+        } else {
+            return $this->getRow()->getForm()->getRule($this->name);
+        }
     }
 
     /**
@@ -260,40 +262,40 @@ abstract class Type {
 
     public function isFillable()
     {
-    	if ($this->fillable === true) {
-    		return true;
-	    } else {
-		    return $this->getRow()->getForm()->isFieldFillable($this->name);
-	    }
+        if ($this->fillable === true) {
+            return true;
+        } else {
+            return $this->getRow()->getForm()->isFieldFillable($this->name);
+        }
     }
 
-	public function isGuarded()
-	{
-		return $this->getRow()->getForm()->isFieldGuarded($this->name);
-	}
+    public function isGuarded()
+    {
+        return $this->getRow()->getForm()->isFieldGuarded($this->name);
+    }
 
-	public function isVisible()
-	{
-		return $this->getRow()->getForm()->isFieldVisible($this->name);
-	}
+    public function isVisible()
+    {
+        return $this->getRow()->getForm()->isFieldVisible($this->name);
+    }
 
-	public function isHidden()
-	{
-		return $this->getRow()->getForm()->isFieldHidden($this->name);
-	}
+    public function isHidden()
+    {
+        return $this->getRow()->getForm()->isFieldHidden($this->name);
+    }
 
-	/**
+    /**
      * @return mixed
      */
     public function getValue()
     {
-    	if (old($this->name) !== null) {
-    		return old($this->name);
-	    } elseif ($this->value !== null) {
-		    return $this->value;
-	    } else {
-		    return $this->getRow()->getForm()->getValue($this->name);
-	    }
+        if (old($this->name) !== null) {
+            return old($this->name);
+        } elseif ($this->value !== null) {
+            return $this->value;
+        } else {
+            return $this->getRow()->getForm()->getValue($this->name);
+        }
     }
 
     /**
@@ -306,6 +308,22 @@ abstract class Type {
         $this->value = $value;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReadonly(): bool
+    {
+        return $this->readonly;
+    }
+
+    /**
+     * @param bool $readonly
+     */
+    public function setReadonly(bool $readonly): void
+    {
+        $this->readonly = $readonly;
     }
 
     /**
@@ -329,37 +347,37 @@ abstract class Type {
 
     public function getHelp()
     {
-    	return $this->help;
+        return $this->help;
     }
 
     public function setHelp($help): Type
-	{
-		$this->help = $help;
-		return $this;
-	}
+    {
+        $this->help = $help;
+        return $this;
+    }
 
-	public function isInvalid()
-	{
-		return $this->getRow()->getForm()->isFieldInvalid($this->name);
-	}
+    public function isInvalid()
+    {
+        return $this->getRow()->getForm()->isFieldInvalid($this->name);
+    }
 
-	public function getError()
-	{
-		return $this->getRow()->getForm()->getFieldError($this->name);
-	}
+    public function getError()
+    {
+        return $this->getRow()->getForm()->getFieldError($this->name);
+    }
 
-	public function setClass($class) : Type
-	{
-		$this->class = $class;
-		return $this;
-	}
+    public function setClass($class) : Type
+    {
+        $this->class = $class;
+        return $this;
+    }
 
-	public function getClass()
-	{
-		return $this->class;
-	}
+    public function getClass()
+    {
+        return $this->class;
+    }
 
-	/**
+    /**
      * @return FormRow
      */
     public function getRow(): FormRow
@@ -416,6 +434,6 @@ abstract class Type {
 
     public function makeFillable()
     {
-    	$this->fillable = true;
+        $this->fillable = true;
     }
 }

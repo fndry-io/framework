@@ -142,7 +142,7 @@ class FoundryServiceProvider extends ServiceProvider
 
     protected function registerEvents() : void
     {
-
+        $this->fireSettingsEvent();
     }
 
     protected function fireSettingsEvent(): void
