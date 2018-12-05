@@ -85,4 +85,8 @@ class Setting extends Model{
         'deleted_at'
     ];
 
+    protected $guarded = [
+
+    ];
+
 }

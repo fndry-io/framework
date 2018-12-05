@@ -24,6 +24,8 @@ class ChoiceType extends Type{
      */
     protected $options;
 
+    protected $expanded;
+
 	/**
 	 * @var mixed The empty option. Null or false for none. True for default text or a string for the displayed text
 	 */
@@ -43,13 +45,30 @@ class ChoiceType extends Type{
     {
         $this->setMultiple($multiple);
         $this->setOptions($options);
-
+        $this->setExpanded($expanded);
         $type = $expanded? $multiple? 'checkbox': 'radio' : 'select';
 
         parent::__construct($name, $label, $required, null, $position, $rules, $id, $placeholder, $type);
 
         $this->setValue($value);
     }
+
+    /**
+     * @return mixed
+     */
+    public function isExpanded()
+    {
+        return $this->expanded;
+    }
+
+    /**
+     * @param mixed $expanded
+     */
+    public function setExpanded($expanded): void
+    {
+        $this->expanded = $expanded;
+    }
+
 
     /**
      * @return bool
@@ -137,5 +156,5 @@ class ChoiceType extends Type{
 	{
 		return !!($this->empty);
 	}
-    
+
 }
