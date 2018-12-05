@@ -4,10 +4,10 @@ namespace Foundry;
 
 use Foundry\Config\SettingRepository;
 use Foundry\Contracts\Repository;
-use Foundry\Models\Setting;
+use Foundry\Observers\SettingObserver;
 use Foundry\Providers\ConsoleServiceProvider;
+use Foundry\Providers\EventServiceProvider;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class FoundryServiceProvider extends ServiceProvider
@@ -25,7 +25,6 @@ class FoundryServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerNamespaces();
-        $this->registerEvents();
 
         if ($this->app->runningInConsole()) {
             $this->registerMigrations();
@@ -74,7 +73,7 @@ class FoundryServiceProvider extends ServiceProvider
            if (Cache::has('settings')) {
                $settings = Cache::get('settings');
            }else{
-               $settings = $this->getSettingsItems();
+               $settings = SettingObserver::getSettingsItems();
                Cache::put('settings', $settings, now()->addDays(30));
            }
 
@@ -95,38 +94,12 @@ class FoundryServiceProvider extends ServiceProvider
     }
 
     /**
-     * Get all settings values
-     *
-     * @return array
-     */
-    private function getSettingsItems(): array
-    {
-
-        $table = SettingRepository::getTable();
-
-        $settings = DB::table($table)->get();
-
-        $arr = array();
-
-        /**@var $setting Setting*/
-        foreach ($settings as $setting){
-
-            $value = $setting->value? $setting->value : $setting->default;
-
-            settype($value, isset($setting->type)? $setting->type: 'string');
-
-            $arr[$setting->domain.'.'.$setting->name] = $value;
-        }
-
-        return $arr;
-    }
-
-    /**
      * Register providers.
      */
     protected function registerProviders() : void
     {
         $this->app->register(ConsoleServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
     }
 
     /**
@@ -138,23 +111,5 @@ class FoundryServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-    }
-
-    protected function registerEvents() : void
-    {
-        $this->fireSettingsEvent();
-    }
-
-    protected function fireSettingsEvent(): void
-    {
-        //Refreshed settings when a new one is added
-        /** @var $setting Setting*/
-        Setting::saved(function(){
-
-            $settings = $this->getSettingsItems();
-            Cache::put('settings', $settings, now()->addDays(30));
-
-            setting()->set($settings);
-        });
     }
 }
