@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $type
  * @property $default
  * @property $value
+ * @property $model
  *
  * @package Foundry\Models
  */
@@ -32,15 +33,27 @@ class Setting extends Model{
     ];
 
     /**
+     * Get fully qualified class name for the model
+     * Needs to be overridden in child class
+     *
+     * @return string
+     */
+    static function model() : string
+    {
+        return get_class(New Setting());
+    }
+
+    /**
      * Various properties of the respective setting
      *
      * e.g '{$domain}.{$name}' => array('description' => 'Human readable description', 'default' => '{$default}', 'type' => '{$type[i]}', 'options' => 'array of available options')
      *
-     * @var array
+     * @return array
      */
-    static $settings = [
-
-    ];
+    static function settings() : array
+    {
+        return [];
+    }
 
     /**
      * The attributes that are mass assignable.

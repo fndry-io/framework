@@ -21,7 +21,9 @@ abstract class SettingSeeder extends Seeder{
     /**
      * @return array
      */
-    protected abstract function getSettings() : array;
+    protected abstract function settings() : array;
+
+    protected abstract function model() : string;
 
     /**
      * Run the database seeds.
@@ -38,7 +40,7 @@ abstract class SettingSeeder extends Seeder{
 
         $illegal = 0;
 
-        foreach ($this->getSettings() as $key => $setting){
+        foreach ($this->settings() as $key => $setting){
 
             $domain_name = explode('.', $key);
 
@@ -54,6 +56,7 @@ abstract class SettingSeeder extends Seeder{
 
                 $model->domain = $domain_name[0];
                 $model->name = $domain_name[1];
+                $model->model = $this->model();
                 $type = isset($setting['type'])? $setting['type']: 'string';
 
                 $model->type = $type;
