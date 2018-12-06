@@ -4,6 +4,7 @@ namespace Foundry;
 
 use Foundry\Config\SettingRepository;
 use Foundry\Contracts\Repository;
+use Foundry\Models\Setting;
 use Foundry\Observers\SettingObserver;
 use Foundry\Providers\ConsoleServiceProvider;
 use Foundry\Providers\EventServiceProvider;
@@ -24,6 +25,8 @@ class FoundryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Setting::observe(new SettingObserver());
+
         $this->registerNamespaces();
 
         if ($this->app->runningInConsole()) {
