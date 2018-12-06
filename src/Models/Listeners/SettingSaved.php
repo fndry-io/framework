@@ -1,25 +1,38 @@
 <?php
 
-namespace Foundry\Observers;
-
+namespace Foundry\Models\Listeners;
 
 use Foundry\Config\SettingRepository;
 use Foundry\Models\Setting;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
-class SettingObserver{
+class SettingSaved{
 
     /**
-     * Refresh settings cache
+     * Create the event listener.
+     *
+     * @return void
      */
-    public function saved()
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  \Foundry\Models\Events\SettingSaved $event
+     * @return void
+     */
+    public function handle(SettingSaved $event)
     {
         $settings = self::getSettingsItems();
         Cache::put('settings', $settings, now()->addDays(30));
 
         setting()->set($settings);
     }
+
 
     /**
      * Get all settings values

@@ -2,6 +2,7 @@
 
 namespace Foundry\Models;
 
+use Foundry\Models\Events\SettingSaved;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -87,6 +88,15 @@ class Setting extends Model{
 
     protected $guarded = [
 
+    ];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'saved' => SettingSaved::class,
     ];
 
 }

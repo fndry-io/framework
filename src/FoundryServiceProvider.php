@@ -4,8 +4,7 @@ namespace Foundry;
 
 use Foundry\Config\SettingRepository;
 use Foundry\Contracts\Repository;
-use Foundry\Models\Setting;
-use Foundry\Observers\SettingObserver;
+use Foundry\Models\Listeners\SettingSaved;
 use Foundry\Providers\ConsoleServiceProvider;
 use Foundry\Providers\EventServiceProvider;
 use Illuminate\Support\Facades\Cache;
@@ -25,7 +24,6 @@ class FoundryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Setting::observe(new SettingObserver());
 
         $this->registerNamespaces();
 
@@ -76,7 +74,7 @@ class FoundryServiceProvider extends ServiceProvider
            if (Cache::has('settings')) {
                $settings = Cache::get('settings');
            }else{
-               $settings = SettingObserver::getSettingsItems();
+               $settings = SettingSaved::getSettingsItems();
                Cache::put('settings', $settings, now()->addDays(30));
            }
 
