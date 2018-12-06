@@ -4,6 +4,7 @@ namespace Foundry\Models\Listeners;
 
 use Foundry\Config\SettingRepository;
 use Foundry\Models\Setting;
+use Foundry\Models\Events\SettingSaved as Event;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -22,10 +23,10 @@ class SettingSaved{
     /**
      * Handle the event.
      *
-     * @param  \Foundry\Models\Events\SettingSaved $event
+     * @param  Event $event
      * @return void
      */
-    public function handle(SettingSaved $event)
+    public function handle(Event $event)
     {
         $settings = self::getSettingsItems();
         Cache::put('settings', $settings, now()->addDays(30));
