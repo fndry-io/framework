@@ -18,7 +18,7 @@ class CreateSettingsTable extends Migration
             $table->increments('id');
             $table->string('domain', 100)->comment('Plugin domain');
             $table->string('name', 100)->comment('Setting name');
-	        $table->string('type', '10')->comment('Type of value: bool, int, integer, boolean, string, double, array');
+	        $table->string('type', 10)->comment('Type of value: bool, int, integer, boolean, string, double, array');
             $table->string('default')->comment('Setting default value');
             $table->string('value')->comment('Changed Setting value')->nullable();
             $table->string('model')->comment('Model for this setting');
