@@ -24,8 +24,8 @@ trait Sluggify {
      */
     public function getSlugField()
     {
-        return isset($this->slug) ?
-            $this->slug:
+        return isset($this->slug_field) ?
+            $this->slug_field:
             'slug';
     }
 
@@ -46,9 +46,9 @@ trait Sluggify {
      */
     protected static function bootSluggify()
     {
-        static::creating(function ($model) {
+        static::saving(function ($model) {
             /**@var $model Sluggify*/
-            $model[$model->getSlugField()] = $model->createSlug($model->getSluggableField());
+            $model[$model->getSlugField()] = $model->createSlug($model[$model->getSluggableField()]);
         });
     }
 
@@ -93,7 +93,7 @@ trait Sluggify {
     private function getRelatedSlugs($slug, $field)
     {
         return static::select($field)->where($field, 'like', $slug.'%')
-                        ->get();
+            ->get();
     }
 
 }
