@@ -44,10 +44,8 @@ trait Sluggify {
     /**
      * Laravel Model Boot function
      */
-    protected static function boot()
+    protected static function bootSluggify()
     {
-        parent::boot();
-
         static::creating(function ($model) {
             /**@var $model Sluggify*/
             $model[$model->getSlugField()] = $model->createSlug($model->getSluggableField());
