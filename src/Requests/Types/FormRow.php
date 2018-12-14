@@ -37,6 +37,8 @@ class FormRow{
         if(sizeof($fields) === 0)
             $this->fields = array();
 
+        $this->forms = array();
+
         foreach ($fields as $field){
             $this->addField($field);
         }

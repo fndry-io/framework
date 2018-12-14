@@ -14,14 +14,14 @@ class FormSection{
 
     protected $description;
 
-	/**
-	 * @var array The rows
-	 */
+    /**
+     * @var array The rows
+     */
     protected $rows;
 
-	/**
-	 * @var FormView The wrapping form
-	 */
+    /**
+     * @var FormView The wrapping form
+     */
     protected $form;
 
     /**
@@ -33,6 +33,8 @@ class FormSection{
     public function __construct($title, $rows = [])
     {
         $this->title = $title;
+        $this->rows = array();
+
         foreach ($rows as $row){
             $this->addRow($row);
         }
@@ -61,7 +63,7 @@ class FormSection{
      * @param array $rows
      * @return FormSection
      */
-    public function addRows(array $rows) : FormSection
+    public function addFields(array $rows) : FormSection
     {
         foreach ($rows as $row){
             $this->addRow($row);
@@ -85,21 +87,21 @@ class FormSection{
      *
      * @return FormSection
      */
-    public function setForm(FormView $form): FormRow
+    public function setForm(FormView $form): FormSection
     {
         $this->form = $form;
         return $this;
     }
 
-	/**
-	 * The the rows for this section
-	 *
-	 * @return array
-	 */
-	public function getRows()
-	{
-		return $this->rows;
-	}
+    /**
+     * The the rows for this section
+     *
+     * @return array
+     */
+    public function getRows()
+    {
+        return $this->rows;
+    }
 
     /**
      * @return mixed
@@ -134,7 +136,7 @@ class FormSection{
     }
 
 
-	/**
+    /**
      * Serialize Object
      *
      * @return array
