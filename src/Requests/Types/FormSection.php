@@ -61,7 +61,7 @@ class FormSection{
      * @param array $rows
      * @return FormSection
      */
-    public function addFields(array $rows) : FormSection
+    public function addRows(array $rows) : FormSection
     {
         foreach ($rows as $row){
             $this->addRow($row);
