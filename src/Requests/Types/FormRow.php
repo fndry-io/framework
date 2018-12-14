@@ -34,6 +34,9 @@ class FormRow{
      */
     public function __construct($fields = [])
     {
+        if(sizeof($fields) === 0)
+            $this->fields = array();
+
         foreach ($fields as $field){
             $this->addField($field);
         }
