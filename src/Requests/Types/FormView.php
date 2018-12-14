@@ -79,6 +79,8 @@ class FormView implements Arrayable {
 	 */
 	protected $rows;
 
+	protected $sections;
+
 	/**
 	 * @var MessageBag
 	 */
@@ -103,6 +105,7 @@ class FormView implements Arrayable {
     {
         $this->name = $name;
         $this->rows = array();
+        $this->sections = array();
     }
 
     /**
@@ -259,6 +262,45 @@ class FormView implements Arrayable {
         return $this;
     }
 
+    /**
+     * Add a form section
+     *
+     * @param FormSection $section
+     *
+     * @return FormView
+     */
+    public function addSection(FormSection $section) : FormView
+    {
+        if(!in_array($section, $this->sections)){
+            $section->setForm($this);
+            array_push($this->sections, $section);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSections(): array
+    {
+        return $this->sections;
+    }
+
+    /**
+     * @param array $sections
+     *
+     * @return FormView
+     */
+    public function setSections(array $sections): FormView
+    {
+        foreach ($sections as $section){
+            $this->addSection($section);
+        }
+
+        return $this;
+    }
+
     public function getRows()
     {
     	return $this->rows;
@@ -269,29 +311,58 @@ class FormView implements Arrayable {
 	    /**
 	     * @var FormRow $row
 	     */
-	    foreach ($this->getRows() as &$row) {
-	    	foreach ($row->getFields() as &$field) {
-	    		$name = $field->getName();
-	    		if (isset($values[$name])) {
-				    $field->setValue($values[$name]);
-			    }
-		    }
-	    }
+	    $this->setFieldValues($this->getRows(), $values);
+
+	    foreach ($this->getSections() as &$section){
+	        /**@var $section FormSection*/
+	        $this->setFieldValues($section->getRows(), $values);
+        }
+
 	    return $this;
+    }
+
+    private function setFieldValues(array $rows, array  $values) :void
+    {
+        /**
+         * @var FormRow $row
+         */
+        foreach ($rows as &$row) {
+            foreach ($row->getFields() as &$field) {
+                /**@var $field Type*/
+                $name = $field->getName();
+                if (isset($values[$name])) {
+                    $field->setValue($values[$name]);
+                }
+            }
+        }
     }
 
 	public function getField($name)
 	{
+	    $rows = $this->getAllRows();
+
 		/**
 		 * @var FormRow $row
 		 */
-		foreach ($this->rows as $row) {
+		foreach ($rows as $row) {
 			if ($field = $row->getField($name)) {
 				return $field;
 			}
 		}
 		return null;
 	}
+
+	private function getAllRows() : array
+    {
+        $rows = $this->rows;
+
+        /**@var $section FormSection*/
+        foreach ($this->sections as $section){
+            array_push($rows, $section->getRows());
+        }
+
+        return $rows;
+    }
 
 	/**
 	 * Gets a flat list of all the fields
@@ -301,10 +372,11 @@ class FormView implements Arrayable {
 	public function getFields()
 	{
 		$fields = [];
+        $rows = $this->getAllRows();
 		/**
 		 * @var FormRow $row
 		 */
-		foreach ($this->getRows() as &$row) {
+		foreach ($rows as &$row) {
 			foreach ($row->getFields() as &$field) {
 				$fields[] = $field;
 			}
@@ -493,7 +565,7 @@ class FormView implements Arrayable {
 	public function fieldCount(): int
 	{
 		$count = 0;
-		foreach ($this->getRows() as $row) {
+		foreach ($this->getAllRows() as $row) {
 			$count = $count + $row->fieldCount();
 		}
 		return $count;
@@ -548,6 +620,7 @@ class FormView implements Arrayable {
     public function jsonSerialize()
     {
         $r = array();
+        $s = array();
         $u = array();
 
         if ($this->getPostUrl())
@@ -566,10 +639,18 @@ class FormView implements Arrayable {
             array_push($r, $row->jsonSerialize());
         }
 
+        /**
+         * @var $section FormSection
+         */
+        foreach ($this->sections as $section){
+            array_push($s, $section->jsonSerialize());
+        }
+
         $json = array(
 	        'id' => $this->id,
             'name' => $this->name,
-            'rows' => (array) $r
+            'rows' => (array) $r,
+            'sections' => (array) $s
         );
 
         if ($u) $json['methods'] = (array) $u;

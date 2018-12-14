@@ -15,6 +15,13 @@ class FormRow{
 	 */
     protected $fields;
 
+    protected $section;
+
+    /**
+     * @var array the forms
+     */
+    protected $forms;
+
 	/**
 	 * @var FormView The wrapping form
 	 */
@@ -27,7 +34,9 @@ class FormRow{
      */
     public function __construct($fields = [])
     {
-        $this->fields = $fields;
+        foreach ($fields as $field){
+            $this->addField($field);
+        }
     }
 
     /**
@@ -42,6 +51,51 @@ class FormRow{
         if(!in_array($field, $this->fields)){
             $field->setRow($this);
             array_push($this->fields, $field);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add an array of fields
+     *
+     * @param array $fields
+     * @return FormRow
+     */
+    public function addFields(array $fields) : FormRow
+    {
+        foreach ($fields as $field){
+            $this->addField($field);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add an inner form
+     *
+     * @param FormView $formView
+     * @return FormRow
+     */
+    public function addForm(FormView $formView) : FormRow
+    {
+        if(!in_array($formView, $this->forms)){
+            array_push($this->forms, $formView);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add multiple inner forms
+     *
+     * @param array $forms
+     * @return FormRow
+     */
+    public function addForms(array $forms): FormRow
+    {
+        foreach ($forms as $form){
+            $this->addForm($form);
         }
 
         return $this;
@@ -78,6 +132,26 @@ class FormRow{
     }
 
     /**
+     * @return mixed
+     */
+    public function getSection()
+    {
+        return $this->section;
+    }
+
+    /**
+     * @param mixed $section
+     *
+     * @return FormRow
+     */
+    public function setSection(FormSection $section): FormRow
+    {
+        $this->section = $section;
+
+        return $this;
+    }
+
+    /**
      * @param FormView $form
      *
      * @return FormRow
@@ -98,6 +172,24 @@ class FormRow{
 		return $this->fields;
 	}
 
+    /**
+     * @return array
+     */
+    public function getForms(): array
+    {
+        return $this->forms;
+    }
+
+    /**
+     * @param array $forms
+     */
+    public function setForms(array $forms): void
+    {
+        foreach ($forms as $form){
+            $this->addForm($form);
+        }
+    }
+
 	/**
 	 * Return the number of fields in this row
 	 *
@@ -116,6 +208,7 @@ class FormRow{
     public function jsonSerialize()
     {
         $f = array();
+        $forms = array();
 
         /**
          * @var $field Type
@@ -124,8 +217,14 @@ class FormRow{
             array_push($f, $field->jsonSerialize());
         }
 
+        /**@var $form FormView $form */
+        foreach ($this->forms as $form){
+            array_push($forms, $form->jsonSerialize());
+        }
+
         $json = array(
-            'fields' => (array) $f
+            'fields' => (array) $f,
+            'forms' => (array) $forms
         );
 
         return $json;
