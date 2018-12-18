@@ -281,7 +281,7 @@ abstract class Form
 		if(!$authorise || $this->authorize()){
             $validator = Validator::make($this->inputs, $rules, $this->messages());
             if ($validator->fails()) {
-                return Response::error($validator->errors()->getMessages(), 422);
+                return Response::error([static::getFormView()->getName() => $validator->errors()->getMessages()], 422);
             }else{
                 return Response::success($this->inputs);
             }

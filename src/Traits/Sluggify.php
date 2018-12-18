@@ -94,7 +94,7 @@ trait Sluggify {
     {
         $query = static::select($field)->where($field, 'like', $slug.'%');
 
-        if($this->id){
+        if(isset($this->id)){
             $query->where('id', '!=', $this->id);
         }
 
