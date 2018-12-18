@@ -17,6 +17,8 @@ class FormRow{
 
     protected $section;
 
+    protected $tab;
+
     /**
      * @var array the forms
      */
@@ -132,6 +134,26 @@ class FormRow{
     public function getForm() : FormView
     {
         return $this->form;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTab()
+    {
+        return $this->tab;
+    }
+
+    /**
+     * @param mixed $tab
+     *
+     * @return FormRow
+     */
+    public function setTab($tab): FormRow
+    {
+        $this->tab = $tab;
+
+        return $this;
     }
 
     /**

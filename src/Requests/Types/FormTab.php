@@ -4,17 +4,15 @@ namespace Foundry\Requests\Types;
 
 
 /**
- * Class FormSection
+ * Class FormTab
  *
  * @package Foundry\Requests\Types
  */
-class FormSection{
+class FormTab{
 
     protected $title;
 
     protected $description;
-
-    protected $tab;
 
     /**
      * @var array The rows
@@ -22,59 +20,45 @@ class FormSection{
     protected $rows;
 
     /**
+     * @var array The sections
+     */
+    protected $sections;
+
+    /**
      * @var FormView The wrapping form
      */
     protected $form;
 
     /**
-     * FormSection constructor.
+     * FormTab constructor.
      *
      * @param $title
      * @param array $rows
+     * @param array $sections
      */
-    public function __construct($title, $rows = [])
+    public function __construct($title, $rows = [], $sections = [])
     {
         $this->title = $title;
         $this->rows = array();
+        $this->sections = array();
 
-        foreach ($rows as $row){
-            $this->addRow($row);
-        }
+        $this->addRows($rows);
+        $this->addSections($sections);
     }
 
     /**
-     * Add a row to a section
+     * Add a row to a tab
      *
      * @param FormRow $row
      *
-     * @return FormSection
+     * @return FormTab
      */
-    public function addRow(FormRow $row) : FormSection
+    public function addRow(FormRow $row) : FormTab
     {
         if(!in_array($row, $this->rows)){
-            $row = $row->setSection($this);
+            $row = $row->setTab($this);
             array_push($this->rows, $row);
         }
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTab()
-    {
-        return $this->tab;
-    }
-
-    /**
-     * @param mixed $tab
-     *
-     * @return FormSection
-     */
-    public function setTab($tab): FormSection
-    {
-        $this->tab = $tab;
 
         return $this;
     }
@@ -83,12 +67,44 @@ class FormSection{
      * Add an array of rows
      *
      * @param array $rows
-     * @return FormSection
+     * @return FormTab
      */
-    public function addRows(array $rows) : FormSection
+    public function addRows(array $rows) : FormTab
     {
         foreach ($rows as $row){
             $this->addRow($row);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add a section to a tab
+     *
+     * @param FormSection $section
+     *
+     * @return FormTab
+     */
+    public function addSection(FormSection $section) : FormTab
+    {
+        if(!in_array($section, $this->sections)){
+            $section = $section->setTab($this);
+            array_push($this->sections, $section);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add an array of sections
+     *
+     * @param array $sections
+     * @return FormTab
+     */
+    public function addSections(array $sections) : FormTab
+    {
+        foreach ($sections as $section){
+            $this->addSection($section);
         }
 
         return $this;
@@ -107,22 +123,39 @@ class FormSection{
     /**
      * @param FormView $form
      *
-     * @return FormSection
+     * @return FormTab
      */
-    public function setForm(FormView $form): FormSection
+    public function setForm(FormView $form): FormTab
     {
         $this->form = $form;
         return $this;
     }
 
     /**
-     * The the rows for this section
+     * The rows for this tab
      *
      * @return array
      */
     public function getRows()
     {
-        return $this->rows;
+        $rows = $this->rows;
+
+        /**@var $section FormSection*/
+        foreach ($this->sections as $section){
+            array_merge($rows, $section->getRows());
+        }
+
+        return $rows;
+    }
+
+    /**
+     * The sections for this tab
+     *
+     * @return array
+     */
+    public function getSections()
+    {
+        return $this->sections;
     }
 
     /**
@@ -166,6 +199,7 @@ class FormSection{
     public function jsonSerialize()
     {
         $r = array();
+        $s = array();
 
         /**
          * @var $row FormRow
@@ -174,10 +208,18 @@ class FormSection{
             array_push($r, $row->jsonSerialize());
         }
 
+        /**
+         * @var $section FormSection
+         */
+        foreach ($this->sections as $section){
+            array_push($s, $section->jsonSerialize());
+        }
+
         $json = array(
             'title' => $this->title,
             'description' => $this->description,
             'rows' => (array) $r,
+            'sections' => (array) $s
         );
 
         return $json;

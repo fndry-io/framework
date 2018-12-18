@@ -73,13 +73,7 @@ class FormView implements Arrayable {
      */
     protected $model;
 
-	/**
-	 * form rows
-	 * @var array
-	 */
-	protected $rows;
-
-	protected $sections;
+	protected $tabs;
 
 	/**
 	 * @var MessageBag
@@ -104,8 +98,7 @@ class FormView implements Arrayable {
     public function __construct($name)
     {
         $this->name = $name;
-        $this->rows = array();
-        $this->sections = array();
+        $this->tabs = array();
     }
 
     /**
@@ -254,9 +247,43 @@ class FormView implements Arrayable {
      */
     public function addRow(FormRow $row) : FormView
     {
-        if(!in_array($row, $this->rows)){
+        /**@var $tab FormTab*/
+        $tab = $this->getLastTab();
+
+        if(!in_array($row, $tab->getRows())){
             $row->setForm($this);
-            array_push($this->rows, $row);
+            $tab->addRow($row);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Create details tab
+     *
+     * @return $this
+     */
+    private function createDetailsTab()
+    {
+        $tab = new FormTab('Details');
+
+        $this->addTab($tab);
+
+        return $this;
+    }
+
+    /**
+     * Add a form tab
+     *
+     * @param FormTab $tab
+     *
+     * @return FormView
+     */
+    public function addTab(FormTab $tab) : FormView
+    {
+        if(!in_array($tab, $this->tabs)){
+            $tab->setForm($this);
+            array_push($this->tabs, $tab);
         }
 
         return $this;
@@ -271,12 +298,29 @@ class FormView implements Arrayable {
      */
     public function addSection(FormSection $section) : FormView
     {
-        if(!in_array($section, $this->sections)){
+        /**@var $tab FormTab*/
+        $tab = $this->getLastTab();
+
+        if(!in_array($section, $tab->getSections())){
             $section->setForm($this);
-            array_push($this->sections, $section);
+            $tab->addSection($section);
         }
 
         return $this;
+    }
+
+    /**
+     * Get last tab
+     *
+     * @return FormTab
+     */
+    private function getLastTab()
+    {
+        if(sizeof($this->tabs) === 0){
+            $this->createDetailsTab();
+        }
+
+        return $this->tabs[sizeof($this->tabs) - 1];
     }
 
     /**
@@ -284,7 +328,15 @@ class FormView implements Arrayable {
      */
     public function getSections(): array
     {
-        return $this->sections;
+        $sections = array();
+
+        /**@var $tab FormTab*/
+        foreach ($this->tabs as $tab)
+        {
+            array_push($sections, $tab->getSections());
+        }
+
+        return $sections;
     }
 
     /**
@@ -303,19 +355,28 @@ class FormView implements Arrayable {
 
     public function getRows()
     {
-    	return $this->rows;
+        $rows = array();
+
+        /**@var $tab FormTab*/
+        foreach ($this->tabs as $tab)
+        {
+            array_push($rows, $tab->getRows());
+        }
+
+    	return $rows;
     }
 
     public function setValues($values) : FormView
     {
-	    /**
-	     * @var FormRow $row
-	     */
-	    $this->setFieldValues($this->getRows(), $values);
+        /**@var $tab FormTab*/
+        foreach ($this->tabs as $tab){
 
-	    foreach ($this->getSections() as &$section){
-	        /**@var $section FormSection*/
-	        $this->setFieldValues($section->getRows(), $values);
+            $this->setFieldValues($tab->getRows(), $values);
+
+            foreach ($tab->getSections() as &$section){
+                /**@var $section FormSection*/
+                $this->setFieldValues($section->getRows(), $values);
+            }
         }
 
 	    return $this;
@@ -354,11 +415,17 @@ class FormView implements Arrayable {
 
 	private function getAllRows() : array
     {
-        $rows = $this->rows;
+        $rows = array();
 
-        /**@var $section FormSection*/
-        foreach ($this->sections as $section){
-            array_push($rows, $section->getRows());
+        /**@var $tab FormTab*/
+        foreach ($this->tabs as $tab){
+
+            array_push($rows, $tab->getRows());
+
+            foreach ($tab->getSections() as &$section){
+                /**@var $section FormSection*/
+                array_push($rows, $section->getRows());
+            }
         }
 
         return $rows;
@@ -548,7 +615,7 @@ class FormView implements Arrayable {
 
 	public function getRules()
 	{
-		return $this->rules();
+		return $this->rules;
 	}
 
 	public function setRules($rules): FormView
@@ -619,8 +686,7 @@ class FormView implements Arrayable {
      */
     public function jsonSerialize()
     {
-        $r = array();
-        $s = array();
+        $t = array();
         $u = array();
 
         if ($this->getPostUrl())
@@ -633,24 +699,16 @@ class FormView implements Arrayable {
             $u['DELETE'] = $this->getDeleteUrl();
 
         /**
-         * @var $row FormRow
+         * @var $row FormTab
          */
-        foreach ($this->rows as $row){
-            array_push($r, $row->jsonSerialize());
-        }
-
-        /**
-         * @var $section FormSection
-         */
-        foreach ($this->sections as $section){
-            array_push($s, $section->jsonSerialize());
+        foreach ($this->tabs as $tab){
+            array_push($t, $tab->jsonSerialize());
         }
 
         $json = array(
 	        'id' => $this->id,
             'name' => $this->name,
-            'rows' => (array) $r,
-            'sections' => (array) $s
+            'tabs' => (array) $t,
         );
 
         if ($u) $json['methods'] = (array) $u;
