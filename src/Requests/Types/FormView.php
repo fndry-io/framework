@@ -223,6 +223,22 @@ class FormView implements Arrayable {
     }
 
     /**
+     * @return array
+     */
+    public function getTabs(): array
+    {
+        return $this->tabs;
+    }
+
+    /**
+     * @param array $tabs
+     */
+    public function setTabs(array $tabs): void
+    {
+        $this->tabs = $tabs;
+    }
+
+    /**
      * @param string $postUrl
      * @param string $putUrl
      * @param string $deleteUrl
