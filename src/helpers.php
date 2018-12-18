@@ -25,3 +25,33 @@ if (! function_exists('setting')) {
 
 }
 
+/**
+ * Merge additional fields into a request object
+ *
+ * @param \Illuminate\Http\Request $request | the actual request object
+ * @param array $values | associative array of key = value to be merged into the request
+ * @param null|string $key The key containing values in the request object
+ */
+if (! function_exists('request_merge')) {
+
+    function request_merge(\Illuminate\Http\Request $request, $values, $key = null)
+    {
+
+        if($key){
+
+            $new = $request->only($key)[$key];
+
+            foreach ($values as $k => $v){
+                $new[$k] = $v;
+
+                $request->merge([$key => $new]);
+            }
+
+        }else{
+            $request->merge($values);
+        }
+
+        return $request;
+    }
+
+}
