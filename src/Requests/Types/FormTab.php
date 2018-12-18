@@ -14,6 +14,8 @@ class FormTab{
 
     protected $description;
 
+    protected $id;
+
     /**
      * @var array The rows
      */
@@ -41,6 +43,8 @@ class FormTab{
         $this->title = $title;
         $this->rows = array();
         $this->sections = array();
+
+        $this->id = time();
 
         $this->addRows($rows);
         $this->addSections($sections);
@@ -190,6 +194,21 @@ class FormTab{
         $this->description = $description;
     }
 
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 
     /**
      * Serialize Object
@@ -219,7 +238,8 @@ class FormTab{
             'title' => $this->title,
             'description' => $this->description,
             'rows' => (array) $r,
-            'sections' => (array) $s
+            'sections' => (array) $s,
+            'id' => $this->getId()
         );
 
         return $json;
