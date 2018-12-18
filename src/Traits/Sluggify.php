@@ -92,8 +92,13 @@ trait Sluggify {
      */
     private function getRelatedSlugs($slug, $field)
     {
-        return static::select($field)->where($field, 'like', $slug.'%')
-            ->get();
+        $query = static::select($field)->where($field, 'like', $slug.'%');
+
+        if($this->id){
+            $query->where('id', '!=', $this->id);
+        }
+
+        return $query->get();
     }
 
 }
