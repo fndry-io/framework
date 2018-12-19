@@ -369,19 +369,22 @@ class FormView implements Arrayable {
         return $this;
     }
 
+    /**
+     * Get rows
+     *
+     * @return array
+     */
     public function getRows()
     {
-        $rows = array();
-
-        /**@var $tab FormTab*/
-        foreach ($this->tabs as $tab)
-        {
-            array_push($rows, $tab->getRows());
-        }
-
-    	return $rows;
+        return $this->getAllRows();
     }
 
+    /**
+     * Set values
+     *
+     * @param $values
+     * @return FormView
+     */
     public function setValues($values) : FormView
     {
         /**@var $tab FormTab*/
@@ -398,6 +401,12 @@ class FormView implements Arrayable {
 	    return $this;
     }
 
+    /**
+     * Set various fields values
+     *
+     * @param array $rows
+     * @param array $values
+     */
     private function setFieldValues(array $rows, array  $values) :void
     {
         /**
@@ -414,6 +423,12 @@ class FormView implements Arrayable {
         }
     }
 
+    /**
+     * Get field by name
+     *
+     * @param $name
+     * @return Type|null
+     */
 	public function getField($name)
 	{
 	    $rows = $this->getAllRows();
@@ -429,18 +444,23 @@ class FormView implements Arrayable {
 		return null;
 	}
 
-	private function getAllRows() : array
+    /**
+     * Get all rows
+     *
+     * @return array
+     */
+    private function getAllRows() : array
     {
         $rows = array();
 
         /**@var $tab FormTab*/
         foreach ($this->tabs as $tab){
 
-            array_push($rows, $tab->getRows());
+            $rows =  array_merge($rows, $tab->getRows());
 
             foreach ($tab->getSections() as &$section){
                 /**@var $section FormSection*/
-                array_push($rows, $section->getRows());
+                $rows = array_merge($rows, $section->getRows());
             }
         }
 
