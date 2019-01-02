@@ -59,8 +59,14 @@ abstract class Form
      */
     protected $rules;
 
+	/**
+	 * @var string The associated Service Class name
+	 */
     protected $service;
 
+	/**
+	 * @var Request The request object
+	 */
     protected $request;
 
     public function __construct($inputs)
