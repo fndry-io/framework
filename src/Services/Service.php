@@ -20,6 +20,6 @@ abstract class Service {
 	 *
 	 * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null|object
 	 */
-	abstract static function model($id): Model;
+	abstract static function model($id);
 
 }
