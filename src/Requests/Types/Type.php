@@ -76,7 +76,6 @@ abstract class Type {
 
     protected $readonly = false;
 
-
     protected $error;
 
     protected $help;

@@ -13,7 +13,8 @@
     "require": {
         "php": "^7.1",
         "nwidart/laravel-modules":"dev-features",
-        "lavary/laravel-menu": "^1.7"
+        "lavary/laravel-menu": "^1.7",
+        "webpatser/laravel-uuid": "^3.0",
     },
     "require-dev": {
         "fideloper/proxy": "^4.0",
