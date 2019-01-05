@@ -20,20 +20,24 @@ class Response
 
 	protected $error;
 
+	protected $message;
+
 	/**
 	 * Response Constructor
 	 *
 	 * @param mixed $data
 	 * @param bool $status
 	 * @param int $code
-	 * @param null $error
+	 * @param array|string|null $error
+	 * @param string|null $message
 	 */
-	public function __construct($data = [], $status = true, $code = 200, $error = null)
+	public function __construct($data = [], $status = true, $code = 200, $error = null, $message = null)
 	{
 		$this->data = $data;
 		$this->status = $status;
 		$this->code = $code;
 		$this->error = $error;
+		$this->message = $message;
 	}
 
 	/**
@@ -51,8 +55,8 @@ class Response
 	 * @param array $data
 	 * @return Response
 	 */
-	static function success($data = []){
-		return new Response($data);
+	static function success($data = [], $message = null){
+		return new Response($data, true, 200, null, $message);
 	}
 
 	/**
@@ -81,6 +85,9 @@ class Response
     	if ($this->error) {
     		$array['error'] = $this->error;
 	    }
+	    if ($this->message) {
+		    $array['message'] = $this->message;
+	    }
     	return $array;
     }
 
@@ -102,6 +109,11 @@ class Response
 	public function getData()
 	{
 		return $this->data;
+	}
+
+	public function getMessage()
+	{
+		return $this->message;
 	}
 
 	public function __toString()

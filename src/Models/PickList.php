@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
  *
- * @package Plugins\Foundry\Users\Models
+ * @package Foundry\Core\Models
  */
 class PickList extends Model
 {
