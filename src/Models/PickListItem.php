@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $label
  * @property string $description
  * @property string $identifier
+ * @property boolean $status
  * @property int $pick_list_id
  * @property PickList $list
  * @property Carbon $created_at

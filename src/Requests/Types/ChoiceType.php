@@ -145,7 +145,7 @@ class ChoiceType extends Type{
 			if ($default !== null) {
 				return $default;
 			} else {
-				return __('Select one');
+				return __('Select...');
 			}
 		} elseif (is_string($this->empty)) {
 			return $this->empty;

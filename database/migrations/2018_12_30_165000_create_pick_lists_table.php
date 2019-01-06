@@ -17,7 +17,7 @@ class CreatePickListsTable extends Migration
 
             $table->increments('id');
 	        $table->string('label', 100);
-	        $table->string('identifier', 50)->unique();
+	        $table->string('identifier', 100)->unique();
 	        $table->string('description', 500)->nullable();
 
             $table->softDeletes();

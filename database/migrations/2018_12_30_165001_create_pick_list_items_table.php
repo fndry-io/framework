@@ -17,12 +17,15 @@ class CreatePickListItemsTable extends Migration
 
             $table->increments('id');
             $table->string('label', 100);
-	        $table->string('identifier', 50)->unique();
+	        $table->string('identifier', 100);
+	        $table->boolean('status')->default(1);
 	        $table->string('description', 500)->nullable();
 
 	        $table->integer('pick_list_id')->unsigned()->index();
 
 	        $table->foreign('pick_list_id', 'pick_list_items_pick_list_id_foreign')->references('id')->on('pick_lists');
+
+	        $table->unique(['pick_list_id', 'identifier']);
 
 	        $table->softDeletes();
             $table->timestamps();
