@@ -274,6 +274,28 @@ class FormView implements Arrayable {
         return $this;
     }
 
+	/**
+	 * Create a row and add fields to it
+	 *
+	 * @param Type[] $types The fields to add
+	 *
+	 * @return FormView
+	 */
+	public function addFieldRow(Type ...$types) : FormView
+	{
+		/**@var $tab FormTab*/
+		$tab = $this->getLastTab();
+
+		$row = new FormRow();
+		foreach ($types as $field) {
+			$row->addField($field);
+		}
+		$row->setForm($this);
+		$tab->addRow($row);
+
+		return $this;
+	}
+
     /**
      * Create details tab
      *

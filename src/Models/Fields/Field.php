@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package Foundry\Models
  */
-interface FieldType {
+interface Field {
 
 	/**
 	 * The input type for displaying on a page

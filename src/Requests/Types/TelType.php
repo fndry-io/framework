@@ -8,7 +8,7 @@ namespace Foundry\Requests\Types;
  *
  * @package Foundry\Requests\Types
  */
-class TelType extends Type{
+class TelType extends TextType{
 
 	public function __construct(
 		string $name,

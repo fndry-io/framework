@@ -4,11 +4,11 @@ namespace Foundry\Requests\Types;
 
 
 /**
- * Class EmailType
+ * Class DateTimeType
  *
  * @package Foundry\Requests\Types
  */
-class EmailType extends TextType{
+class DateTimeType extends Type {
 
     public function __construct(string $name,
                                 string $label = null,
@@ -19,7 +19,7 @@ class EmailType extends TextType{
                                 string $id = null,
                                 string $placeholder = null)
     {
-        $type = 'email';
+        $type = 'datetime';
         parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
     }
 }

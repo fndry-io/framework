@@ -1,8 +1,6 @@
 <?php
 namespace Foundry\Models\Fields;
 
-use Illuminate\Database\Query\Builder;
-
 /**
  * Interface Options
  *
