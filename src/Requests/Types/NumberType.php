@@ -12,6 +12,10 @@ class NumberType extends TextType{
 
 	protected $decimals;
 
+	protected $max;
+
+	protected $min;
+
 	public function __construct(string $name,
 		string $label= null,
 		bool $required = true,
@@ -25,7 +29,7 @@ class NumberType extends TextType{
 		parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
 	}
 
-	public function setDecimals($decimals): Type
+	public function setDecimals($decimals = null): Type
 	{
 		$this->decimals = $decimals;
 		return $this;
@@ -34,6 +38,28 @@ class NumberType extends TextType{
 	public function getDecimals()
 	{
 		return $this->decimals;
+	}
+
+	public function setMin($value = null): Type
+	{
+		$this->min = $value;
+		return $this;
+	}
+
+	public function getMin()
+	{
+		return $this->min;
+	}
+
+	public function setMax($value = null): Type
+	{
+		$this->max = $value;
+		return $this;
+	}
+
+	public function getMax()
+	{
+		return $this->max;
 	}
 
 }

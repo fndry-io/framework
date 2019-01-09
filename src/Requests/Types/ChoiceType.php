@@ -32,11 +32,11 @@ class ChoiceType extends Type{
     protected $empty;
 
     public function __construct(string $name,
+								string $label = null,
+								bool $required = true,
                                 bool $expanded,
                                 bool $multiple,
                                 array $options,
-                                string $label = null,
-                                bool $required = true,
                                 $value = null,
                                 string $position = 'full',
                                 string $rules = null,

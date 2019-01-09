@@ -16,7 +16,7 @@ class TextType extends Type{
 
 	protected $min_length;
 
-	public function setMultiline($state): Type
+	public function setMultiline($state = null): Type
 	{
 		$this->multiline = $state;
 		return $this;
@@ -27,7 +27,7 @@ class TextType extends Type{
 		return $this->multiline;
 	}
 
-	public function setMaxLength($length): Type
+	public function setMaxLength($length = null): Type
 	{
 		$this->max_length = $length;
 		return $this;
@@ -38,7 +38,7 @@ class TextType extends Type{
 		return $this->max_length;
 	}
 
-	public function setMinLength($length): Type
+	public function setMinLength($length = null): Type
 	{
 		$this->min_length = $length;
 		return $this;

@@ -33,10 +33,10 @@ class AutoCompleteType extends ChoiceType {
 	 */
     public function __construct(string $name,
 							    string $label,
+	                            bool $required = true,
                                 array $options,
 	                            string $url,
 							    bool $multiple,
-                                bool $required = true,
                                 $value = null,
                                 string $position = 'full',
                                 string $rules = null,
