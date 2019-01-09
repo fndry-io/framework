@@ -31,4 +31,9 @@ abstract class PickListField extends ChoiceField {
 		                   ->toArray();
 	}
 
+	static function type() : string
+	{
+		return 'integer';
+	}
+
 }

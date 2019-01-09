@@ -29,7 +29,7 @@ class NumberType extends TextType{
 		parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
 	}
 
-	public function setDecimals($decimals = null): Type
+	public function setDecimals($decimals = null): NumberType
 	{
 		$this->decimals = $decimals;
 		return $this;
@@ -40,7 +40,7 @@ class NumberType extends TextType{
 		return $this->decimals;
 	}
 
-	public function setMin($value = null): Type
+	public function setMin($value = null): NumberType
 	{
 		$this->min = $value;
 		return $this;
@@ -51,7 +51,7 @@ class NumberType extends TextType{
 		return $this->min;
 	}
 
-	public function setMax($value = null): Type
+	public function setMax($value = null): NumberType
 	{
 		$this->max = $value;
 		return $this;
