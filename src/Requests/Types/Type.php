@@ -354,7 +354,7 @@ abstract class Type {
 		return $this->help;
 	}
 
-	public function setHelp($help): Type
+	public function setHelp($help = null): Type
 	{
 		$this->help = $help;
 		return $this;
