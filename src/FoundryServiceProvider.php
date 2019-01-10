@@ -7,6 +7,7 @@ use Foundry\Contracts\Repository;
 use Foundry\Models\Listeners\SettingSaved;
 use Foundry\Providers\ConsoleServiceProvider;
 use Foundry\Providers\EventServiceProvider;
+use Foundry\Requests\FormRequestHandler;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 
@@ -82,6 +83,14 @@ class FoundryServiceProvider extends ServiceProvider
        });
 
        $this->app->alias(Repository::class, 'settings');
+
+	   /**
+	    * Register the FormRequestHandler Facade and link it to the FormRequestHandler Class
+	    */
+	   $this->app->singleton(\Foundry\Facades\FormRequestHandler::class, function () {
+		   	return new FormRequestHandler();
+	   });
+	   $this->app->alias(\Foundry\Facades\FormRequestHandler::class, 'form-request-handler');
 
    }
 

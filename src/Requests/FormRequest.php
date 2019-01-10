@@ -75,6 +75,8 @@ abstract class FormRequest
         $this->rules = static::rules();
     }
 
+    //abstract static function name() : string;
+
     /**
      * Set the inputs
      *

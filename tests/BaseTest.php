@@ -2,8 +2,9 @@
 
 namespace Foundry\Tests;
 
+use PHPUnit\Framework\TestCase;
 
-abstract class BaseTest
+abstract class BaseTest extends TestCase
 {
 
 }
