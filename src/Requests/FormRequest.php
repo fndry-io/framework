@@ -12,6 +12,11 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 
+/**
+ * Class FormRequest
+ *
+ * @package Foundry\Requests
+ */
 abstract class FormRequest
 {
     /**
@@ -74,8 +79,6 @@ abstract class FormRequest
         $this->setInputs($inputs);
         $this->rules = static::rules();
     }
-
-    //abstract static function name() : string;
 
     /**
      * Set the inputs
@@ -235,6 +238,15 @@ abstract class FormRequest
     public function messages() {
         return [];
     }
+
+	/**
+	 * Returns a unique name for the Form Request object
+	 *
+	 * This is used in handling the request with the FormRequestHandler
+	 *
+	 * @return string
+	 */
+	abstract static function name() : string;
 
 	/**
 	 * Determine if the user is authorized to make this request.
