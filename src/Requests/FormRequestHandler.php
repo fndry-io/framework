@@ -27,6 +27,17 @@ class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
 	 */
 	public function register($class, $key = null)
 	{
+		if (is_array($class)) {
+			foreach ($class as $_class) {
+				$this->registerForm($_class);
+			}
+		} else {
+			$this->registerForm($class, $key);
+		}
+	}
+
+	protected function registerForm($class, $key = null)
+	{
 		if ($key == null) {
 			$key = forward_static_call([$class, 'name']);
 		}
