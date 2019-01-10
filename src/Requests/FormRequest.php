@@ -246,7 +246,7 @@ abstract class FormRequest
 	 *
 	 * @return string
 	 */
-	abstract static function name() : string;
+	abstract static function name();
 
 	/**
 	 * Determine if the user is authorized to make this request.
