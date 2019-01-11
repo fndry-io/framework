@@ -48,9 +48,7 @@ class ChoiceType extends Type{
         $this->setExpanded($expanded);
         $type = $expanded? $multiple? 'checkbox': 'radio' : 'select';
 
-        parent::__construct($name, $label, $required, null, $position, $rules, $id, $placeholder, $type);
-
-        $this->setValue($value);
+        parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
     }
 
     /**

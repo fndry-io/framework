@@ -45,12 +45,9 @@ class AutoCompleteType extends ChoiceType {
 								string $query_param = 'q'
 		)
     {
-        $type = 'autocomplete';
-	    $this->setMultiple($multiple);
-	    $this->setOptions($options);
+        parent::__construct($name, $label, $required, false, $multiple, $options, $value, $position, $rules, $id, $placeholder);
 	    $this->setQueryParam($query_param);
-        parent::__construct($name, $label, $required, null, $position, $rules, $id, $placeholder, $type);
-        $this->setValue($value);
+        $this->setType('autocomplete');
     }
 
 	/**

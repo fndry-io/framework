@@ -46,7 +46,7 @@ trait Sluggify {
      */
     protected static function bootSluggify()
     {
-        static::saving(function ($model) {
+        static::creating(function ($model) {
             /**@var $model Sluggify*/
             $model[$model->getSlugField()] = $model->createSlug($model[$model->getSluggableField()]);
         });
@@ -92,7 +92,7 @@ trait Sluggify {
      */
     private function getRelatedSlugs($slug, $field)
     {
-        $query = static::select($field)->where($field, 'like', $slug.'%');
+        $query = static::withTrashed()->select($field)->where($field, 'like', $slug . '%');
 
         if(isset($this->id)){
             $query->where('id', '!=', $this->id);

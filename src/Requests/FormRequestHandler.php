@@ -52,14 +52,20 @@ class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
 	 *
 	 * @param $key
 	 * @param $request
+	 * @param $id
 	 *
 	 * @return Response
 	 * @throws FormRequestException
 	 */
-	public function handle($key, $request) : Response
+	public function handle($key, $request, $id = null) : Response
 	{
 		$form = $this->getForm($key);
-		return $form::handleRequest($request);
+		if ($id) {
+			$model = $form::model($id);
+		} else {
+			$model = null;
+		}
+		return $form::handleRequest($request, $model);
 	}
 
 	/**
@@ -67,14 +73,20 @@ class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
 	 *
 	 * @param $key
 	 * @param $request
+	 * @param $id
 	 *
 	 * @return Response
 	 * @throws FormRequestException
 	 */
-	public function view($key, $request) : Response
+	public function view($key, $request, $id = null) : Response
 	{
 		$form = $this->getForm($key);
-		return $form::handleFormViewRequest($request);
+		if ($id) {
+			$model = $form::model($id);
+		} else {
+			$model = null;
+		}
+		return $form::handleFormViewRequest($request, $model);
 	}
 
 	/**

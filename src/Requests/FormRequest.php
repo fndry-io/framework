@@ -106,7 +106,7 @@ abstract class FormRequest
     /**
      * @param Request $request
      *
-     * @param null $model
+     * @param Model|null $model
      * @return FormRequest
      */
     static public function fromRequest(Request $request, $model = null)
@@ -118,13 +118,7 @@ abstract class FormRequest
         $form = new static(static::only(static::fields(), $fields));
         $form->setRequest($request);
 	    if ($model) {
-		    if (is_object($model)) {
-			    $form->setModel($model);
-		    } else {
-			    if ($model = static::model($model)) {
-				    $form->setModel($model);
-			    }
-		    }
+		    $form->setModel($model);
 	    }
         return $form;
     }
@@ -133,13 +127,13 @@ abstract class FormRequest
      * Handle the request
      *
      * @param Request $request
-     * @param $id
+     * @param $model
      *
      * @return Response
      */
-    static public function handleRequest(Request $request, $id = null)
+    static public function handleRequest(Request $request, $model = null)
     {
-        $form = static::fromRequest($request, $id);
+        $form = static::fromRequest($request, $model);
         return $form->handle();
     }
 
@@ -147,15 +141,15 @@ abstract class FormRequest
 	 * Handle the form view request
 	 *
 	 * @param Request $request
-	 * @param $id
+	 * @param $model
 	 *
 	 * @return Response
 	 */
-	static public function handleFormViewRequest(Request $request, $id = null)
+	static public function handleFormViewRequest(Request $request, $model = null)
 	{
-		$form = static::fromRequest($request, $id);
+		$form = static::fromRequest($request, $model);
 		if($form->authorize()){
-			$formView = $form::getFormView( $id );
+			$formView = $form::view( $model );
 			$formView->setRequest($request);
 			return Response::success( $formView->jsonSerialize() );
 		}else{
@@ -265,13 +259,29 @@ abstract class FormRequest
     /**
      * Gets the form view object for rendering the form
      *
-     * @param int $id
+     * @param Model|null $model
      *
      * @return FormView
      */
-    static abstract function getFormView($id = null): FormView;
+    static abstract function getFormView($model = null): FormView;
 
-    /**
+	static function view($model = null)
+	{
+		$form = static::getFormView($model);
+
+		//get the model and set it to the form view
+		if ( $model ) {
+			$form->setModel( $model );
+		} else {
+			$model = null;
+		}
+
+		$form->setRules( static::rules( $model ) );
+
+		return $form;
+	}
+
+	/**
      * Get the model for a given id
      *
      * @param $id
@@ -332,7 +342,7 @@ abstract class FormRequest
 			if ($rules) {
 				$validator = Validator::make($this->inputs, $rules, $this->messages());
 				if ($validator->fails()) {
-					return Response::error([static::getFormView()->getName() => $validator->errors()->getMessages()], 422);
+					return Response::error($validator->errors()->getMessages(), 422);
 				}
 			}
 			return Response::success($this->inputs);
@@ -561,6 +571,11 @@ abstract class FormRequest
     {
         $this->method = $method;
         return $this;
+    }
+
+    public function input($key)
+    {
+    	return isset($this->inputs[$key]) ? $this->inputs[$key] : null;
     }
 
 }
