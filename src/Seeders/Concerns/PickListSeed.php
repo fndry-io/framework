@@ -6,23 +6,32 @@ use Foundry\Models\PickListItem;
 
 trait PickListSeed {
 
-	public function seedPickList($list, $items)
+	public function seedPickList($list, $items, $force = false)
 	{
-		if (!$list = PickList::where('identifier', $list['identifier'])->first()) {
-			$list = new PickList();
-			$list->identifier = $list['identifier'];
-			$list->label = $list['label'];
-			$list->save();
+		if ($force && $_list = PickList::where('identifier', $list['identifier'])->first()) {
+			/**
+			 * @var $list PickList
+			 */
+			$_list->items()->forceDelete();
+			$_list->forceDelete();
 		}
 
-		foreach ($items as $_item) {
-			if (!$item = PickListItem::where('identifier', $_item['identifier'])->where('pick_list_id', $list->id)->first()) {
-				$item = new PickListItem();
-				$item->identifier = $_item['identifier'];
-				$item->label = $_item['label'];
-				$item->status = $_item['status'];
-				$item->pick_list_id = $list->id;
-				$item->save();
+		if (!$_list = PickList::where('identifier', $list['identifier'])->first()) {
+			$_list = new PickList();
+			$_list->identifier = $list['identifier'];
+			$_list->label = $list['label'];
+			$_list->save();
+		}
+
+		foreach ($items as $item) {
+			if (!$_item = PickListItem::where('identifier', $item['identifier'])->where('pick_list_id', $_list->id)->first()) {
+				$_item = new PickListItem();
+				$_item->identifier = $item['identifier'];
+				$_item->label = $item['label'];
+				$_item->status = $item['status'];
+				$_item->default = $item['default'];
+				$_item->pick_list_id = $_list->id;
+				$_item->save();
 			}
 		}
 	}

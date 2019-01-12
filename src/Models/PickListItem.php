@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $description
  * @property string $identifier
  * @property boolean $status
+ * @property boolean $default
  * @property int $pick_list_id
  * @property PickList $list
  * @property Carbon $created_at
@@ -43,6 +44,8 @@ class PickListItem extends Model
 		'label',
 		'description',
 		'identifier',
+		'status',
+		'default',
         'pick_list_id'
 	];
 

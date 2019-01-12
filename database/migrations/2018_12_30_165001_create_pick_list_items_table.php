@@ -19,6 +19,7 @@ class CreatePickListItemsTable extends Migration
             $table->string('label', 100);
 	        $table->string('identifier', 100);
 	        $table->boolean('status')->default(1);
+	        $table->boolean('default')->default(0);
 	        $table->string('description', 500)->nullable();
 
 	        $table->integer('pick_list_id')->unsigned()->index();

@@ -573,9 +573,17 @@ abstract class FormRequest
         return $this;
     }
 
-    public function input($key)
+	/**
+	 * Get an input value or return the default
+	 *
+	 * @param $key
+	 * @param null $default
+	 *
+	 * @return mixed|null
+	 */
+    public function input($key, $default = null)
     {
-    	return isset($this->inputs[$key]) ? $this->inputs[$key] : null;
+    	return isset($this->inputs[$key]) ? $this->inputs[$key] : $default;
     }
 
 }
