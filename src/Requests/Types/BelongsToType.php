@@ -2,19 +2,21 @@
 
 namespace Foundry\Requests\Types;
 use Foundry\Requests\Types\Traits\HasQueryOptions;
+use Foundry\Requests\Types\Traits\HasRequest;
 
 
 /**
- * Class AutoCompleteType
+ * Class BelongsToType
  *
  * @package Foundry\Requests\Types
  */
-class AutoCompleteType extends ChoiceType {
+class BelongsToType extends ChoiceType {
 
+	use HasRequest;
 	use HasQueryOptions;
 
 	/**
-	 * AutoCompleteType constructor.
+	 * BelongsToType constructor.
 	 *
 	 * @param string $name The field name
 	 * @param string $label
@@ -22,6 +24,9 @@ class AutoCompleteType extends ChoiceType {
 	 * @param string $url The url to fetch the list of available options from
 	 * @param bool $multiple
 	 * @param bool $required
+	 * @param string $request_url
+	 * @param string $request_name
+	 * @param string $request_id
 	 * @param null $value
 	 * @param string $position
 	 * @param string|null $rules
@@ -32,9 +37,12 @@ class AutoCompleteType extends ChoiceType {
     public function __construct(string $name,
 							    string $label,
 	                            bool $required = true,
-                                array $options,
-	                            string $url,
+							    array $options,
+							    string $url,
 							    bool $multiple,
+							    string $request_url,
+							    string $request_name,
+							    string $request_id = null,
                                 $value = null,
                                 string $position = 'full',
                                 string $rules = null,
@@ -44,8 +52,10 @@ class AutoCompleteType extends ChoiceType {
 		)
     {
         parent::__construct($name, $label, $required, false, $multiple, $options, $value, $position, $rules, $id, $placeholder);
-        $this->setUrl($url);
+	    $this->setUrl($url);
 	    $this->setQueryParam($query_param);
-        $this->setType('autocomplete');
+	    $this->setFormRequest($request_url, $request_name, $request_id);
+        $this->setType('belongsto');
     }
+
 }
