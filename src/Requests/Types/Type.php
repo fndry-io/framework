@@ -3,6 +3,7 @@
 namespace Foundry\Requests\Types;
 
 
+use Foundry\Requests\Types\Traits\HasButtons;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @package Foundry\Requests\Types
  */
 abstract class Type {
+
+	use HasButtons;
 
 	/**
 	 * Name of the field
@@ -86,6 +89,7 @@ abstract class Type {
 
 	/**
 	 * @var int The number of rows to display if multiple
+	 * @todo This should change to $lines accordingly
 	 */
 	protected $rows;
 
@@ -186,8 +190,8 @@ abstract class Type {
 	 */
 	public function getRules(): string
 	{
-		if (isset($this->rules[$key])) {
-			return $this->rules[$key];
+		if ($this->rules) {
+			return $this->rules;
 		} else {
 			return $this->getRow()->getForm()->getRule($this->name);
 		}
@@ -420,17 +424,20 @@ abstract class Type {
 	public function jsonSerialize() : array{
 
 		$field = array();
-		$model = $this->getRow()->getForm()->getModel();
 
+		//set all the object properties
 		foreach ($this as $key => $value) {
+			$field[$key] = $value;
+		}
 
-			if($key !== 'row'){
-				if($key === 'value' && $model)
-					$field[$key] = $this->getModelValue($model);
-				else
-					$field[$key] = $value;
-			}
+		//set the value
+		if (!$field['value'] && $model = $this->getRow()->getForm()->getModel()) {
+			$field['value'] = $this->getModelValue($model);
+		}
 
+		//set the rules
+		if (!$field['rules']) {
+			$field['rules'] = $this->getRules();
 		}
 
 		return $field;
