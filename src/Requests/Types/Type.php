@@ -188,7 +188,7 @@ abstract class Type {
 	/**
 	 * @return string
 	 */
-	public function getRules(): string
+	public function getRules()
 	{
 		if ($this->rules) {
 			return $this->rules;
