@@ -34,7 +34,7 @@ trait HasButtons {
 	 *
 	 * @return array
 	 */
-	public function getbuttons(): array
+	public function getButtons(): array
 	{
 		return $this->buttons;
 	}

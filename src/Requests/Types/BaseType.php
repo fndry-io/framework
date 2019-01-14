@@ -55,7 +55,10 @@ abstract class BaseType implements Arrayable {
 			$field[$key] = $value;
 		}
 
+		//set required into the rules
+
 		return $field;
 	}
+
 
 }

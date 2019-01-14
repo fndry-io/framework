@@ -2,6 +2,7 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Exceptions\InputTypeNotSetException;
 use Foundry\Requests\Types\Contracts\Modelable;
 use Foundry\Requests\Types\Traits\HasButtons;
 use Foundry\Requests\Types\Traits\HasClass;
@@ -114,7 +115,12 @@ class FormType extends ParentType implements Modelable {
 				}
 			}
 		}
-		$this->inputs[] = $inputs;
+		foreach ($inputs as &$input) {
+			/**
+			 * @var InputType $input
+			 */
+			$this->inputs[$input->getName()] = $input;
+		}
 		return $this;
 	}
 
@@ -351,5 +357,6 @@ class FormType extends ParentType implements Modelable {
 		}
 		return $this;
 	}
+
 
 }

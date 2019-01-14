@@ -22,14 +22,13 @@ trait HasRequired {
 	}
 
 	/**
-	 * @param string $required
+	 * @param bool $required
 	 *
 	 * @return InputType
 	 */
-	public function setRequired(string $required): InputType
+	public function setRequired(bool $required): InputType
 	{
 		$this->required = $required;
-
 		return $this;
 	}
 

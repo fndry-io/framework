@@ -2,6 +2,9 @@
 
 namespace Foundry\Requests;
 
+use Foundry\Models\InputCollection;
+use Foundry\Requests\Types\DocType;
+use Foundry\Requests\Types\FormType;
 use Foundry\Requests\Types\FormView;
 use Foundry\Services\Service;
 use Illuminate\Contracts\View\View;
@@ -211,9 +214,12 @@ abstract class FormRequest
      *
      * @return array
      */
-    static function rules(Model $model = null): array {
-    	return [];
-    }
+	static public function rules(Model $model = null): array
+	{
+		return static::inputCollection()->rules();
+	}
+
+
 
     /**
      * Get available fields based on the permissions of the currently logged in user.
@@ -221,7 +227,7 @@ abstract class FormRequest
      * @return array
      */
     static function fields(): array {
-	    return [];
+	    return static::inputCollection()->keys()->toArray();
     }
 
     /**
@@ -256,30 +262,25 @@ abstract class FormRequest
      */
     static abstract function service();
 
+	/**
+	 * @param null $model
+	 *
+	 * @return InputCollection
+	 */
+	static abstract function inputCollection($model = null) : InputCollection;
+
     /**
      * Gets the form view object for rendering the form
      *
      * @param Model|null $model
      *
-     * @return FormView
+     * @return FormType
      */
-    static abstract function getFormView($model = null): FormView;
+    //static abstract function getForm($model = null): FormType;
 
-	static function view($model = null)
-	{
-		$form = static::getFormView($model);
+	static abstract function form($model = null): FormType;
 
-		//get the model and set it to the form view
-		if ( $model ) {
-			$form->setModel( $model );
-		} else {
-			$model = null;
-		}
-
-		$form->setRules( static::rules( $model ) );
-
-		return $form;
-	}
+	static abstract function view(Request $request, $model = null) : DocType;
 
 	/**
      * Get the model for a given id
@@ -376,7 +377,7 @@ abstract class FormRequest
     }
 
     /**
-     * Converst the values to their typed equivilents
+     * Converts the values to their typed equivalents
      *
      * @param $values
      *
@@ -585,5 +586,6 @@ abstract class FormRequest
     {
     	return isset($this->inputs[$key]) ? $this->inputs[$key] : $default;
     }
+
 
 }

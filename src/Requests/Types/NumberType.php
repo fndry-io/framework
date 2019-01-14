@@ -27,6 +27,7 @@ class NumberType extends TextInputType{
 	{
 		$type = 'number';
 		parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
+		$this->addRule('numeric');
 	}
 
 	public function setDecimals($decimals = null): NumberType

@@ -13,6 +13,9 @@ trait HasMinMax {
 	public function setMin($value = null): InputType
 	{
 		$this->min = $value;
+		if (method_exists($this, 'addRule') && $value !== null) {
+			$this->addRule('min:' . $value);
+		}
 		return $this;
 	}
 
@@ -24,6 +27,9 @@ trait HasMinMax {
 	public function setMax($value = null): InputType
 	{
 		$this->max = $value;
+		if (method_exists($this, 'addRule') && $value !== null) {
+			$this->addRule('max:' . $value);
+		}
 		return $this;
 	}
 

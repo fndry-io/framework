@@ -8,7 +8,7 @@ trait HasOptions {
 	use HasMultiple;
 
 	/**
-	 * @var array $options Available options
+	 * @var array|\Closure $options Available options
 	 */
 	protected $options;
 
@@ -50,11 +50,11 @@ trait HasOptions {
 	}
 
 	/**
-	 * @param array $options
+	 * @param array|\Closure $options
 	 *
 	 * @return InputType
 	 */
-	public function setOptions(array $options): InputType
+	public function setOptions($options): InputType
 	{
 		$this->options = $options;
 		return $this;

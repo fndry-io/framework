@@ -20,22 +20,4 @@ interface Field {
 	 */
 	static function input() : InputType;
 
-	/**
-	 * The rule for validation
-	 *
-	 * @param bool $nullable
-	 * @param Model|null $model
-	 *
-	 * @return mixed
-	 */
-	static function rules($nullable = true, Model $model = null) : array;
-
-	/**
-	 * The PHP type of a field
-	 *
-	 * @see http://php.net/manual/en/function.settype.php
-	 * @return string
-	 */
-	static function type() : string;
-
 }

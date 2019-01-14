@@ -25,5 +25,6 @@ class DateInputType extends InputType{
     {
         $type = 'date';
         parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
+        $this->addRule('date');
     }
 }

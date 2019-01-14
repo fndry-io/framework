@@ -25,5 +25,6 @@ class DateTimeInputType extends InputType {
     {
         $type = 'datetime';
         parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
+	    $this->addRule('date');
     }
 }

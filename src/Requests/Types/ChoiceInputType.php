@@ -37,5 +37,4 @@ class ChoiceInputType extends InputType{
     }
 
 
-
 }

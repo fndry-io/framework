@@ -86,4 +86,5 @@ class ButtonType extends BaseType {
 		return $this;
 	}
 
+
 }

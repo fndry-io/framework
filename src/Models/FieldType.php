@@ -16,25 +16,10 @@ interface FieldType {
 	/**
 	 * The input type for displaying on a page
 	 *
+	 * @param Model $model
+	 *
 	 * @return InputType
 	 */
-	static function input() : InputType;
-
-	/**
-	 * The rule for validation
-	 *
-	 * @param Model|null $model
-	 *
-	 * @return mixed
-	 */
-	static function rules(Model $model = null) : array;
-
-	/**
-	 * The PHP type of a field
-	 *
-	 * @see http://php.net/manual/en/function.settype.php
-	 * @return string
-	 */
-	static function type() : string;
+	static function input(Model $model = null) : InputType;
 
 }
