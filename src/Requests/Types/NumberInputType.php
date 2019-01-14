@@ -10,7 +10,7 @@ use Foundry\Requests\Types\Traits\HasMinMax;
  *
  * @package Foundry\Requests\Types
  */
-class NumberType extends TextInputType{
+class NumberInputType extends TextInputType{
 
 	use HasMinMax;
 
@@ -30,7 +30,7 @@ class NumberType extends TextInputType{
 		$this->addRule('numeric');
 	}
 
-	public function setDecimals($decimals = null): NumberType
+	public function setDecimals($decimals = null): NumberInputType
 	{
 		$this->decimals = $decimals;
 		return $this;

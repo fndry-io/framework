@@ -2,15 +2,18 @@
 
 namespace Foundry\Requests\Types\Traits;
 
-use Foundry\Requests\Types\InputType;
-
 trait HasMinMax {
 
 	protected $max;
 
 	protected $min;
 
-	public function setMin($value = null): InputType
+	/**
+	 * @param null $value
+	 *
+	 * @return $this
+	 */
+	public function setMin($value = null)
 	{
 		$this->min = $value;
 		if (method_exists($this, 'addRule') && $value !== null) {
@@ -19,12 +22,20 @@ trait HasMinMax {
 		return $this;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getMin()
 	{
 		return $this->min;
 	}
 
-	public function setMax($value = null): InputType
+	/**
+	 * @param null $value
+	 *
+	 * @return $this
+	 */
+	public function setMax($value = null)
 	{
 		$this->max = $value;
 		if (method_exists($this, 'addRule') && $value !== null) {
@@ -33,6 +44,9 @@ trait HasMinMax {
 		return $this;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getMax()
 	{
 		return $this->max;

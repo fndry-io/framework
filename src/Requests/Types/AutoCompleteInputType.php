@@ -2,33 +2,26 @@
 
 namespace Foundry\Requests\Types;
 use Foundry\Requests\Types\Traits\HasQueryOptions;
-use Foundry\Requests\Types\Traits\HasRequest;
 
 
 /**
- * Class ReferenceType
- *
- * A reference type is used to set hasOne, hasMany, belongsTp, belongsToMany
+ * Class AutoCompleteType
  *
  * @package Foundry\Requests\Types
  */
-class ReferenceType extends ChoiceInputType {
+class AutoCompleteInputType extends ChoiceInputType {
 
-	use HasRequest;
 	use HasQueryOptions;
 
 	/**
-	 * Reference constructor
+	 * AutoCompleteType constructor.
 	 *
 	 * @param string $name The field name
 	 * @param string $label
 	 * @param array $options The options to display if not doing a url fetch for them
-	 * @param string $url The url to fetch the list of available options. If this and options are null, then the Type the equivalent to a hasOne relationship
+	 * @param string $url The url to fetch the list of available options from
 	 * @param bool $multiple
 	 * @param bool $required
-	 * @param string $request_url
-	 * @param string $request_name
-	 * @param string $request_id
 	 * @param null $value
 	 * @param string $position
 	 * @param string|null $rules
@@ -39,12 +32,9 @@ class ReferenceType extends ChoiceInputType {
     public function __construct(string $name,
 							    string $label,
 	                            bool $required = true,
-							    array $options,
-							    string $url,
+                                array $options,
+	                            string $url,
 							    bool $multiple,
-							    string $request_url,
-							    string $request_name,
-							    string $request_id = null,
                                 $value = null,
                                 string $position = 'full',
                                 string $rules = null,
@@ -54,12 +44,8 @@ class ReferenceType extends ChoiceInputType {
 		)
     {
         parent::__construct($name, $label, $required, false, $multiple, $options, $value, $position, $rules, $id, $placeholder);
-	    $this->setUrl($url);
+        $this->setUrl($url);
 	    $this->setQueryParam($query_param);
-	    $this->setRequestUrl($request_url);
-	    $this->setRequestName($request_name);
-	    $this->setRequestId($request_id);
-        $this->setType('references');
+        $this->setType('autocomplete');
     }
-
 }

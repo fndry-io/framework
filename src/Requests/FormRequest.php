@@ -280,6 +280,12 @@ abstract class FormRequest
 
 	static abstract function form($model = null): FormType;
 
+	/**
+	 * @param Request $request
+	 * @param null $model
+	 *
+	 * @return DocType
+	 */
 	static abstract function view(Request $request, $model = null) : DocType;
 
 	/**
