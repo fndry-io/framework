@@ -67,3 +67,17 @@ if (! function_exists('routeUri')) {
 		throw new InvalidArgumentException("Route [{$name}] not defined.");
 	}
 }
+
+
+if (! function_exists('strip_non_utf8')) {
+	/**
+	 * Remove non utf-8 characters from a string
+	 *
+	 * @param $string
+	 *
+	 * @return string
+	 */
+	function strip_non_utf8( $string ) {
+		return iconv( "UTF-8", "UTF-8//IGNORE", $string );
+	}
+}
