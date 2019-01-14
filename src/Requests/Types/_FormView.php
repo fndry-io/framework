@@ -13,7 +13,7 @@ use Illuminate\Support\MessageBag;
  *
  * @package Foundry\Requests\Types
  */
-class FormView implements Arrayable {
+class _FormView implements Arrayable {
 
 
     /**
@@ -277,11 +277,11 @@ class FormView implements Arrayable {
 	/**
 	 * Create a row and add fields to it
 	 *
-	 * @param Type[] $types The fields to add
+	 * @param InputType[] $types The fields to add
 	 *
 	 * @return FormView
 	 */
-	public function addFieldRow(Type ...$types) : FormView
+	public function addFieldRow(InputType ...$types) : FormView
 	{
 		/**@var $tab FormTab*/
 		$tab = $this->getLastTab();
@@ -436,7 +436,7 @@ class FormView implements Arrayable {
          */
         foreach ($rows as &$row) {
             foreach ($row->getFields() as &$field) {
-                /**@var $field Type*/
+                /**@var $field InputType*/
                 $name = $field->getName();
                 if (isset($values[$name])) {
                     $field->setValue($values[$name]);
@@ -449,7 +449,8 @@ class FormView implements Arrayable {
      * Get field by name
      *
      * @param $name
-     * @return Type|null
+     *
+     * @return InputType|null
      */
 	public function getField($name)
 	{

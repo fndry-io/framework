@@ -9,7 +9,7 @@ use Foundry\Requests\Types\Traits\HasQueryOptions;
  *
  * @package Foundry\Requests\Types
  */
-class AutoCompleteType extends ChoiceType {
+class AutoCompleteType extends ChoiceInputType {
 
 	use HasQueryOptions;
 

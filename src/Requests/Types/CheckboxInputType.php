@@ -8,7 +8,7 @@ namespace Foundry\Requests\Types;
  *
  * @package Foundry\Requests\Types
  */
-class CheckboxType extends Type{
+class CheckboxInputType extends InputType{
 
 	protected $checked;
 

@@ -2,43 +2,46 @@
 
 namespace Foundry\Requests\Types\Traits;
 
-use Foundry\Requests\Types\Type;
+use Foundry\Requests\Types\InputType;
 
 trait HasRequest {
 
-	/**
-	 * The form request details
-	 *
-	 * array['url'] string The url route to call
-	 * array['request'] string The request name. Maps to _request query param.
-	 * array['id'] int The request model id. Maps to _id query param.
-	 *
-	 * @var array The array
-	 */
-	protected $form_request;
+	protected $request_url;
+	protected $request_name;
+	protected $request_id = null;
 
-	/**
-	 * Sets the
-	 *
-	 * @param $url
-	 * @param $name
-	 * @param null $id
-	 *
-	 * @return Type
-	 */
-	public function setFormRequest($url, $name, $id = null) : Type
+
+	public function setRequestUrl($url) : InputType
 	{
-		$this->form_request = [
-			'url' => $url,
-			'name' => $name,
-			'id' => $id
-		];
+		$this->request_url = $url;
 		return $this;
 	}
 
-	public function getFormRequest(): array
+	public function setRequestName($name) : InputType
 	{
-		return $this->form_request;
+		$this->request_name = $name;
+		return $this;
+	}
+
+	public function setRequestId($id) : InputType
+	{
+		$this->request_id = $id;
+		return $this;
+	}
+
+	public function getRequestUrl() : string
+	{
+		return $this->request_url;
+	}
+
+	public function getRequestName() : string
+	{
+		return $this->request_name;
+	}
+
+	public function getRequestId()
+	{
+		return $this->request_id;
 	}
 
 }

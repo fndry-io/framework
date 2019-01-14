@@ -1,6 +1,8 @@
 <?php
 
 namespace Foundry\Requests\Types;
+use Foundry\Requests\Types\Traits\HasDescription;
+use Foundry\Requests\Types\Traits\HasTitle;
 
 
 /**
@@ -8,11 +10,11 @@ namespace Foundry\Requests\Types;
  *
  * @package Foundry\Requests\Types
  */
-class FormSection{
+class _FormSection {
 
-    protected $title;
-
-    protected $description;
+	use HasTitle,
+		HasDescription
+		;
 
     protected $tab;
 
@@ -124,39 +126,6 @@ class FormSection{
     {
         return $this->rows;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param mixed $title
-     */
-    public function setTitle($title): void
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param mixed $description
-     */
-    public function setDescription($description): void
-    {
-        $this->description = $description;
-    }
-
 
     /**
      * Serialize Object

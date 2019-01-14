@@ -1,14 +1,17 @@
 <?php
 
 namespace Foundry\Requests\Types;
+use Foundry\Requests\Types\Traits\HasMinMax;
 
 
 /**
- * Class DateTimeType
+ * Class EmailType
  *
  * @package Foundry\Requests\Types
  */
-class DateTimeType extends Type {
+class EmailInputType extends InputType{
+
+	use HasMinMax;
 
     public function __construct(string $name,
                                 string $label = null,
@@ -19,7 +22,7 @@ class DateTimeType extends Type {
                                 string $id = null,
                                 string $placeholder = null)
     {
-        $type = 'datetime';
+        $type = 'email';
         parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
     }
 }

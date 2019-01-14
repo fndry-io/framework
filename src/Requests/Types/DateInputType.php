@@ -2,13 +2,17 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Requests\Types\Traits\HasMinMax;
+
 
 /**
  * Class DateType
  *
  * @package Foundry\Requests\Types
  */
-class DateType extends Type{
+class DateInputType extends InputType{
+
+	use HasMinMax;
 
     public function __construct(string $name,
                                 string $label = null,

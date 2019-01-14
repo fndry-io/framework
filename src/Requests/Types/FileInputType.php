@@ -4,11 +4,11 @@ namespace Foundry\Requests\Types;
 
 
 /**
- * Class PasswordType
+ * Class FileType
  *
  * @package Foundry\Requests\Types
  */
-class PasswordType extends Type{
+class FileInputType extends InputType{
 
     public function __construct(string $name,
                                 string $label = null,
@@ -19,7 +19,7 @@ class PasswordType extends Type{
                                 string $id = null,
                                 string $placeholder = null)
     {
-        $type = 'password';
+        $type = 'file';
         parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
     }
 }

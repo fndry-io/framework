@@ -1,14 +1,11 @@
 <?php
 namespace Foundry\Requests\Types\Traits;
 
-use Foundry\Requests\Types\Type;
+use Foundry\Requests\Types\InputType;
 
 trait HasOptions {
 
-	/**
-	 * @var bool $multiple Used to determine if we allow multiple selections (chechbox vs radio, or select vs select[multiple]
-	 */
-	protected $multiple;
+	use HasMultiple;
 
 	/**
 	 * @var array $options Available options
@@ -36,31 +33,11 @@ trait HasOptions {
 	/**
 	 * @param mixed $expanded
 	 *
-	 * @return Type
+	 * @return InputType
 	 */
-	public function setExpanded($expanded):  Type
+	public function setExpanded($expanded):  InputType
 	{
 		$this->expanded = $expanded;
-		return $this;
-	}
-
-
-	/**
-	 * @return bool
-	 */
-	public function isMultiple(): bool
-	{
-		return $this->multiple;
-	}
-
-	/**
-	 * @param bool $multiple
-	 *
-	 * @return Type
-	 */
-	public function setMultiple(bool $multiple): Type
-	{
-		$this->multiple = $multiple;
 		return $this;
 	}
 
@@ -75,9 +52,9 @@ trait HasOptions {
 	/**
 	 * @param array $options
 	 *
-	 * @return Type
+	 * @return InputType
 	 */
-	public function setOptions(array $options): Type
+	public function setOptions(array $options): InputType
 	{
 		$this->options = $options;
 		return $this;
@@ -100,7 +77,7 @@ trait HasOptions {
 		return false;
 	}
 
-	public function setEmpty($value) : Type
+	public function setEmpty($value) : InputType
 	{
 		$this->empty = $value;
 		return $this;

@@ -2,13 +2,17 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Requests\Types\Traits\HasMinMax;
+
 
 /**
  * Class TextType
  *
  * @package Foundry\Requests\Types
  */
-class TelType extends TextType{
+class TelInputType extends InputType{
+
+	use HasMinMax;
 
 	public function __construct(
 		string $name,

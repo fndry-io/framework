@@ -2,13 +2,17 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Requests\Types\Traits\HasMinMax;
+
 
 /**
- * Class EmailType
+ * Class PasswordType
  *
  * @package Foundry\Requests\Types
  */
-class EmailType extends TextType{
+class PasswordInputType extends InputType{
+
+	use HasMinMax;
 
     public function __construct(string $name,
                                 string $label = null,
@@ -19,7 +23,7 @@ class EmailType extends TextType{
                                 string $id = null,
                                 string $placeholder = null)
     {
-        $type = 'email';
+        $type = 'password';
         parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
     }
 }

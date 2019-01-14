@@ -8,7 +8,7 @@ namespace Foundry\Requests\Types;
  *
  * @package Foundry\Requests\Types
  */
-class FormRow{
+class _FormRow {
 
 	/**
 	 * @var array The fields
@@ -47,11 +47,11 @@ class FormRow{
     /**
      * Add a field to row
      *
-     * @param Type $field
+     * @param InputType $field
      *
      * @return FormRow
      */
-    public function addField(Type $field) : FormRow
+    public function addField(InputType $field) : FormRow
     {
         if(!in_array($field, $this->fields)){
             $field->setRow($this);
@@ -111,12 +111,12 @@ class FormRow{
 	 *
 	 * @param $name
 	 *
-	 * @return Type|null
+	 * @return InputType|null
 	 */
     public function getField($name)
     {
 	    /**
-	     * @var Type $field
+	     * @var InputType $field
 	     */
     	foreach ($this->fields as $field) {
     		if ($field->getName() === $name) {
@@ -236,7 +236,7 @@ class FormRow{
         $forms = array();
 
         /**
-         * @var $field Type
+         * @var $field InputType
          */
         foreach ($this->fields as $field){
             array_push($f, $field->jsonSerialize());

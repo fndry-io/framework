@@ -6,22 +6,24 @@ use Foundry\Requests\Types\Traits\HasRequest;
 
 
 /**
- * Class BelongsToType
+ * Class ReferenceType
+ *
+ * A reference type is used to set hasOne, hasMany, belongsTp, belongsToMany
  *
  * @package Foundry\Requests\Types
  */
-class BelongsToType extends ChoiceType {
+class ReferenceType extends ChoiceInputType {
 
 	use HasRequest;
 	use HasQueryOptions;
 
 	/**
-	 * BelongsToType constructor.
+	 * Reference constructor
 	 *
 	 * @param string $name The field name
 	 * @param string $label
 	 * @param array $options The options to display if not doing a url fetch for them
-	 * @param string $url The url to fetch the list of available options from
+	 * @param string $url The url to fetch the list of available options. If this and options are null, then the Type the equivalent to a hasOne relationship
 	 * @param bool $multiple
 	 * @param bool $required
 	 * @param string $request_url
@@ -54,8 +56,10 @@ class BelongsToType extends ChoiceType {
         parent::__construct($name, $label, $required, false, $multiple, $options, $value, $position, $rules, $id, $placeholder);
 	    $this->setUrl($url);
 	    $this->setQueryParam($query_param);
-	    $this->setFormRequest($request_url, $request_name, $request_id);
-        $this->setType('belongsto');
+	    $this->setRequestUrl($request_url);
+	    $this->setRequestName($request_name);
+	    $this->setRequestId($request_id);
+        $this->setType('references');
     }
 
 }

@@ -2,13 +2,17 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Requests\Types\Traits\HasMinMax;
+
 
 /**
- * Class FileType
+ * Class DateTimeType
  *
  * @package Foundry\Requests\Types
  */
-class FileType extends Type{
+class DateTimeInputType extends InputType {
+
+	use HasMinMax;
 
     public function __construct(string $name,
                                 string $label = null,
@@ -19,7 +23,7 @@ class FileType extends Type{
                                 string $id = null,
                                 string $placeholder = null)
     {
-        $type = 'file';
+        $type = 'datetime';
         parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
     }
 }

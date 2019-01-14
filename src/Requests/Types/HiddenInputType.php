@@ -8,7 +8,7 @@ namespace Foundry\Requests\Types;
  *
  * @package Foundry\Requests\Types
  */
-class HiddenType extends Type{
+class HiddenInputType extends InputType{
 
     public function __construct(string $name,
                                 string $label = null,

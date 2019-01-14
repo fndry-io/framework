@@ -3,7 +3,7 @@
 namespace Foundry\Requests\Types\Traits;
 
 use Foundry\Requests\Types\ButtonType;
-use Foundry\Requests\Types\Type;
+use Foundry\Requests\Types\InputType;
 
 trait HasButtons {
 
@@ -17,14 +17,14 @@ trait HasButtons {
 	/**
 	 * Adds buttons to the input
 	 *
-	 * @param ButtonType ...$buttons
+	 * @param ButtonType ...$button
 	 *
-	 * @return Type
+	 * @return $this
 	 */
-	public function setButtons(ButtonType ...$buttons) : Type
+	public function setButtons(ButtonType &...$button)
 	{
-		foreach ($buttons as $button) {
-			$this->buttons[] = $button;
+		foreach ($button as &$_button) {
+			$this->buttons[] = $_button;
 		}
 		return $this;
 	}

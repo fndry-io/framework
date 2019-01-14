@@ -1,7 +1,7 @@
 <?php
 namespace Foundry\Models\Fields;
 
-use Foundry\Requests\Types\Type;
+use Foundry\Requests\Types\InputType;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,18 +16,19 @@ interface Field {
 	/**
 	 * The input type for displaying on a page
 	 *
-	 * @return Type
+	 * @return InputType
 	 */
-	static function input() : Type;
+	static function input() : InputType;
 
 	/**
 	 * The rule for validation
 	 *
+	 * @param bool $nullable
 	 * @param Model|null $model
 	 *
 	 * @return mixed
 	 */
-	static function rules(Model $model = null) : array;
+	static function rules($nullable = true, Model $model = null) : array;
 
 	/**
 	 * The PHP type of a field

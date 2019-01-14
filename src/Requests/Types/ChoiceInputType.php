@@ -2,6 +2,7 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Requests\Types\Traits\HasMinMax;
 use Foundry\Requests\Types\Traits\HasOptions;
 
 /**
@@ -10,9 +11,10 @@ use Foundry\Requests\Types\Traits\HasOptions;
  * @package Foundry\Requests\Types
  * @todo Update ChoiceType and others of a similar nature to rather use traits for the additional properties and methods
  */
-class ChoiceType extends Type{
+class ChoiceInputType extends InputType{
 
 	use HasOptions;
+	use HasMinMax;
 
     public function __construct(string $name,
 								string $label = null,

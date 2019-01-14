@@ -2,19 +2,19 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Requests\Types\Traits\HasMinMax;
+
 
 /**
  * Class NumberType
  *
  * @package Foundry\Requests\Types
  */
-class NumberType extends TextType{
+class NumberType extends TextInputType{
+
+	use HasMinMax;
 
 	protected $decimals;
-
-	protected $max;
-
-	protected $min;
 
 	public function __construct(string $name,
 		string $label= null,
@@ -40,26 +40,5 @@ class NumberType extends TextType{
 		return $this->decimals;
 	}
 
-	public function setMin($value = null): NumberType
-	{
-		$this->min = $value;
-		return $this;
-	}
-
-	public function getMin()
-	{
-		return $this->min;
-	}
-
-	public function setMax($value = null): NumberType
-	{
-		$this->max = $value;
-		return $this;
-	}
-
-	public function getMax()
-	{
-		return $this->max;
-	}
 
 }

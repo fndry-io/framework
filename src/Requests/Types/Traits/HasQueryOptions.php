@@ -2,7 +2,7 @@
 
 namespace Foundry\Requests\Types\Traits;
 
-use Foundry\Requests\Types\Type;
+use Foundry\Requests\Types\InputType;
 
 trait HasQueryOptions {
 
@@ -28,9 +28,9 @@ trait HasQueryOptions {
 	/**
 	 * @param string $query_param
 	 *
-	 * @return Type
+	 * @return InputType
 	 */
-	public function setQueryParam(string $query_param): Type
+	public function setQueryParam(string $query_param): InputType
 	{
 		$this->query_param = $query_param;
 		return $this;
@@ -39,9 +39,9 @@ trait HasQueryOptions {
 	/**
 	 * @param $url
 	 *
-	 * @return Type
+	 * @return InputType
 	 */
-	public function setUrl($url) : Type
+	public function setUrl($url) : InputType
 	{
 		$this->url = $url;
 		return $this;

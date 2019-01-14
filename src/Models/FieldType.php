@@ -1,7 +1,7 @@
 <?php
 namespace Foundry\Models;
 
-use Foundry\Requests\Types\Type;
+use Foundry\Requests\Types\InputType;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,9 +16,9 @@ interface FieldType {
 	/**
 	 * The input type for displaying on a page
 	 *
-	 * @return Type
+	 * @return InputType
 	 */
-	static function input() : Type;
+	static function input() : InputType;
 
 	/**
 	 * The rule for validation

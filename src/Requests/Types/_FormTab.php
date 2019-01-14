@@ -8,7 +8,7 @@ namespace Foundry\Requests\Types;
  *
  * @package Foundry\Requests\Types
  */
-class FormTab{
+class _FormTab{
 
     protected $title;
 
