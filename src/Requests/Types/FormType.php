@@ -2,7 +2,6 @@
 
 namespace Foundry\Requests\Types;
 
-use Foundry\Exceptions\InputTypeNotSetException;
 use Foundry\Requests\Types\Contracts\Modelable;
 use Foundry\Requests\Types\Traits\HasButtons;
 use Foundry\Requests\Types\Traits\HasClass;
@@ -28,10 +27,6 @@ class FormType extends ParentType implements Modelable {
 		HasRules
 		;
 
-	protected $action;
-
-	protected $method;
-
 	protected $encoding;
 
 	/**
@@ -48,40 +43,14 @@ class FormType extends ParentType implements Modelable {
 	 * FormType constructor.
 	 *
 	 * @param $name
-	 * @param $action
-	 * @param null $method
-	 * @param null $encoding
 	 * @param null $id
 	 */
-    public function __construct($name, $action, $method = null, $encoding = null, $id = null)
+    public function __construct($name, $id = null)
     {
     	$this->setType('form');
     	$this->setName($name);
-	    $this->setAction($action);
-	    $this->setMethod($method);
-	    $this->setEncoding($encoding);
 	    $this->setId($id);
     }
-
-    public function setAction(string $value = null)
-    {
-    	$this->action = $value;
-    	return $this;
-    }
-	public function getAction()
-	{
-    	return $this->action;
-	}
-
-	public function setMethod(string $value = null)
-	{
-		$this->action = $value;
-		return $this;
-	}
-	public function getMethod()
-	{
-    	$this->method;
-	}
 
 	public function setEncoding($value = null)
 	{
@@ -285,7 +254,7 @@ class FormType extends ParentType implements Modelable {
 	 *
 	 * @param $key
 	 *
-	 * @return array|null
+	 * @return \Illuminate\Contracts\Support\MessageBag|null
 	 */
 	public function getInputError($key)
 	{

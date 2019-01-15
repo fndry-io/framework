@@ -14,7 +14,7 @@ class SubmitButtonType extends ButtonType {
 		string $action,
 		string $title = null,
 		array $query = [],
-		string $method = 'GET',
+		string $method = 'POST',
 		string $id = null)
 	{
 		$type = 'submit';
