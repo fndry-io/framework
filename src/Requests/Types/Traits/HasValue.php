@@ -45,9 +45,8 @@ trait HasValue {
 	{
 		if ($this->hasModel()) {
 			return $this->getModel()->isFillable($this->getName());
-		} else {
-			return $this->fillable;
 		}
+		return true;
 	}
 
 	public function isGuarded()
