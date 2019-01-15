@@ -15,8 +15,8 @@ class SubmitButtonType extends ButtonType {
 		string $title = null,
 		array $query = [],
 		string $method = 'POST',
-		string $id = null)
-	{
+		string $id = null
+	) {
 		$type = 'submit';
 		parent::__construct( $label, $action, $title, $query, $method, $id, $type );
 	}

@@ -16,8 +16,7 @@ trait HasId {
 	/**
 	 * @return string
 	 */
-	public function getId(): string
-	{
+	public function getId(): string {
 		return $this->id;
 	}
 
@@ -26,17 +25,17 @@ trait HasId {
 	 *
 	 * @return InputType
 	 */
-	public function setId($id = null)
-	{
-		if ($id == null) {
-			if (method_exists($this, 'getName')) {
-				$this->id = camel_case(str_slug($this->getName()) . 'Type');
+	public function setId( $id = null ) {
+		if ( $id == null ) {
+			if ( method_exists( $this, 'getName' ) ) {
+				$this->id = camel_case( str_slug( $this->getName() ) . 'Type' );
 			} else {
-				$this->id = uniqid('Id');
+				$this->id = uniqid( 'Id' );
 			}
 		} else {
 			$this->id = $id;
 		}
+
 		return $this;
 	}
 

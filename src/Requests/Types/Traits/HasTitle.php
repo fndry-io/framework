@@ -16,8 +16,7 @@ trait HasTitle {
 	/**
 	 * @return string
 	 */
-	public function getTitle(): string
-	{
+	public function getTitle(): string {
 		return $this->title;
 	}
 
@@ -26,8 +25,7 @@ trait HasTitle {
 	 *
 	 * @return InputType
 	 */
-	public function setTitle(string $title = null)
-	{
+	public function setTitle( string $title = null ) {
 		$this->title = $title;
 
 		return $this;

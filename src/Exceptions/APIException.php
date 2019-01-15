@@ -9,26 +9,24 @@ namespace Foundry\Exceptions;
  *
  * @author Medard Ilunga
  */
-class APIException
-{
-    public static function get($key)
-    {
-        $reflect = null;
+class APIException {
+	public static function get( $key ) {
+		$reflect = null;
 
-        try {
-            $reflect = new \ReflectionClass("App\Exceptions\\APIException");
-        } catch (\ReflectionException $e) {
-        }
+		try {
+			$reflect = new \ReflectionClass( "App\Exceptions\\APIException" );
+		} catch ( \ReflectionException $e ) {
+		}
 
-        if($reflect){
-            $values = $reflect->getConstants();
+		if ( $reflect ) {
+			$values = $reflect->getConstants();
 
-            if (array_key_exists($key, $values))
-            {
-                return $values[$key];
-            }
-        }
-        return __("An unknown error occurred.");
-    }
+			if ( array_key_exists( $key, $values ) ) {
+				return $values[ $key ];
+			}
+		}
+
+		return __( "An unknown error occurred." );
+	}
 
 }

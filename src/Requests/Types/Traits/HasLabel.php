@@ -15,8 +15,7 @@ trait HasLabel {
 	/**
 	 * @return string
 	 */
-	public function getLabel(): string
-	{
+	public function getLabel(): string {
 		return $this->label;
 	}
 
@@ -25,8 +24,7 @@ trait HasLabel {
 	 *
 	 * @return InputType
 	 */
-	public function setLabel(string $label = null)
-	{
+	public function setLabel( string $label = null ) {
 		$this->label = $label;
 
 		return $this;

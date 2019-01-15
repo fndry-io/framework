@@ -10,6 +10,7 @@ use Foundry\Requests\Types\Traits\HasId;
 use Foundry\Requests\Types\Traits\HasName;
 use Foundry\Requests\Types\Traits\HasRules;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 
@@ -25,14 +26,17 @@ class FormType extends ParentType implements Modelable {
 		HasId,
 		HasButtons,
 		HasErrors,
-		HasRules
-		;
+		HasRules;
 
 	protected $json_ignore = [
 		'model',
 		'inputs',
 		'request'
 	];
+
+	protected $action;
+
+	protected $method = 'POST';
 
 	protected $encoding;
 
@@ -52,65 +56,83 @@ class FormType extends ParentType implements Modelable {
 	 * @param $name
 	 * @param null $id
 	 */
-    public function __construct($name, $id = null)
-    {
-    	$this->setType('form');
-    	$this->setName($name);
-	    $this->setId($id);
-    }
+	public function __construct( $name, $id = null ) {
+		$this->setType( 'form' );
+		$this->setName( $name );
+		$this->setId( $id );
+	}
 
-	public function setEncoding($value = null)
-	{
+	public function setAction( $value ) {
 		$this->action = $value;
+
 		return $this;
-	}
-	public function getEncoding()
-	{
-    	$this->encoding;
 	}
 
-	public function setModel(Model &$model = null)
-	{
-		$this->model = $model;
+	public function getAction() {
+		return $this->action;
+	}
+
+	public function setMethod( $value ) {
+		$this->method = $value;
+
 		return $this;
 	}
-	public function getModel() : Model
-	{
+
+	public function getMethod() {
+		return $this->method;
+	}
+
+	public function setEncoding( $value ) {
+		$this->action = $value;
+
+		return $this;
+	}
+
+	public function getEncoding() {
+		$this->encoding;
+	}
+
+	public function setModel( Model &$model = null ) {
+		$this->model = $model;
+
+		return $this;
+	}
+
+	public function getModel(): Model {
 		$this->model;
 	}
 
-	public function attachInputCollection($collection)
-	{
+	public function attachInputCollection( $collection ) {
 		/**
 		 * @var Collection $collection
 		 */
-		$this->attachInputs(...array_values($collection->all()));
+		$this->attachInputs( ...array_values( $collection->all() ) );
+
 		return $this;
 	}
 
-	public function attachInputs(InputType ...$inputs)
-	{
-		if ($this->model) {
-			foreach ($inputs as &$input) {
-				if (!$input->hasModel()) {
+	public function attachInputs( InputType ...$inputs ) {
+		if ( $this->model ) {
+			foreach ( $inputs as &$input ) {
+				if ( ! $input->hasModel() ) {
 					/**
 					 * @var InputType $input
 					 */
-					$input->setModel($this->model);
+					$input->setModel( $this->model );
 				}
 			}
 		}
-		foreach ($inputs as &$input) {
+		foreach ( $inputs as &$input ) {
 			/**
 			 * @var InputType $input
 			 */
-			$this->inputs[$input->getName()] = $input;
+			$this->inputs[ $input->getName() ] = $input;
 		}
+
 		return $this;
 	}
 
-	public function getInputs()
-	{
+	public function getInputs() {
 		return $this->inputs;
 	}
 
@@ -121,13 +143,13 @@ class FormType extends ParentType implements Modelable {
 	 *
 	 * @return InputType|null
 	 */
-	public function getInput($name)
-	{
-		foreach ($this->inputs as &$input) {
-			if ($name === $input->getName()) {
+	public function getInput( $name ) {
+		foreach ( $this->inputs as &$input ) {
+			if ( $name === $input->getName() ) {
 				return $input;
 			}
 		}
+
 		return null;
 	}
 
@@ -138,11 +160,11 @@ class FormType extends ParentType implements Modelable {
 	 *
 	 * @return bool
 	 */
-	public function isInputFillable($key)
-	{
-		if ($input = $this->getInput($key)) {
+	public function isInputFillable( $key ) {
+		if ( $input = $this->getInput( $key ) ) {
 
 		}
+
 		return true;
 	}
 
@@ -153,11 +175,11 @@ class FormType extends ParentType implements Modelable {
 	 *
 	 * @return mixed|null
 	 */
-	public function getValue($key)
-	{
-		if ($this->model) {
-			return object_get($this->model,  $key);
+	public function getValue( $key ) {
+		if ( $this->model ) {
+			return object_get( $this->model, $key );
 		}
+
 		return null;
 	}
 
@@ -165,16 +187,17 @@ class FormType extends ParentType implements Modelable {
 	 * Set values
 	 *
 	 * @param $values
+	 *
 	 * @return $this
 	 */
-	public function setValues($values = [])
-	{
-		foreach ($values as $name => $value) {
-			if ($input = $this->getInput($name)) {
-				/**@var InputType $input*/
-				$input->setValue($value);
+	public function setValues( $values = [] ) {
+		foreach ( $values as $name => $value ) {
+			if ( $input = $this->getInput( $name ) ) {
+				/**@var InputType $input */
+				$input->setValue( $value );
 			}
 		}
+
 		return $this;
 	}
 
@@ -185,9 +208,9 @@ class FormType extends ParentType implements Modelable {
 	 *
 	 * @return $this
 	 */
-	public function addInputRow(InputType ...$types)
-	{
-		$this->addChildren((new RowType())->addChildren(...$types));
+	public function addInputRow( InputType ...$types ) {
+		$this->addChildren( ( new RowType() )->addChildren( ...$types ) );
+
 		return $this;
 	}
 
@@ -198,13 +221,13 @@ class FormType extends ParentType implements Modelable {
 	 *
 	 * @return \Illuminate\Contracts\Support\MessageBag|null
 	 */
-	public function getInputError($key)
-	{
-		if ($input = $this->getInput($key)) {
-			if ($input->hasErrors()) {
+	public function getInputError( $key ) {
+		if ( $input = $this->getInput( $key ) ) {
+			if ( $input->hasErrors() ) {
 				return $input->getErrors();
 			}
 		}
+
 		return null;
 	}
 
@@ -215,11 +238,11 @@ class FormType extends ParentType implements Modelable {
 	 *
 	 * @return bool
 	 */
-	public function isInputInvalid($key)
-	{
-		if ($input = $this->getInput($key)) {
+	public function isInputInvalid( $key ) {
+		if ( $input = $this->getInput( $key ) ) {
 			return $input->hasErrors();
 		}
+
 		return null;
 	}
 
@@ -228,9 +251,8 @@ class FormType extends ParentType implements Modelable {
 	 *
 	 * @return int
 	 */
-	public function inputCount(): int
-	{
-		return count($this->inputs);
+	public function inputCount(): int {
+		return count( $this->inputs );
 	}
 
 
@@ -241,33 +263,46 @@ class FormType extends ParentType implements Modelable {
 	 *
 	 * @return $this
 	 */
-	public function setRules($rules = [])
-	{
+	public function setRules( $rules = [] ) {
 		$this->rules = $rules;
-		foreach ($this->rules as $key => $rules) {
-			if ($input = $this->getInput($key)) {
-				/**@var InputType $input*/
-				$input->setRules($rules);
+		foreach ( $this->rules as $key => $rules ) {
+			if ( $input = $this->getInput( $key ) ) {
+				/**@var InputType $input */
+				$input->setRules( $rules );
 			}
 		}
+
 		return $this;
 	}
 
 	/**
 	 * Set the request
 	 *
-	 * @param $request
+	 * @param Request|null $request
 	 *
 	 * @return $this
 	 */
-	public function setRequest($request)
-	{
+	public function setRequest( Request $request = null ) {
 		$this->request = $request;
-		if ($request->session()->has('errors') && $request->session()->get('errors')->hasBag('default')) {
-			$this->setErrors($request->session()->get('errors')->getBag('default'));
+		if ( $request && $request->session()->has( 'errors' ) && $request->session()->get( 'errors' )->hasBag( 'default' ) ) {
+			$this->setErrors( $request->session()->get( 'errors' )->getBag( 'default' ) );
 		}
+
 		return $this;
 	}
 
+
+	/**
+	 * @param $name
+	 *
+	 * @return InputType|null
+	 */
+	public function get( $name ) {
+		if ( $this->inputs[ $name ] ) {
+			return $this->inputs[ $name ];
+		}
+
+		return null;
+	}
 
 }

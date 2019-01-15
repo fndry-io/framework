@@ -17,24 +17,26 @@ trait HasRules {
 	/**
 	 * @return string|array
 	 */
-	public function getRules()
-	{
-		if (isset($this->required)) {
-			$this->addRule('required');
-		} else {
-			$this->addRule('nullable');
-		}
-		if (isset($this->min) && $this->min !== null) {
-			$this->addRule('min:' . $this->min);
-		}
-		if (isset($this->max) && $this->max !== null) {
-			$this->addRule('max:' . $this->max);
-		}
-		if (isset($this->options)) {
-			if (is_array($this->options)) {
-				$this->addRule(\Illuminate\Validation\Rule::in($this->getOptions()));
+	public function getRules() {
+		if ( isset( $this->required ) ) {
+			if ( $this->required ) {
+				$this->addRule( 'required' );
+			} else {
+				$this->addRule( 'nullable' );
 			}
 		}
+		if ( isset( $this->min ) && $this->min !== null ) {
+			$this->addRule( 'min:' . $this->min );
+		}
+		if ( isset( $this->max ) && $this->max !== null ) {
+			$this->addRule( 'max:' . $this->max );
+		}
+		if ( isset( $this->options ) ) {
+			if ( is_array( $this->options ) ) {
+				$this->addRule( \Illuminate\Validation\Rule::in( $this->getOptions() ) );
+			}
+		}
+
 		return $this->rules;
 	}
 
@@ -43,17 +45,17 @@ trait HasRules {
 	 *
 	 * @return $this
 	 */
-	public function setRules($rules = null)
-	{
-		if (is_string($rules)) {
-			$rules = explode('|', $rules);
+	public function setRules( $rules = null ) {
+		if ( is_string( $rules ) ) {
+			$rules = explode( '|', $rules );
 		}
-		if ($rules){
-			foreach ($rules as $key => $value) {
-				$this->addRule($value, $key);
+		if ( $rules ) {
+			foreach ( $rules as $key => $value ) {
+				$this->addRule( $value, $key );
 			}
 		}
 		$this->rules = $rules;
+
 		return $this;
 	}
 
@@ -62,18 +64,39 @@ trait HasRules {
 	 *
 	 * @param string|Rule $rule The rule to add
 	 * @param null $key If the key given is a string, it will use it, if an integer it will ignore and just add the rule to the existing array
+	 *
 	 * @return $this
 	 */
-	public function addRule($rule, $key = null)
-	{
-		if (empty($this->rules)) {
+	public function addRule( $rule, $key = null ) {
+		if ( empty( $this->rules ) ) {
 			$this->rules = [];
 		}
-		if ($key && is_string($key)) {
-			$this->rules[$key] = $rule;
+		if ( $key && is_string( $key ) ) {
+			$this->rules[ $key ] = $rule;
 		} else {
 			$this->rules[] = $rule;
 		}
+
+		return $this;
+	}
+
+	/**
+	 * Removes rules based on their value
+	 *
+	 * @param mixed ...$rules
+	 *
+	 * @return $this
+	 */
+	public function removeRules( ...$rules ) {
+		if ( ! empty( $this->rules ) ) {
+			foreach ( $rules as $rule ) {
+				$index = array_search( $rule, $this->rules );
+				if ( $index !== false ) {
+					unset( $this->required[ $index ] );
+				}
+			}
+		}
+
 		return $this;
 	}
 }

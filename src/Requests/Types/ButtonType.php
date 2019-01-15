@@ -1,6 +1,7 @@
 <?php
 
 namespace Foundry\Requests\Types;
+
 use Foundry\Requests\Types\Traits\HasClass;
 use Foundry\Requests\Types\Traits\HasId;
 use Foundry\Requests\Types\Traits\HasLabel;
@@ -16,8 +17,7 @@ class ButtonType extends BaseType {
 	use HasId,
 		HasLabel,
 		HasClass,
-		HasTitle
-		;
+		HasTitle;
 
 	/**
 	 * The form row this field belongs to
@@ -41,48 +41,45 @@ class ButtonType extends BaseType {
 		array $query = [],
 		string $method = 'GET',
 		string $id = null,
-		string $type = 'action')
-	{
-		$this->setLabel($label);
-		$this->setAction($action);
-		$this->setTitle($title);
-		$this->setQuery($query);
-		$this->setMethod($method);
-		$this->setType($type);
-		$this->setId($id);
+		string $type = 'action'
+	) {
+		$this->setLabel( $label );
+		$this->setAction( $action );
+		$this->setTitle( $title );
+		$this->setQuery( $query );
+		$this->setMethod( $method );
+		$this->setType( $type );
+		$this->setId( $id );
 	}
 
 
-	public function getAction()
-	{
+	public function getAction() {
 		return $this->action;
 	}
 
-	public function setAction(string $value = null)
-	{
+	public function setAction( string $value = null ) {
 		$this->action = $value;
+
 		return $this;
 	}
 
-	public function getQuery()
-	{
+	public function getQuery() {
 		return $this->query;
 	}
 
-	public function setQuery(array $value = null)
-	{
+	public function setQuery( array $value = null ) {
 		$this->query = $value;
+
 		return $this;
 	}
 
-	public function getMethod()
-	{
+	public function getMethod() {
 		return $this->method;
 	}
 
-	public function setMethod(string $value = null)
-	{
+	public function setMethod( string $value = null ) {
 		$this->method = $value;
+
 		return $this;
 	}
 

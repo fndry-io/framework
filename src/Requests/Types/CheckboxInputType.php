@@ -8,34 +8,34 @@ namespace Foundry\Requests\Types;
  *
  * @package Foundry\Requests\Types
  */
-class CheckboxInputType extends InputType{
+class CheckboxInputType extends InputType {
 
 	protected $checked;
 
-	public function __construct(string $name,
-		string $label= null,
+	public function __construct(
+		string $name,
+		string $label = null,
 		bool $required = true,
 		string $value = null,
 		bool $checked = false,
 		string $position = 'full',
 		string $rules = null,
 		string $id = null,
-		string $placeholder = null)
-	{
+		string $placeholder = null
+	) {
 		$type = 'checkbox';
-		parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
-		
-		$this->setChecked($checked);
+		parent::__construct( $name, $label, $required, $value, $position, $rules, $id, $placeholder, $type );
+
+		$this->setChecked( $checked );
 	}
 
-	public function isChecked()
-	{
+	public function isChecked() {
 		return $this->checked;
 	}
 
-	public function setChecked(bool $checked = true)
-	{
+	public function setChecked( bool $checked = true ) {
 		$this->checked = $checked;
+
 		return $this;
 	}
 }

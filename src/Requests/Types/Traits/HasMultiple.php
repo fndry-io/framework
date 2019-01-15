@@ -19,8 +19,7 @@ trait HasMultiple {
 	/**
 	 * @return bool
 	 */
-	public function getMultiple(): int
-	{
+	public function getMultiple(): int {
 		return $this->multiple;
 	}
 
@@ -29,10 +28,14 @@ trait HasMultiple {
 	 *
 	 * @return $this
 	 */
-	public function setMultiple(int $multiple = null)
-	{
+	public function setMultiple( int $multiple = null ) {
 		$this->multiple = $multiple;
+
 		return $this;
+	}
+
+	public function isMultiple(): bool {
+		return ( $this->multiple && $this->multiple > 1 );
 	}
 
 }

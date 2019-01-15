@@ -16,8 +16,7 @@ trait HasDescription {
 	/**
 	 * @return string
 	 */
-	public function getDescription(): string
-	{
+	public function getDescription(): string {
 		return $this->description;
 	}
 
@@ -26,8 +25,7 @@ trait HasDescription {
 	 *
 	 * @return InputType
 	 */
-	public function setDescription(string $description = null)
-	{
+	public function setDescription( string $description = null ) {
 		$this->description = $description;
 
 		return $this;

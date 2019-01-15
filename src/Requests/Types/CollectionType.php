@@ -12,12 +12,11 @@ class CollectionType extends ParentType {
 	use HasMinMax,
 		HasMultiple,
 		HasButtons,
-		HasName
-		;
+		HasName;
 
-	public function __construct($name) {
-		$this->setName($name);
-		$this->setType('collection');
+	public function __construct( $name ) {
+		$this->setName( $name );
+		$this->setType( 'collection' );
 	}
 
 }

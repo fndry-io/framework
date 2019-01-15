@@ -17,8 +17,7 @@ class SectionType extends ParentType {
 	use HasId,
 		HasClass,
 		HasTitle,
-		HasDescription
-		;
+		HasDescription;
 
 	/**
 	 * Type of the input to display
@@ -34,14 +33,13 @@ class SectionType extends ParentType {
 	 * @param string|null $description
 	 * @param string|null $id
 	 */
-	public function __construct(string $title, string $description = null, string $id = null)
-	{
-		$this->setType('section');
+	public function __construct( string $title, string $description = null, string $id = null ) {
+		$this->setType( 'section' );
 
-		$this->setTitle($title);
-		$this->setDescription($description);
-		$id = $id? $id: camel_case(str_slug($title ) . 'Section');
-		$this->setId($id);
+		$this->setTitle( $title );
+		$this->setDescription( $description );
+		$id = $id ? $id : camel_case( str_slug( $title ) . 'Section' );
+		$this->setId( $id );
 	}
 
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Foundry\Requests\Types;
+
 use Foundry\Requests\Types\Traits\HasQueryOptions;
 
 
@@ -29,23 +30,23 @@ class AutoCompleteInputType extends ChoiceInputType {
 	 * @param string|null $placeholder
 	 * @param string $query_param
 	 */
-    public function __construct(string $name,
-							    string $label,
-	                            bool $required = true,
-                                array $options,
-	                            string $url,
-							    bool $multiple,
-                                $value = null,
-                                string $position = 'full',
-                                string $rules = null,
-                                string $id = null,
-                                string $placeholder = null,
-								string $query_param = 'q'
-		)
-    {
-        parent::__construct($name, $label, $required, false, $multiple, $options, $value, $position, $rules, $id, $placeholder);
-        $this->setUrl($url);
-	    $this->setQueryParam($query_param);
-        $this->setType('autocomplete');
-    }
+	public function __construct(
+		string $name,
+		string $label,
+		bool $required = true,
+		array $options,
+		string $url,
+		bool $multiple,
+		$value = null,
+		string $position = 'full',
+		string $rules = null,
+		string $id = null,
+		string $placeholder = null,
+		string $query_param = 'q'
+	) {
+		parent::__construct( $name, $label, $required, false, $multiple, $options, $value, $position, $rules, $id, $placeholder );
+		$this->setUrl( $url );
+		$this->setQueryParam( $query_param );
+		$this->setType( 'autocomplete' );
+	}
 }

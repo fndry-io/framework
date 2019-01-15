@@ -15,8 +15,8 @@ class CancelButtonType extends ButtonType {
 		string $title = null,
 		array $query = [],
 		string $method = 'GET',
-		string $id = null)
-	{
+		string $id = null
+	) {
 		$type = 'cancel';
 		parent::__construct( $label, $action, $title, $query, $method, $id, $type );
 	}

@@ -20,8 +20,7 @@ trait HasQueryOptions {
 	/**
 	 * @return string
 	 */
-	public function getQueryParam(): string
-	{
+	public function getQueryParam(): string {
 		return $this->query_param;
 	}
 
@@ -30,9 +29,9 @@ trait HasQueryOptions {
 	 *
 	 * @return $this
 	 */
-	public function setQueryParam(string $query_param = null)
-	{
+	public function setQueryParam( string $query_param = null ) {
 		$this->query_param = $query_param;
+
 		return $this;
 	}
 
@@ -41,17 +40,16 @@ trait HasQueryOptions {
 	 *
 	 * @return $this
 	 */
-	public function setUrl(string $url = null)
-	{
+	public function setUrl( string $url = null ) {
 		$this->url = $url;
+
 		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getUrl() : string
-	{
+	public function getUrl(): string {
 		return $this->url;
 	}
 

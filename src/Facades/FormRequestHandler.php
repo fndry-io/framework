@@ -1,4 +1,5 @@
 <?php
+
 namespace Foundry\Facades;
 
 use Illuminate\Support\Facades\Facade;
@@ -9,10 +10,8 @@ use Illuminate\Support\Facades\Facade;
  * @package Foundry\Facades
  * @see \Foundry\Contracts\FormRequestHandler
  */
-class FormRequestHandler extends Facade
-{
-	protected static function getFacadeAccessor()
-	{
+class FormRequestHandler extends Facade {
+	protected static function getFacadeAccessor() {
 		return 'form-request-handler';
 	}
 }

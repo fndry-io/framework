@@ -16,8 +16,7 @@ trait HasHelp {
 	/**
 	 * @return string
 	 */
-	public function getHelp(): string
-	{
+	public function getHelp() {
 		return $this->help;
 	}
 
@@ -26,8 +25,7 @@ trait HasHelp {
 	 *
 	 * @return InputType
 	 */
-	public function setHelp(string $help = null)
-	{
+	public function setHelp( string $help = null ) {
 		$this->help = $help;
 
 		return $this;

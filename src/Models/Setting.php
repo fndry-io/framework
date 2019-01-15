@@ -18,85 +18,83 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @package Foundry\Models
  */
-class Setting extends Model{
+class Setting extends Model {
 
-    use SoftDeletes;
+	use SoftDeletes;
 
-    //Possible values for the type field
-    static $types = [
-        'bool' => 'bool',
-        'int' => 'int',
-        'integer' => 'integer',
-        'boolean' => 'boolean',
-        'string' => 'string',
-        'double' => 'double',
-        'array' => 'array'
-    ];
+	//Possible values for the type field
+	static $types = [
+		'bool'    => 'bool',
+		'int'     => 'int',
+		'integer' => 'integer',
+		'boolean' => 'boolean',
+		'string'  => 'string',
+		'double'  => 'double',
+		'array'   => 'array'
+	];
 
-    /**
-     * Get fully qualified class name for the model
-     * Needs to be overridden in child class
-     *
-     * @return string
-     */
-    static function model() : string
-    {
-        return get_class(New Setting());
-    }
+	/**
+	 * Get fully qualified class name for the model
+	 * Needs to be overridden in child class
+	 *
+	 * @return string
+	 */
+	static function model(): string {
+		return get_class( New Setting() );
+	}
 
-    /**
-     * Various properties of the respective setting
-     *
-     * e.g '{$domain}.{$name}' => array('description' => 'Human readable description', 'default' => '{$default}', 'type' => '{$type[i]}', 'options' => 'array of available options')
-     *
-     * @return array
-     */
-    static function settings() : array
-    {
-        return [];
-    }
+	/**
+	 * Various properties of the respective setting
+	 *
+	 * e.g '{$domain}.{$name}' => array('description' => 'Human readable description', 'default' => '{$default}', 'type' => '{$type[i]}', 'options' => 'array of available options')
+	 *
+	 * @return array
+	 */
+	static function settings(): array {
+		return [];
+	}
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'domain',
-        'name',
-        'type',
-        'default',
-        'value'
-    ];
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = [
+		'domain',
+		'name',
+		'type',
+		'default',
+		'value'
+	];
 
-    protected $dates = [
-        'created_at',
-        'deleted_at',
-        'updated_at'
-    ];
+	protected $dates = [
+		'created_at',
+		'deleted_at',
+		'updated_at'
+	];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-        'deleted_at'
-    ];
+	/**
+	 * The attributes that should be hidden for arrays.
+	 *
+	 * @var array
+	 */
+	protected $hidden = [
+		'created_at',
+		'updated_at',
+		'deleted_at'
+	];
 
-    protected $guarded = [
+	protected $guarded = [
 
-    ];
+	];
 
-    /**
-     * The event map for the model.
-     *
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'saved' => SettingSaved::class,
-    ];
+	/**
+	 * The event map for the model.
+	 *
+	 * @var array
+	 */
+	protected $dispatchesEvents = [
+		'saved' => SettingSaved::class,
+	];
 
 }

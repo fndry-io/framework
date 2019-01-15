@@ -13,14 +13,13 @@ trait HasClass {
 
 	protected $class;
 
-	public function setClass($class = null)
-	{
+	public function setClass( $class = null ) {
 		$this->class = $class;
+
 		return $this;
 	}
 
-	public function getClass()
-	{
+	public function getClass() {
 		return $this->class;
 	}
 }

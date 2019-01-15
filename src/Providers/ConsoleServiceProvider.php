@@ -14,36 +14,33 @@ use Illuminate\Support\ServiceProvider;
  *
  * @author Medard Ilunga
  */
-class ConsoleServiceProvider extends ServiceProvider
-{
-    protected $defer = false;
+class ConsoleServiceProvider extends ServiceProvider {
+	protected $defer = false;
 
-    /**
-     * The available commands
-     *
-     * @var array
-     */
-    protected $commands = [
-        GenerateModelCommand::class,
-        GenerateServiceCommand::class,
-        GeneratePluginCommand::class,
-    ];
+	/**
+	 * The available commands
+	 *
+	 * @var array
+	 */
+	protected $commands = [
+		GenerateModelCommand::class,
+		GenerateServiceCommand::class,
+		GeneratePluginCommand::class,
+	];
 
-    /**
-     * Register the commands.
-     */
-    public function register()
-    {
-        $this->commands($this->commands);
-    }
+	/**
+	 * Register the commands.
+	 */
+	public function register() {
+		$this->commands( $this->commands );
+	}
 
-    /**
-     * @return array
-     */
-    public function provides()
-    {
-        $provides = $this->commands;
+	/**
+	 * @return array
+	 */
+	public function provides() {
+		$provides = $this->commands;
 
-        return $provides;
-    }
+		return $provides;
+	}
 }

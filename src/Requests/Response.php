@@ -1,5 +1,7 @@
 <?php
+
 namespace Foundry\Requests;
+
 use Illuminate\Http\RedirectResponse;
 
 /**
@@ -9,8 +11,7 @@ use Illuminate\Http\RedirectResponse;
  *
  * @package Foundry\Requests
  */
-class Response
-{
+class Response {
 
 	protected $status;
 
@@ -31,12 +32,11 @@ class Response
 	 * @param array|string|null $error
 	 * @param string|null $message
 	 */
-	public function __construct($data = [], $status = true, $code = 200, $error = null, $message = null)
-	{
-		$this->data = $data;
-		$this->status = $status;
-		$this->code = $code;
-		$this->error = $error;
+	public function __construct( $data = [], $status = true, $code = 200, $error = null, $message = null ) {
+		$this->data    = $data;
+		$this->status  = $status;
+		$this->code    = $code;
+		$this->error   = $error;
 		$this->message = $message;
 	}
 
@@ -45,18 +45,19 @@ class Response
 	 *
 	 * @return bool
 	 */
-	public function isSuccess()
-	{
+	public function isSuccess() {
 		return $this->status;
 	}
 
 	/**
 	 * Response
+	 *
 	 * @param array $data
+	 *
 	 * @return Response
 	 */
-	static function success($data = [], $message = null){
-		return new Response($data, true, 200, null, $message);
+	static function success( $data = [], $message = null ) {
+		return new Response( $data, true, 200, null, $message );
 	}
 
 	/**
@@ -64,10 +65,11 @@ class Response
 	 *
 	 * @param $error
 	 * @param $code
+	 *
 	 * @return Response
 	 */
-	static function error($error, $code){
-		return new Response([], false, $code, $error);
+	static function error( $error, $code ) {
+		return new Response( [], false, $code, $error );
 	}
 
 	/**
@@ -75,59 +77,53 @@ class Response
 	 *
 	 * @return array
 	 */
-    public function jsonSerialize()
-    {
-    	$array = [
-		    'status' => $this->status,
-		    'code' => $this->code,
-		    'data' => $this->data
-	    ];
-    	if ($this->error) {
-    		$array['error'] = $this->error;
-	    }
-	    if ($this->message) {
-		    $array['message'] = $this->message;
-	    }
-    	return $array;
-    }
+	public function jsonSerialize() {
+		$array = [
+			'status' => $this->status,
+			'code'   => $this->code,
+			'data'   => $this->data
+		];
+		if ( $this->error ) {
+			$array['error'] = $this->error;
+		}
+		if ( $this->message ) {
+			$array['message'] = $this->message;
+		}
 
-    public function getStatus()
-    {
-    	return $this->status;
-    }
+		return $array;
+	}
 
-    public function getError()
-    {
-    	return $this->error;
-    }
+	public function getStatus() {
+		return $this->status;
+	}
 
-	public function getCode()
-	{
+	public function getError() {
+		return $this->error;
+	}
+
+	public function getCode() {
 		return $this->code;
 	}
 
-	public function getData()
-	{
+	public function getData() {
 		return $this->data;
 	}
 
-	public function getMessage()
-	{
+	public function getMessage() {
 		return $this->message;
 	}
 
-	public function __toString()
-	{
-		return json_encode($this->jsonSerialize());
+	public function __toString() {
+		return json_encode( $this->jsonSerialize() );
 	}
 
-	public function redirect(RedirectResponse $redirect)
-	{
+	public function redirect( RedirectResponse $redirect ) {
 		if ( $this->getCode() == 422 ) {
 			$redirect->withErrors( $this->getError() );
 		} else {
 			$redirect->with( 'status', $this->getError() );
 		}
+
 		return $redirect;
 	}
 

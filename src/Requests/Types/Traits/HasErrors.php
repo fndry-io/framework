@@ -21,12 +21,12 @@ trait HasErrors {
 	 *
 	 * @return $this
 	 */
-	public function setErrors($errors = [])
-	{
-		if (is_array($errors)) {
-			$errors = new MessageBag($errors);
+	public function setErrors( $errors = [] ) {
+		if ( is_array( $errors ) ) {
+			$errors = new MessageBag( $errors );
 		}
 		$this->errors = $errors;
+
 		return $this;
 	}
 
@@ -35,15 +35,13 @@ trait HasErrors {
 	 *
 	 * @return MessageBagContract
 	 */
-	public function getErrors(): MessageBagContract
-	{
-		return ($this->errors) ? $this->errors : new MessageBag();
+	public function getErrors(): MessageBagContract {
+		return ( $this->errors ) ? $this->errors : new MessageBag();
 	}
 
 
-	public function hasErrors()
-	{
-		return !($this->errors) || $this->errors->isEmpty();
+	public function hasErrors() {
+		return ( $this->errors && $this->errors->isNotEmpty() );
 	}
 
 }

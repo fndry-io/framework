@@ -1,6 +1,7 @@
 <?php
 
 namespace Foundry\Requests\Types;
+
 use Foundry\Requests\Types\Traits\HasQueryOptions;
 use Foundry\Requests\Types\Traits\HasRequest;
 
@@ -36,30 +37,30 @@ class ReferenceInputType extends ChoiceInputType {
 	 * @param string|null $placeholder
 	 * @param string $query_param
 	 */
-    public function __construct(string $name,
-							    string $label,
-	                            bool $required = true,
-							    array $options,
-							    string $url,
-							    bool $multiple,
-							    string $request_url,
-							    string $request_name,
-							    string $request_id = null,
-                                $value = null,
-                                string $position = 'full',
-                                string $rules = null,
-                                string $id = null,
-                                string $placeholder = null,
-								string $query_param = 'q'
-		)
-    {
-        parent::__construct($name, $label, $required, false, $multiple, $options, $value, $position, $rules, $id, $placeholder);
-	    $this->setUrl($url);
-	    $this->setQueryParam($query_param);
-	    $this->setRequestUrl($request_url);
-	    $this->setRequestName($request_name);
-	    $this->setRequestId($request_id);
-        $this->setType('references');
-    }
+	public function __construct(
+		string $name,
+		string $label,
+		bool $required = true,
+		array $options,
+		string $url,
+		bool $multiple,
+		string $request_url,
+		string $request_name,
+		string $request_id = null,
+		$value = null,
+		string $position = 'full',
+		string $rules = null,
+		string $id = null,
+		string $placeholder = null,
+		string $query_param = 'q'
+	) {
+		parent::__construct( $name, $label, $required, false, $multiple, $options, $value, $position, $rules, $id, $placeholder );
+		$this->setUrl( $url );
+		$this->setQueryParam( $query_param );
+		$this->setRequestUrl( $request_url );
+		$this->setRequestName( $request_name );
+		$this->setRequestId( $request_id );
+		$this->setType( 'references' );
+	}
 
 }

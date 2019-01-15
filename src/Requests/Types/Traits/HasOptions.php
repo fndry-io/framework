@@ -1,4 +1,5 @@
 <?php
+
 namespace Foundry\Requests\Types\Traits;
 
 use Foundry\Requests\Types\InputType;
@@ -25,8 +26,7 @@ trait HasOptions {
 	/**
 	 * @return mixed
 	 */
-	public function isExpanded()
-	{
+	public function isExpanded() {
 		return $this->expanded;
 	}
 
@@ -35,17 +35,16 @@ trait HasOptions {
 	 *
 	 * @return $this
 	 */
-	public function setExpanded(bool $expanded = true)
-	{
+	public function setExpanded( bool $expanded = true ) {
 		$this->expanded = $expanded;
+
 		return $this;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getOptions(): array
-	{
+	public function getOptions(): array {
 		return $this->options;
 	}
 
@@ -54,9 +53,9 @@ trait HasOptions {
 	 *
 	 * @return $this
 	 */
-	public function setOptions($options = null)
-	{
+	public function setOptions( $options = null ) {
 		$this->options = $options;
+
 		return $this;
 	}
 
@@ -67,43 +66,40 @@ trait HasOptions {
 	 *
 	 * @return bool
 	 */
-	public function isOptionChecked($key)
-	{
-		if (is_array($this->value)) {
-			return in_array($key, $this->value);
-		} elseif (is_string($this->value)) {
+	public function isOptionChecked( $key ) {
+		if ( is_array( $this->value ) ) {
+			return in_array( $key, $this->value );
+		} elseif ( is_string( $this->value ) ) {
 			return $key == $this->value;
 		}
+
 		return false;
 	}
 
-	public function setEmpty($value = null)
-	{
+	public function setEmpty( $value = null ) {
 		$this->empty = $value;
+
 		return $this;
 	}
 
-	public function getEmpty($value)
-	{
+	public function getEmpty( $value ) {
 		return $this->empty;
 	}
 
-	public function getEmptyLabel($default = null)
-	{
-		if ($this->empty === true) {
-			if ($default !== null) {
+	public function getEmptyLabel( $default = null ) {
+		if ( $this->empty === true ) {
+			if ( $default !== null ) {
 				return $default;
 			} else {
-				return __('Select...');
+				return __( 'Select...' );
 			}
-		} elseif (is_string($this->empty)) {
+		} elseif ( is_string( $this->empty ) ) {
 			return $this->empty;
 		}
 	}
 
-	public function hasEmptyOption()
-	{
-		return !!($this->empty);
+	public function hasEmptyOption() {
+		return ! ! ( $this->empty );
 	}
 
 }

@@ -38,15 +38,15 @@ abstract class InputType extends BaseType implements Inputable {
 		HasPlaceholder,
 		HasHelp,
 		HasReadonly,
-		HasErrors
-		;
+		HasErrors;
 
 	/**
 	 * @var Model
 	 */
 	protected $model;
 
-	public function __construct(string $name,
+	public function __construct(
+		string $name,
 		string $label = null,
 		bool $required = true,
 		string $value = null,
@@ -54,19 +54,19 @@ abstract class InputType extends BaseType implements Inputable {
 		string $rules = null,
 		string $id = null,
 		string $placeholder = null,
-		string $type = 'text')
-	{
-		$this->setName($name);
-		$this->setType($type);
-		$this->setRequired($required);
+		string $type = 'text'
+	) {
+		$this->setName( $name );
+		$this->setType( $type );
+		$this->setRequired( $required );
 
-		$this->setLabel($label? $label: $name);
-		$this->setValue($value);
-		$this->setPosition($position);
-		$this->setRules($rules);
+		$this->setLabel( $label ? $label : $name );
+		$this->setValue( $value );
+		$this->setPosition( $position );
+		$this->setRules( $rules );
 
-		$this->setId($id);
-		$this->setPlaceholder($placeholder ? $placeholder: $label? $label: $name);
+		$this->setId( $id );
+		$this->setPlaceholder( $placeholder ? $placeholder : $label ? $label : $name );
 	}
 
 	/**
@@ -74,63 +74,72 @@ abstract class InputType extends BaseType implements Inputable {
 	 *
 	 * @return array
 	 */
-	public function jsonSerialize() : array{
+	public function jsonSerialize(): array {
 
 		$field = array();
 
 		//set all the object properties
-		foreach ($this as $key => $value) {
-			$field[$key] = $value;
+		foreach ( $this as $key => $value ) {
+			$field[ $key ] = $value;
 		}
 
 		//set the value
-		if (!$field['value'] && $this->hasModel()) {
-			$field['value'] = $this->getModelValue($this->getName());
+		if ( ! $field['value'] && $this->hasModel() ) {
+			$field['value'] = $this->getModelValue( $this->getName() );
 		}
 
 		//set the rules
-		if ($field['rules']) {
+		if ( $field['rules'] ) {
 			$_rules = [];
-			$rules = $this->getRules();
-			if ($rules) {
-				foreach ($rules as $rule) {
-					if (is_object($rule)) {
+			$rules  = $this->getRules();
+			if ( $rules ) {
+				foreach ( $rules as $rule ) {
+					if ( is_object( $rule ) ) {
 						$_rules[] = (string) $rule;
-					} elseif (is_string($rule)) {
+					} elseif ( is_string( $rule ) ) {
 						$_rules[] = $rule;
 					}
 				}
-				$_rules = implode('|', $_rules);
+				$_rules = implode( '|', $_rules );
 			}
 			$field['rules'] = $_rules;
 		}
 
 		//set the fillable etc values
-		foreach ([
-			'fillable' => 'isFillable',
-			'guarded' => 'isGuarded',
-			'visible' => 'isVisible',
-			'hidden' => 'isHidden'
-		] as $key => $method) {
-			$field[$key] = call_user_func([$this, $method]);
+		foreach (
+			[
+				'fillable' => 'isFillable',
+				'guarded'  => 'isGuarded',
+				'visible'  => 'isVisible',
+				'hidden'   => 'isHidden'
+			] as $key => $method
+		) {
+			$field[ $key ] = call_user_func( [ $this, $method ] );
 		}
 
 		return $field;
 	}
 
-	public function getModel() : Model
-	{
+	public function getModel(): Model {
 		return $this->model;
 	}
 
-	public function setModel(Model &$model = null)
-	{
+	public function setModel( Model &$model = null ) {
 		$this->model = $model;
+
 		return $this;
 	}
 
-	public function hasModel() : bool
-	{
-		return !!($this->model);
+	public function hasModel(): bool {
+		return ! ! ( $this->model );
+	}
+
+	public function display() {
+		$value = $this->getValue();
+		if ( $value === null ) {
+			return '-- ' . __( 'NOT SET' ) . ' ---';
+		} else {
+			return $value;
+		}
 	}
 }

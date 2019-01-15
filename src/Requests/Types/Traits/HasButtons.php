@@ -21,11 +21,11 @@ trait HasButtons {
 	 *
 	 * @return $this
 	 */
-	public function setButtons(ButtonType ...$buttons)
-	{
-		foreach ($buttons as $button) {
+	public function setButtons( ButtonType ...$buttons ) {
+		foreach ( $buttons as $button ) {
 			$this->buttons[] = $button;
 		}
+
 		return $this;
 	}
 
@@ -34,9 +34,12 @@ trait HasButtons {
 	 *
 	 * @return array
 	 */
-	public function getButtons(): array
-	{
+	public function getButtons(): array {
 		return $this->buttons;
+	}
+
+	public function hasButtons() {
+		return ! empty( $this->buttons );
 	}
 
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Foundry\Services;
+
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -20,6 +21,6 @@ abstract class Service {
 	 *
 	 * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null|object
 	 */
-	abstract static function model($id);
+	abstract static function model( $id );
 
 }

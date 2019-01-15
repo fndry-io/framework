@@ -1,4 +1,5 @@
 <?php
+
 namespace Foundry\Models;
 
 use Foundry\Requests\Types\InputType;
@@ -20,6 +21,6 @@ interface FieldType {
 	 *
 	 * @return InputType
 	 */
-	static function input(Model $model = null) : InputType;
+	static function input( Model $model = null ): InputType;
 
 }

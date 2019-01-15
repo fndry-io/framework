@@ -1,6 +1,8 @@
 <?php
 
 namespace Foundry\Requests\Types;
+
+use Foundry\Requests\Types\Contracts\Inputable;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
@@ -22,8 +24,7 @@ abstract class BaseType implements Arrayable {
 	/**
 	 * @return mixed
 	 */
-	public function getType()
-	{
+	public function getType() {
 		return $this->type;
 	}
 
@@ -32,9 +33,9 @@ abstract class BaseType implements Arrayable {
 	 *
 	 * @return InputType
 	 */
-	public function setType($type = null)
-	{
+	public function setType( $type = null ) {
 		$this->type = $type;
+
 		return $this;
 	}
 
@@ -47,22 +48,21 @@ abstract class BaseType implements Arrayable {
 	 *
 	 * @return array
 	 */
-	public function jsonSerialize() : array
-	{
+	public function jsonSerialize(): array {
 
 		$field = array();
 
 		//set all the object properties
-		foreach ($this as $key => $value) {
+		foreach ( $this as $key => $value ) {
 
-			if ($key == 'json_ignore' || in_array($key, $this->json_ignore)) {
+			if ( $key == 'json_ignore' || in_array( $key, $this->json_ignore ) ) {
 				continue;
 			}
 
-			if (is_array($value)) {
+			if ( is_array( $value ) ) {
 				$_value = [];
-				foreach ($value as $child) {
-					if (is_object($child)) {
+				foreach ( $value as $child ) {
+					if ( is_object( $child ) ) {
 						$_value[] = $child->toArray();
 					} else {
 						$_value[] = $child;
@@ -71,12 +71,16 @@ abstract class BaseType implements Arrayable {
 				$value = $_value;
 			}
 
-			$field[$key] = $value;
+			$field[ $key ] = $value;
 		}
 
 		//set required into the rules
 
 		return $field;
+	}
+
+	public function isInputType() {
+		return $this instanceof Inputable;
 	}
 
 

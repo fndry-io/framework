@@ -6,7 +6,7 @@ use Foundry\Requests\FormRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
-trait ViewFormRequest {
+trait FormFormRequest {
 
 	/**
 	 * Bind data to the view.
@@ -21,7 +21,7 @@ trait ViewFormRequest {
 		/**
 		 * @var FormRequest $class
 		 */
-		$form = $class::view( $request, $model );
+		$form = $class::form( $request, $model );
 		$view->with( [
 			'form' => $form
 		] );

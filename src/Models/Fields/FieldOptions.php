@@ -1,4 +1,5 @@
 <?php
+
 namespace Foundry\Models\Fields;
 
 /**
@@ -17,6 +18,6 @@ interface FieldOptions {
 	 *
 	 * @return array
 	 */
-	static function options(\Closure $closure = null): array;
+	static function options( \Closure $closure = null ): array;
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Foundry\Requests;
 
 use Foundry\Exceptions\FormRequestException;
@@ -25,26 +26,24 @@ class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
 	 * @return void
 	 * @throws FormRequestException
 	 */
-	public function register($class, $key = null)
-	{
-		if (is_array($class)) {
-			foreach ($class as $_class) {
-				$this->registerForm($_class);
+	public function register( $class, $key = null ) {
+		if ( is_array( $class ) ) {
+			foreach ( $class as $_class ) {
+				$this->registerForm( $_class );
 			}
 		} else {
-			$this->registerForm($class, $key);
+			$this->registerForm( $class, $key );
 		}
 	}
 
-	protected function registerForm($class, $key = null)
-	{
-		if ($key == null) {
-			$key = forward_static_call([$class, 'name']);
+	protected function registerForm( $class, $key = null ) {
+		if ( $key == null ) {
+			$key = forward_static_call( [ $class, 'name' ] );
 		}
-		if (isset($this->forms[$key])) {
-			throw new FormRequestException(sprintf("Form key %s already used", $key));
+		if ( isset( $this->forms[ $key ] ) ) {
+			throw new FormRequestException( sprintf( "Form key %s already used", $key ) );
 		}
-		$this->forms[$key] = $class;
+		$this->forms[ $key ] = $class;
 	}
 
 	/**
@@ -57,15 +56,15 @@ class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
 	 * @return Response
 	 * @throws FormRequestException
 	 */
-	public function handle($key, $request, $id = null) : Response
-	{
-		$form = $this->getForm($key);
-		if ($id) {
-			$model = $form::model($id);
+	public function handle( $key, $request, $id = null ): Response {
+		$form = $this->getForm( $key );
+		if ( $id ) {
+			$model = $form::model( $id );
 		} else {
 			$model = null;
 		}
-		return $form::handleRequest($request, $model);
+
+		return $form::handleRequest( $request, $model );
 	}
 
 	/**
@@ -78,15 +77,15 @@ class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
 	 * @return Response
 	 * @throws FormRequestException
 	 */
-	public function view($key, $request, $id = null) : Response
-	{
-		$form = $this->getForm($key);
-		if ($id) {
-			$model = $form::model($id);
+	public function view( $key, $request, $id = null ): Response {
+		$form = $this->getForm( $key );
+		if ( $id ) {
+			$model = $form::model( $id );
 		} else {
 			$model = null;
 		}
-		return $form::handleFormViewRequest($request, $model);
+
+		return $form::handleFormViewRequest( $request, $model );
 	}
 
 	/**
@@ -97,12 +96,12 @@ class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
 	 * @return FormRequest
 	 * @throws FormRequestException
 	 */
-	protected function getForm($key) : string
-	{
-		if (!isset($this->forms[$key])) {
-			throw new FormRequestException(sprintf("Form %s not registered", $key));
+	protected function getForm( $key ): string {
+		if ( ! isset( $this->forms[ $key ] ) ) {
+			throw new FormRequestException( sprintf( "Form %s not registered", $key ) );
 		}
-		return $this->forms[$key];
+
+		return $this->forms[ $key ];
 	}
 
 }

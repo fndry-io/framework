@@ -1,4 +1,5 @@
 <?php
+
 namespace Foundry\Core\Routing;
 
 use Illuminate\Routing\Route as LaravelRoute;
@@ -12,19 +13,18 @@ class Route extends LaravelRoute {
 	 *
 	 * @return mixed
 	 */
-	public function run()
-	{
+	public function run() {
 		$response = parent::run();
-		if ($this->thenCallback && is_callable($this->thenCallback)) {
-			return call_user_func($this->thenCallback, $response);
+		if ( $this->thenCallback && is_callable( $this->thenCallback ) ) {
+			return call_user_func( $this->thenCallback, $response );
 		} else {
 			return $response;
 		}
 	}
 
-	public function then($callback)
-	{
+	public function then( $callback ) {
 		$this->thenCallback = $callback;
+
 		return $this;
 	}
 }

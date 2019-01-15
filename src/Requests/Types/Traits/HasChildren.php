@@ -1,4 +1,5 @@
 <?php
+
 namespace Foundry\Requests\Types\Traits;
 
 use Foundry\Requests\Types\BaseType;
@@ -14,11 +15,11 @@ trait HasChildren {
 	 *
 	 * @return $this
 	 */
-	public function addChildren(BaseType ...$types)
-	{
-		foreach ($types as $type) {
+	public function addChildren( BaseType ...$types ) {
+		foreach ( $types as $type ) {
 			$this->children[] = $type;
 		}
+
 		return $this;
 	}
 
@@ -27,8 +28,7 @@ trait HasChildren {
 	 *
 	 * @return array
 	 */
-	public function getChildren(): array
-	{
+	public function getChildren(): array {
 		return $this->children;
 	}
 

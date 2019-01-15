@@ -16,8 +16,7 @@ trait HasName {
 	/**
 	 * @return string
 	 */
-	public function getName(): string
-	{
+	public function getName(): string {
 		return $this->name;
 	}
 
@@ -26,8 +25,7 @@ trait HasName {
 	 *
 	 * @return InputType
 	 */
-	public function setName(string $name)
-	{
+	public function setName( string $name ) {
 		$this->name = $name;
 
 		return $this;

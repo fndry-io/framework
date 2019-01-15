@@ -3,7 +3,7 @@
 namespace Foundry\Contracts;
 
 
-interface Option{
+interface Option {
 
-    function keys();
+	function keys();
 }

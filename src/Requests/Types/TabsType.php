@@ -13,7 +13,7 @@ class TabsType extends ParentType {
 	 * TabsType constructor.
 	 */
 	public function __construct() {
-		$this->setType('tabs');
+		$this->setType( 'tabs' );
 	}
 
 }

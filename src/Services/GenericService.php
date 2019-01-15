@@ -13,15 +13,14 @@ use Illuminate\Database\Query\Builder;
  *
  * @package Plugins\Foundry\System\Services
  */
-abstract class GenericService extends FoundryService
-{
+abstract class GenericService extends FoundryService {
 
 	/**
 	 * Returns the model to use for this service
 	 *
 	 * @return Model
 	 */
-	abstract static public function modelClass() : string;
+	abstract static public function modelClass(): string;
 
 
 	/**
@@ -29,15 +28,14 @@ abstract class GenericService extends FoundryService
 	 *
 	 * @return Model
 	 */
-	abstract static public function resourceName() : string;
+	abstract static public function resourceName(): string;
 
 
 	/**
 	 * {@inheritdoc}
 	 */
-	static function model($id): Model
-	{
-		return static::modelClass()::query()->where('id', $id)->first();
+	static function model( $id ): Model {
+		return static::modelClass()::query()->where( 'id', $id )->first();
 	}
 
 	/**
@@ -47,15 +45,14 @@ abstract class GenericService extends FoundryService
 	 *
 	 * @return Response
 	 */
-	static public function find(\Closure $closure = null): Response
-	{
+	static public function find( \Closure $closure = null ): Response {
 		$query = static::modelClass()::query();
 
-		if ($closure) {
-			$closure($query);
+		if ( $closure ) {
+			$closure( $query );
 		}
 
-		return Response::success($query->paginate(setting('okinus_system.default_pagination', 20)));
+		return Response::success( $query->paginate( setting( 'okinus_system.default_pagination', 20 ) ) );
 	}
 
 	/**
@@ -63,8 +60,7 @@ abstract class GenericService extends FoundryService
 	 *
 	 * @return Builder
 	 */
-	static public function query(): Builder
-	{
+	static public function query(): Builder {
 		return static::modelClass()::query();
 	}
 
@@ -75,12 +71,11 @@ abstract class GenericService extends FoundryService
 	 *
 	 * @return Response
 	 */
-	static function get($id)
-	{
-		if ($id && $store = static::model($id)) {
-			return Response::success($store);
+	static function get( $id ) {
+		if ( $id && $store = static::model( $id ) ) {
+			return Response::success( $store );
 		} else {
-			return Response::error(__("Requested :resource was not found", ['resource' => static::resourceName()]), 404);
+			return Response::error( __( "Requested :resource was not found", [ 'resource' => static::resourceName() ] ), 404 );
 		}
 	}
 
@@ -90,30 +85,30 @@ abstract class GenericService extends FoundryService
 	 *
 	 * @param FormRequest $form
 	 * @param $id
+	 *
 	 * @return Response
 	 */
-	static function upsert(FormRequest $form, $id)
-	{
+	static function upsert( FormRequest $form, $id ) {
 		$class = static::modelClass();
 		$model = new $class();
 
-		if($id && !$model = static::modelClass()::query()->where('id', $id)->first()){
-			return Response::error(__("Requested :resource was not found", ['resource' => static::resourceName()]), 404);
+		if ( $id && ! $model = static::modelClass()::query()->where( 'id', $id )->first() ) {
+			return Response::error( __( "Requested :resource was not found", [ 'resource' => static::resourceName() ] ), 404 );
 		}
 
 		$response = $form->validate();
 
-		if($response->isSuccess()) {
+		if ( $response->isSuccess() ) {
 			$inputs = $response->getData();
-			$model->fill($inputs);
+			$model->fill( $inputs );
 		} else {
 			return $response;
 		}
 
-		if($model->save()){
-			return Response::success($model);
-		}else{
-			return Response::error(__("Unable to save :resource" , ['resource' => static::resourceName()]), 500);
+		if ( $model->save() ) {
+			return Response::success( $model );
+		} else {
+			return Response::error( __( "Unable to save :resource", [ 'resource' => static::resourceName() ] ), 500 );
 		}
 	}
 
@@ -125,25 +120,24 @@ abstract class GenericService extends FoundryService
 	 *
 	 * @return Response
 	 */
-	static public function destroy($model): Response
-	{
-		if (!is_object($model)) {
-			$model = static::model($model);
+	static public function destroy( $model ): Response {
+		if ( ! is_object( $model ) ) {
+			$model = static::model( $model );
 		}
 
-		if (!$model) {
-			return Response::error(__("Requested :resource was not found", ['resource' => static::resourceName()]), 404);
+		if ( ! $model ) {
+			return Response::error( __( "Requested :resource was not found", [ 'resource' => static::resourceName() ] ), 404 );
 		}
 
 		try {
 			$result = $model->delete();
-		} catch (\Exception $e) {
+		} catch ( \Exception $e ) {
 			$result = false;
 		} finally {
-			if($result){
-				return Response::success([], __(":resource deleted", ['resource' => static::resourceName()]));
+			if ( $result ) {
+				return Response::success( [], __( ":resource deleted", [ 'resource' => static::resourceName() ] ) );
 			} else {
-				return Response::error(__("Unable to delete :resource", ['resource' => static::resourceName()]), 500);
+				return Response::error( __( "Unable to delete :resource", [ 'resource' => static::resourceName() ] ), 500 );
 			}
 		}
 	}

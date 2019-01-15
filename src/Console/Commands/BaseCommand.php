@@ -12,7 +12,6 @@ use Nwidart\Modules\Commands\GeneratorCommand;
  *
  * @author Medard Ilunga
  */
-abstract class BaseCommand extends GeneratorCommand
-{
+abstract class BaseCommand extends GeneratorCommand {
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Foundry\Models\Fields;
 
 use Foundry\Models\PickListItem;
@@ -19,7 +20,7 @@ abstract class PickListField extends ChoiceField {
 	 *
 	 * @return array
 	 */
-	static function list($identifier): array {
+	static function list( $identifier ): array {
 		return PickListItem::query()
 		                   ->select( [ 'pick_list_items.*' ] )
 		                   ->join( 'pick_lists', 'pick_list_items.pick_list_id', '=', 'pick_lists.id' )
@@ -27,7 +28,7 @@ abstract class PickListField extends ChoiceField {
 		                   ->where( 'pick_lists.identifier', $identifier )
 		                   ->orderBy( 'pick_list_items.label', 'ASC' )
 		                   ->get()
-		                   ->pluck('label', 'id')
+		                   ->pluck( 'label', 'id' )
 		                   ->toArray();
 	}
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Foundry\View\Composers\Traits;
 
 use Foundry\Requests\FormRequest;
@@ -16,23 +17,23 @@ trait ReadFormRequest {
 	 * @param View $view The view to update
 	 * @param Model $model The model to read
 	 * @param string $model_key The key to set for the loaded model in the view
+	 *
 	 * @return void
 	 */
-	public function handle($class, $request, View &$view, $model, $model_key = 'data')
-	{
+	public function handle( $class, $request, View &$view, $model, $model_key = 'data' ) {
 		/**
 		 * @var FormRequest $class
 		 */
 		$response = $class::handleRequest( $request, $model );
 
-		if ($response->isSuccess()) {
-			$form = $class::view($request, $response->getData());
-			$view->with([
+		if ( $response->isSuccess() ) {
+			$form = $class::view( $request, $response->getData() );
+			$view->with( [
 				$model_key => $response->getData(),
-				'form' => $form
-			]);
+				'form'     => $form
+			] );
 		} else {
-			abort($response->getCode(), $response->getMessage());
+			abort( $response->getCode(), $response->getMessage() );
 		}
 	}
 

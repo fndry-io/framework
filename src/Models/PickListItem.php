@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Pick List Item Model
- * 
+ *
  * @property int $id
  * @property string $label
  * @property string $description
@@ -23,16 +23,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @package Foundry\Core\Models
  */
-class PickListItem extends Model
-{
-    use SoftDeletes;
+class PickListItem extends Model {
+	use SoftDeletes;
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'pick_list_items';
+	/**
+	 * The table associated with the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'pick_list_items';
 
 	protected $primaryKey = 'id';
 
@@ -46,25 +45,24 @@ class PickListItem extends Model
 		'identifier',
 		'status',
 		'default',
-        'pick_list_id'
+		'pick_list_id'
 	];
 
-    /**
-     * Dates
-     * @var array
-     */
-    protected $dates = [
-        'deleted_at',
-        'created_at',
-        'updated_at'
-    ];
+	/**
+	 * Dates
+	 * @var array
+	 */
+	protected $dates = [
+		'deleted_at',
+		'created_at',
+		'updated_at'
+	];
 
-    /**
-     * Get the list
-     */
-    public function list()
-    {
-        return $this->belongsTo(PickList::class, 'pick_list_id');
-    }
+	/**
+	 * Get the list
+	 */
+	public function list() {
+		return $this->belongsTo( PickList::class, 'pick_list_id' );
+	}
 
 }

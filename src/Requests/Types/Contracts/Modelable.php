@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 interface Modelable {
 
-	public function setModel(Model &$model = null);
+	public function setModel( Model &$model = null );
 
-	public function getModel() : Model;
+	public function getModel(): Model;
 
-	public function attachInputs(InputType ...$input_types);
+	public function attachInputs( InputType ...$input_types );
 }

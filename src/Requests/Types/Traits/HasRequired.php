@@ -16,8 +16,7 @@ trait HasRequired {
 	/**
 	 * @return bool
 	 */
-	public function isRequired(): bool
-	{
+	public function isRequired(): bool {
 		return $this->required;
 	}
 
@@ -26,9 +25,15 @@ trait HasRequired {
 	 *
 	 * @return InputType
 	 */
-	public function setRequired(bool $required = true)
-	{
+	public function setRequired( bool $required = true ) {
 		$this->required = $required;
+		$this->removeRules( 'required', 'nullable' );
+		if ( $this->required ) {
+			$this->addRule( 'required' );
+		} else {
+			$this->addRule( 'nullable' );
+		}
+
 		return $this;
 	}
 

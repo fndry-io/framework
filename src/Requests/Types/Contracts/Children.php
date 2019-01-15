@@ -13,7 +13,7 @@ interface Children {
 	 *
 	 * @return mixed
 	 */
-	public function addChildren(BaseType ...$types);
+	public function addChildren( BaseType ...$types );
 
 	/**
 	 * Get the children for the Type

@@ -14,18 +14,16 @@ class DocType extends ParentType {
 
 
 	use HasId,
-		HasClass
-		;
+		HasClass;
 
 	/**
 	 * DocType constructor.
 	 *
 	 * @param null $id
 	 */
-    public function __construct($id = null)
-    {
-    	$this->setId($id);
-    	$this->setType('doc');
-    }
+	public function __construct( $id = null ) {
+		$this->setId( $id );
+		$this->setType( 'doc' );
+	}
 
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Pick List Model
- * 
+ *
  * @property int $id
  * @property string $label
  * @property string $description
@@ -20,16 +20,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @package Foundry\Core\Models
  */
-class PickList extends Model
-{
-    use SoftDeletes;
+class PickList extends Model {
+	use SoftDeletes;
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'pick_lists';
+	/**
+	 * The table associated with the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'pick_lists';
 
 	protected $primaryKey = 'id';
 
@@ -43,27 +42,26 @@ class PickList extends Model
 		'identifier'
 	];
 
-    /**
-     * Dates
-     * @var array
-     */
-    protected $dates = [
-        'deleted_at',
-        'created_at',
-        'updated_at'
-    ];
+	/**
+	 * Dates
+	 * @var array
+	 */
+	protected $dates = [
+		'deleted_at',
+		'created_at',
+		'updated_at'
+	];
 
-    public $relationships = [
-    	'hasMany' => [
-    		'items' => PickListItem::class
-	    ]
-    ];
+	public $relationships = [
+		'hasMany' => [
+			'items' => PickListItem::class
+		]
+	];
 
-    /**
-     * Get list items
-     */
-    public function items()
-    {
-        return $this->hasMany(PickListItem::class);
-    }
+	/**
+	 * Get list items
+	 */
+	public function items() {
+		return $this->hasMany( PickListItem::class );
+	}
 }

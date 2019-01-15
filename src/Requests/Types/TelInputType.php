@@ -10,7 +10,7 @@ use Foundry\Requests\Types\Traits\HasMinMax;
  *
  * @package Foundry\Requests\Types
  */
-class TelInputType extends InputType{
+class TelInputType extends InputType {
 
 	use HasMinMax;
 
@@ -22,9 +22,9 @@ class TelInputType extends InputType{
 		string $position = 'full',
 		string $rules = null,
 		string $id = null,
-		string $placeholder = null)
-	{
+		string $placeholder = null
+	) {
 		$type = 'tel';
-		parent::__construct($name, $label, $required, $value, $position, $rules, $id, $placeholder, $type);
+		parent::__construct( $name, $label, $required, $value, $position, $rules, $id, $placeholder, $type );
 	}
 }

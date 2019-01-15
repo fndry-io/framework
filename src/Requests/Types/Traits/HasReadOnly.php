@@ -16,8 +16,7 @@ trait HasReadonly {
 	/**
 	 * @return bool
 	 */
-	public function isReadonly(): bool
-	{
+	public function isReadonly(): bool {
 		return $this->readonly;
 	}
 
@@ -26,8 +25,7 @@ trait HasReadonly {
 	 *
 	 * @return InputType
 	 */
-	public function setReadonly(bool $readonly = false)
-	{
+	public function setReadonly( bool $readonly = false ) {
 		$this->readonly = $readonly;
 
 		return $this;

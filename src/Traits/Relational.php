@@ -1,4 +1,5 @@
 <?php
+
 namespace Foundry\Traits;
 
 use Illuminate\Database\Eloquent\Model;
@@ -84,25 +85,24 @@ trait Relational {
 	 *
 	 * @param array $attributes
 	 */
-	public function __construct(array $attributes = [])
-	{
-		if (isset($this->relationships)) {
-			foreach ($this->relationships as $type => $relationships) {
-				foreach ($relationships as $name => $relationship) {
-					if (is_string($relationship)) {
+	public function __construct( array $attributes = [] ) {
+		if ( isset( $this->relationships ) ) {
+			foreach ( $this->relationships as $type => $relationships ) {
+				foreach ( $relationships as $name => $relationship ) {
+					if ( is_string( $relationship ) ) {
 						$relationship = [
 							'related' => $relationship
 						];
 					}
-					$this->relationships[$type][$name] = array_merge($relationship, [
+					$this->relationships[ $type ][ $name ] = array_merge( $relationship, [
 						'type' => $type
-					]);
+					] );
 
-					$this->mapped_relations[$name] = &$this->relationships[$type][$name];
+					$this->mapped_relations[ $name ] = &$this->relationships[ $type ][ $name ];
 				}
 			}
 		}
-		parent::__construct($attributes);
+		parent::__construct( $attributes );
 	}
 
 	/**
@@ -114,7 +114,7 @@ trait Relational {
 	 *
 	 * @return array The extracted relation `['column' => string, 'table' => string|null, 'relation' => string|null], 'parts' => null|array`
 	 */
-	public static function extractRelation($name): array {
+	public static function extractRelation( $name ): array {
 		$relation = $column = $table = $parts = null;
 		if ( strpos( $name, '.' ) !== false ) {
 			$parts  = preg_split( '/\./', $name );
@@ -129,6 +129,7 @@ trait Relational {
 		} else {
 			$column = $name;
 		}
+
 		return array( $column, $table, $relation, $parts );
 	}
 
@@ -137,11 +138,11 @@ trait Relational {
 	 *
 	 * @return null|string
 	 */
-	public function getAlias()
-	{
-		if ($this->table_alias) {
+	public function getAlias() {
+		if ( $this->table_alias ) {
 			return $this->table_alias;
 		}
+
 		return $this->table;
 	}
 
@@ -152,8 +153,7 @@ trait Relational {
 	 *
 	 * @return void
 	 */
-	public function setAlias($alias)
-	{
+	public function setAlias( $alias ) {
 		$this->table_alias = $alias;
 	}
 
@@ -177,19 +177,19 @@ trait Relational {
 	 *
 	 * @return Builder
 	 */
-	public function scopeWithSelect(Builder $builder, $columns = ['*'], $join = 'left'): Builder
-	{
-		$columns = is_array($columns) ? $columns : func_get_args();
+	public function scopeWithSelect( Builder $builder, $columns = [ '*' ], $join = 'left' ): Builder {
+		$columns = is_array( $columns ) ? $columns : func_get_args();
 
-		if (is_null($this->table_alias)) {
-			$this->setAlias(camel_case(class_basename(self::class)));
+		if ( is_null( $this->table_alias ) ) {
+			$this->setAlias( camel_case( class_basename( self::class ) ) );
 		}
 
-		$builder->from("{$this->getTable()} as {$this->getAlias()}");
+		$builder->from( "{$this->getTable()} as {$this->getAlias()}" );
 
-		foreach ($columns as $alias => $name) {
-			$this->addSelect($builder, $name, $alias, $join);
+		foreach ( $columns as $alias => $name ) {
+			$this->addSelect( $builder, $name, $alias, $join );
 		}
+
 		return $builder;
 	}
 
@@ -204,8 +204,7 @@ trait Relational {
 	 *                      can be an array with the relations as the index and the type of join.
 	 * @param $alias
 	 */
-	protected function addSelect(Builder $builder, $name, $alias, $join = 'left'): void
-	{
+	protected function addSelect( Builder $builder, $name, $alias, $join = 'left' ): void {
 		$relation = null;
 		$column   = null;
 
@@ -214,8 +213,9 @@ trait Relational {
 		}
 
 		//Call the closure
-		if ( is_callable($name)) {
+		if ( is_callable( $name ) ) {
 			$name( $builder, $alias );
+
 			return;
 		}
 
@@ -224,34 +224,33 @@ trait Relational {
 		//Add it directly
 		//Extract the relation
 		if ( strpos( $name, '.' ) !== false ) {
-			list($column, $table, $relation, $parts) = self::extractRelation($name);
-			if ($relation !== $this->getAlias()) {
+			list( $column, $table, $relation, $parts ) = self::extractRelation( $name );
+			if ( $relation !== $this->getAlias() ) {
 				$builder->withJoin( $relation, $join );
-				$model = self::getRelationalModel($relation, $this);
+				$model = self::getRelationalModel( $relation, $this );
 			}
 			$name = $table . '.' . $column;
 		} else {
 			$column = $name;
-			$name = $this->getAlias() . '.' . $name;
+			$name   = $this->getAlias() . '.' . $name;
 		}
 
-		if ($virtual = $model->getVirtualField($column)) {
+		if ( $virtual = $model->getVirtualField( $column ) ) {
 			$fields = [];
-			foreach ($virtual as $field) {
+			foreach ( $virtual as $field ) {
 				$fields[] = '`' . $model->getAlias() . '`.`' . $field . '`';
 			}
-			$column = sprintf("CONCAT_WS(' ', %s)", implode(', ', $fields));
-			$select = DB::raw("$column as `$name`");
+			$column = sprintf( "CONCAT_WS(' ', %s)", implode( ', ', $fields ) );
+			$select = DB::raw( "$column as `$name`" );
 		} else {
 			$select = $name . ' as ' . $alias;
 		}
 		$builder->addSelect( $select );
 	}
 
-	public function getVirtualField($column)
-	{
-		if (isset($this->virtualFields[$column])) {
-			return $this->virtualFields[$column];
+	public function getVirtualField( $column ) {
+		if ( isset( $this->virtualFields[ $column ] ) ) {
+			return $this->virtualFields[ $column ];
 		} else {
 			return null;
 		}
@@ -268,8 +267,7 @@ trait Relational {
 	 *
 	 * @return Builder
 	 */
-	public function scopeWithWhere(Builder $builder, $name, $value): Builder
-	{
+	public function scopeWithWhere( Builder $builder, $name, $value ): Builder {
 		$relation = null;
 		$column   = null;
 
@@ -278,8 +276,8 @@ trait Relational {
 
 			//Extract the relation
 			if ( strpos( $name, '.' ) !== false ) {
-				list($column, $table, $relation, $parts) = self::extractRelation($name);
-				if ($relation !== $this->getAlias()) {
+				list( $column, $table, $relation, $parts ) = self::extractRelation( $name );
+				if ( $relation !== $this->getAlias() ) {
 					$builder->withJoin( $relation, 'inner' );
 				}
 				$name = $table . '.' . $column;
@@ -287,20 +285,18 @@ trait Relational {
 				$name = $this->getAlias() . '.' . $name;
 			}
 
-			if (is_array($value)) {
+			if ( is_array( $value ) ) {
 				$builder->whereIn( $name, $value );
 			} else {
 				$builder->where( $name, $value );
 			}
-		}
-		//Call the closure
+		} //Call the closure
 		else if ( $name instanceof \Closure ) {
 			$name( $builder, $value );
 		}
 
 		return $builder;
 	}
-
 
 
 	/**
@@ -313,48 +309,47 @@ trait Relational {
 	 *
 	 * @return null|array The found relationship, relationships if set to true, or null
 	 */
-	static function getRelationship($relation, $model, $relationships = false)
-	{
+	static function getRelationship( $relation, $model, $relationships = false ) {
 		$relationship = null;
 
 		//determine if the relation is chained
-		if (is_string($relation)) {
-			if (strpos( $relation, '.' ) !== false) {
-				$relations = preg_split('/\./', $relation);
+		if ( is_string( $relation ) ) {
+			if ( strpos( $relation, '.' ) !== false ) {
+				$relations = preg_split( '/\./', $relation );
 			} else {
-				$relations = array_wrap($relation);
+				$relations = array_wrap( $relation );
 			}
 		} else {
 			$relations = $relation;
 		}
 
-		$relation = array_shift($relations);
-		if ($relation === $model->getAlias()){
-			if ($relations){
-				$relation = array_shift($relations);
+		$relation = array_shift( $relations );
+		if ( $relation === $model->getAlias() ) {
+			if ( $relations ) {
+				$relation = array_shift( $relations );
 			}
 		}
 
-		if (isset($model->relationships)) {
-			foreach ($model->relationships as $type => $list) {
-				if (key_exists($relation, $list)) {
-					$relationship = &$model->relationships[$type][$relation];
+		if ( isset( $model->relationships ) ) {
+			foreach ( $model->relationships as $type => $list ) {
+				if ( key_exists( $relation, $list ) ) {
+					$relationship          = &$model->relationships[ $type ][ $relation ];
 					$relationship['model'] = new $relationship['related']();
-					$relationship['model']->setAlias($relation);
-					if ($relationships) {
-						if ($relationships === true) {
+					$relationship['model']->setAlias( $relation );
+					if ( $relationships ) {
+						if ( $relationships === true ) {
 							$relationships = [];
 						}
-						array_push($relationships, $relationship);
+						array_push( $relationships, $relationship );
 					}
 				}
 			}
 		}
 
-		if ($relations && $relationship) {
-			return Relational::getRelationship($relations, $relationship['model'], $relationships);
+		if ( $relations && $relationship ) {
+			return Relational::getRelationship( $relations, $relationship['model'], $relationships );
 		} else {
-			if (is_array($relationships)) {
+			if ( is_array( $relationships ) ) {
 				return $relationships;
 			} else {
 				return $relationship;
@@ -373,12 +368,12 @@ trait Relational {
 	 *
 	 * @return Builder
 	 */
-	public function scopeWithJoin(Builder $builder, $relations, $join = 'left', $operator = '=', $withoutTrashed = true): Builder
-	{
-		$relations = array_wrap($relations);
-		foreach ($relations as $relation) {
-			$this->getJoinSubQuery($builder, $this, $this->getAlias(), $relation, $join, $operator, $withoutTrashed);
+	public function scopeWithJoin( Builder $builder, $relations, $join = 'left', $operator = '=', $withoutTrashed = true ): Builder {
+		$relations = array_wrap( $relations );
+		foreach ( $relations as $relation ) {
+			$this->getJoinSubQuery( $builder, $this, $this->getAlias(), $relation, $join, $operator, $withoutTrashed );
 		}
+
 		return $builder;
 	}
 
@@ -398,66 +393,65 @@ trait Relational {
 	 *
 	 * @throws \Exception
 	 */
-	protected function getJoinSubQuery(Builder $builder, Model $model, $alias, $relation, $join = 'left', $operator = '=', $withoutTrashed = true)
-	{
-		if (!in_array(Relational::class, class_uses($model))) {
-			throw new \Exception(sprintf("Class %s must use the Trait %s.", get_class($model), Relational::class));
+	protected function getJoinSubQuery( Builder $builder, Model $model, $alias, $relation, $join = 'left', $operator = '=', $withoutTrashed = true ) {
+		if ( ! in_array( Relational::class, class_uses( $model ) ) ) {
+			throw new \Exception( sprintf( "Class %s must use the Trait %s.", get_class( $model ), Relational::class ) );
 		}
 
 		$query = $builder->getQuery();
 
 		//determine if the relation is chained
-		$relations = preg_split('/\./', $relation, 2);
-		$relation = array_shift($relations);
+		$relations = preg_split( '/\./', $relation, 2 );
+		$relation  = array_shift( $relations );
 
 		//only process if the join is not for the root model
-		if ($relation !== $model->getAlias()) {
+		if ( $relation !== $model->getAlias() ) {
 			//Work out the join method
 			$joinMethod = 'left';
-			if (is_array($join)) {
-				if (isset($join[$relation])) {
-					$joinMethod = $join[$relation];
+			if ( is_array( $join ) ) {
+				if ( isset( $join[ $relation ] ) ) {
+					$joinMethod = $join[ $relation ];
 				}
 			} else {
 				$joinMethod = $join;
 			}
-			if ($joinMethod === 'inner') {
+			if ( $joinMethod === 'inner' ) {
 				$joinMethod = 'join';
-			} elseif ($joinMethod === 'right') {
+			} elseif ( $joinMethod === 'right' ) {
 				$joinMethod = 'rightJoin';
 			} else {
 				$joinMethod = 'leftJoin';
 			}
 
-			$relationship = self::getRelationship($relation, $model);
-			if ($relationship === null) {
-				throw new \BadMethodCallException(sprintf("Relationship %s does not exist on %s, cannot join.", $relation, get_class($model)));
+			$relationship = self::getRelationship( $relation, $model );
+			if ( $relationship === null ) {
+				throw new \BadMethodCallException( sprintf( "Relationship %s does not exist on %s, cannot join.", $relation, get_class( $model ) ) );
 			}
 
-			/**@var Model;*/
+			/**@var Model; */
 			$foreign = new $relationship['related']();
 
 			$table = "{$foreign->getTable()} as {$relation}";
-			$foreign->setAlias($relation);
+			$foreign->setAlias( $relation );
 
-			$withoutTrashed = ($withoutTrashed && $foreign->hasGlobalScope(SoftDeletingScope::class) && !in_array(SoftDeletingScope::class, $builder->removedScopes()));
+			$withoutTrashed = ( $withoutTrashed && $foreign->hasGlobalScope( SoftDeletingScope::class ) && ! in_array( SoftDeletingScope::class, $builder->removedScopes() ) );
 
 			//check we don't already have this joined
-			if (!isset($this->joined[$relation])) {
-				switch ($relationship['type']) {
+			if ( ! isset( $this->joined[ $relation ] ) ) {
+				switch ( $relationship['type'] ) {
 					case 'hasOne':
 					case 'hasMany':
 						$query->{$joinMethod}(
 							"{$table}",
-							function($q) use ($relation, $operator, $alias, $relationship, $model, $foreign, $withoutTrashed){
+							function ( $q ) use ( $relation, $operator, $alias, $relationship, $model, $foreign, $withoutTrashed ) {
 								$q->on(
-									$relation . "." . (isset($relationship['foreignKey']) ? $relationship['foreignKey'] : $model->getForeignKey()),
+									$relation . "." . ( isset( $relationship['foreignKey'] ) ? $relationship['foreignKey'] : $model->getForeignKey() ),
 									$operator,
-									$alias . "." . (isset($relationship['localKey']) ? $relationship['localKey'] : $model->getKeyName())
+									$alias . "." . ( isset( $relationship['localKey'] ) ? $relationship['localKey'] : $model->getKeyName() )
 								);
 								//detect if we must add the soft delete
-								if ($withoutTrashed) {
-									$q->whereNull($foreign->getQualifiedDeletedAtColumn());
+								if ( $withoutTrashed ) {
+									$q->whereNull( $foreign->getQualifiedDeletedAtColumn() );
 								}
 							}
 						);
@@ -465,15 +459,15 @@ trait Relational {
 					case 'belongsTo':
 						$query->{$joinMethod}(
 							"{$table}",
-							function($q) use ($relation, $operator, $alias, $relationship, $model, $foreign, $withoutTrashed){
+							function ( $q ) use ( $relation, $operator, $alias, $relationship, $model, $foreign, $withoutTrashed ) {
 								$q->on(
-									$relation . "." . (isset($relationship['ownerKey']) ? $relationship['ownerKey'] : $foreign->getKeyName()),
+									$relation . "." . ( isset( $relationship['ownerKey'] ) ? $relationship['ownerKey'] : $foreign->getKeyName() ),
 									$operator,
-									$alias . "." . (isset($relationship['foreignKey']) ? $relationship['foreignKey'] : $foreign->getKeyName())
+									$alias . "." . ( isset( $relationship['foreignKey'] ) ? $relationship['foreignKey'] : $foreign->getKeyName() )
 								);
 								//detect if we must add the soft delete
-								if ($withoutTrashed) {
-									$q->whereNull($foreign->getQualifiedDeletedAtColumn());
+								if ( $withoutTrashed ) {
+									$q->whereNull( $foreign->getQualifiedDeletedAtColumn() );
 								}
 							}
 						);
@@ -482,21 +476,21 @@ trait Relational {
 					case 'belongsToThrough':
 						$query->{$joinMethod}(
 							"{$relationship['table']}",
-							$relationship['table'] . "." . (isset($relationship['foreignKey']) ? $relationship['foreignKey'] : $foreign->getKeyName()),
+							$relationship['table'] . "." . ( isset( $relationship['foreignKey'] ) ? $relationship['foreignKey'] : $foreign->getKeyName() ),
 							$operator,
-							$alias . "." . (isset($relationship['relatedKey']) ? $relationship['relatedKey'] : $model->getKeyName())
+							$alias . "." . ( isset( $relationship['relatedKey'] ) ? $relationship['relatedKey'] : $model->getKeyName() )
 						);
 						$query->{$joinMethod}(
 							"{$table}",
-							function($q) use ($relation, $operator, $alias, $relationship, $model, $foreign, $withoutTrashed){
+							function ( $q ) use ( $relation, $operator, $alias, $relationship, $model, $foreign, $withoutTrashed ) {
 								$q->on(
 									$relation . "." . $foreign->getKeyName(),
 									$operator,
-									$relationship['table'] . "." . (isset($relationship['relatedPivotKey']) ? $relationship['relatedPivotKey'] : $foreign->getForeignKey())
+									$relationship['table'] . "." . ( isset( $relationship['relatedPivotKey'] ) ? $relationship['relatedPivotKey'] : $foreign->getForeignKey() )
 								);
 								//detect if we must add the soft delete
-								if ($withoutTrashed) {
-									$q->whereNull($foreign->getQualifiedDeletedAtColumn());
+								if ( $withoutTrashed ) {
+									$q->whereNull( $foreign->getQualifiedDeletedAtColumn() );
 								}
 							}
 						);
@@ -506,15 +500,15 @@ trait Relational {
 					//case 'morphToMany':
 					//case 'hasManyThrough':
 				}
-				$this->joined[$relation] = $foreign;
+				$this->joined[ $relation ] = $foreign;
 			}
 		} else {
 			$foreign = $model;
 		}
 
 		//continue with other joins if they exist
-		if ($relations) {
-			$this->getJoinSubQuery($builder, $foreign, $relation, $relations[0], $join, $operator, $withoutTrashed);
+		if ( $relations ) {
+			$this->getJoinSubQuery( $builder, $foreign, $relation, $relations[0], $join, $operator, $withoutTrashed );
 		}
 	}
 
@@ -525,12 +519,11 @@ trait Relational {
 	 *
 	 * @return string
 	 */
-	public function getAttributeLabel($attribute)
-	{
-		if (isset($this->labels[$attribute])) {
-			return $this->labels[$attribute];
+	public function getAttributeLabel( $attribute ) {
+		if ( isset( $this->labels[ $attribute ] ) ) {
+			return $this->labels[ $attribute ];
 		} else {
-			return title_case(str_replace('_', ' ', snake_case($attribute)));
+			return title_case( str_replace( '_', ' ', snake_case( $attribute ) ) );
 		}
 	}
 
@@ -539,12 +532,11 @@ trait Relational {
 	 *
 	 * @return string
 	 */
-	public function getTitle()
-	{
-		if (isset($this->title)) {
+	public function getTitle() {
+		if ( isset( $this->title ) ) {
 			return $this->title;
 		} else {
-			return title_case(str_replace('_', ' ', snake_case($this->getAlias())));
+			return title_case( str_replace( '_', ' ', snake_case( $this->getAlias() ) ) );
 		}
 	}
 
@@ -553,8 +545,7 @@ trait Relational {
 	 *
 	 * @return string
 	 */
-	public function getDisplayField()
-	{
+	public function getDisplayField() {
 		return $this->displayField;
 	}
 
@@ -563,9 +554,8 @@ trait Relational {
 	 *
 	 * @return string
 	 */
-	public function getQualifiedDisplayField()
-	{
-		return $this->qualifyColumn($this->getDisplayField());
+	public function getQualifiedDisplayField() {
+		return $this->qualifyColumn( $this->getDisplayField() );
 	}
 
 	/**
@@ -573,12 +563,11 @@ trait Relational {
 	 *
 	 * @return bool
 	 */
-	public function hasRelationship($relation)
-	{
+	public function hasRelationship( $relation ) {
 		return (
-			strpos( $relation, '.' ) !== false && self::getRelationship($relation, $this) !== null
+			strpos( $relation, '.' ) !== false && self::getRelationship( $relation, $this ) !== null
 			|| $relation === $this->getAlias()
-			|| isset($this->mapped_relations[$relation])
+			|| isset( $this->mapped_relations[ $relation ] )
 		);
 	}
 
@@ -595,81 +584,80 @@ trait Relational {
 	 * @return array
 	 * @throws \Exception
 	 */
-	static function getList($condition = null, $query = null, $model = null, $withoutTrashed = true, $relationship = null)
-	{
-		if ($model == null) {
+	static function getList( $condition = null, $query = null, $model = null, $withoutTrashed = true, $relationship = null ) {
+		if ( $model == null ) {
 			$model = new static;
 		}
-		if ($model->getDisplayField() === null) {
-			throw new \Exception(sprintf("Property displayField must be set on %s.", self::class));
+		if ( $model->getDisplayField() === null ) {
+			throw new \Exception( sprintf( "Property displayField must be set on %s.", self::class ) );
 		}
-		if ($query === null) {
-			if (!$withoutTrashed) {
-				$query = $model->newQueryWithoutScope(SoftDeletingScope::class);
+		if ( $query === null ) {
+			if ( ! $withoutTrashed ) {
+				$query = $model->newQueryWithoutScope( SoftDeletingScope::class );
 			} else {
 				$query = self::query();
 			}
 		}
 
-		if ($relationship) {
-			$displayField =  $relationship . '.' . $model->getDisplayField();
-			$primaryKey = $relationship . '.' . $model->getKeyName();
+		if ( $relationship ) {
+			$displayField = $relationship . '.' . $model->getDisplayField();
+			$primaryKey   = $relationship . '.' . $model->getKeyName();
 
 		} else {
-			$displayField =  $model->qualifyColumn($model->getDisplayField());
-			$primaryKey = $model->qualifyColumn($model->getKeyName());
+			$displayField = $model->qualifyColumn( $model->getDisplayField() );
+			$primaryKey   = $model->qualifyColumn( $model->getKeyName() );
 		}
 
-		if (is_callable($condition)) {
-			call_user_func($condition, $query);
-		} elseif (is_array($condition)) {
-			foreach ($condition as $field => $value) {
-				if (is_callable($value)) {
-					call_user_func($value, $query);
+		if ( is_callable( $condition ) ) {
+			call_user_func( $condition, $query );
+		} elseif ( is_array( $condition ) ) {
+			foreach ( $condition as $field => $value ) {
+				if ( is_callable( $value ) ) {
+					call_user_func( $value, $query );
 				} else {
-					$query->withWhere($field, $value);
+					$query->withWhere( $field, $value );
 				}
 			}
 		}
 
 		$query
-			->withSelect([$displayField, $primaryKey])
-			->whereNotNull($model->qualifyColumn($model->getKeyName()))
-		;
+			->withSelect( [ $displayField, $primaryKey ] )
+			->whereNotNull( $model->qualifyColumn( $model->getKeyName() ) );
 
-		if ($virtual = $model->getVirtualField($model->getDisplayField())) {
-			foreach ($virtual as $field) {
-				$query->orderBy($model->qualifyColumn($field), 'ASC');
+		if ( $virtual = $model->getVirtualField( $model->getDisplayField() ) ) {
+			foreach ( $virtual as $field ) {
+				$query->orderBy( $model->qualifyColumn( $field ), 'ASC' );
 			}
 		} else {
 			$query
-				->orderBy($model->qualifyColumn($model->getDisplayField()), 'ASC')
-				->whereNotNull($model->qualifyColumn($model->getDisplayField()))
-			;
+				->orderBy( $model->qualifyColumn( $model->getDisplayField() ), 'ASC' )
+				->whereNotNull( $model->qualifyColumn( $model->getDisplayField() ) );
 		}
 
 //		dump($query->toSql());
 //		die();
 
 		$results = $query->get()->toArray();
-		return array_column($results, $displayField, $primaryKey);
+
+		return array_column( $results, $displayField, $primaryKey );
 	}
 
 	/**
 	 * Qualify the given column name by the model's table.
 	 *
-	 * @param  string  $column
+	 * @param  string $column
+	 *
 	 * @return string
 	 */
-	public function qualifyColumn($column)
-	{
-		if (Str::contains($column, '.')) {
+	public function qualifyColumn( $column ) {
+		if ( Str::contains( $column, '.' ) ) {
 			return $column;
 		}
-		if ($this->getTable() !== $this->getAlias()) {
-			return $this->getAlias().'.'.$column;
+		if ( $this->getTable() !== $this->getAlias() ) {
+			return $this->getAlias() . '.' . $column;
 		}
-		return $this->getTable().'.'.$column;
+
+		return $this->getTable() . '.' . $column;
 	}
 
 	/**
@@ -683,37 +671,36 @@ trait Relational {
 	 * @return Model
 	 * @throws \Exception
 	 */
-	static function getRelationalModel($relation, Model $model)
-	{
-		if (!in_array(Relational::class, class_uses($model))) {
-			throw new \Exception(sprintf("Class %s must use the Trait %s.", get_class($model), Relational::class));
+	static function getRelationalModel( $relation, Model $model ) {
+		if ( ! in_array( Relational::class, class_uses( $model ) ) ) {
+			throw new \Exception( sprintf( "Class %s must use the Trait %s.", get_class( $model ), Relational::class ) );
 		}
 
 		//determine if the relation is chained
-		$relations = preg_split('/\./', $relation, 2);
-		$relation = array_shift($relations);
+		$relations = preg_split( '/\./', $relation, 2 );
+		$relation  = array_shift( $relations );
 
-		if ($relation === $model->getAlias()) {
-			if (empty($relations)) {
+		if ( $relation === $model->getAlias() ) {
+			if ( empty( $relations ) ) {
 				return $model;
 			} else {
-				$relation = array_shift($relations);
+				$relation = array_shift( $relations );
 			}
 		}
 
-		$relationship = Relational::getRelationship($relation, $model);
-		if ($relationship === null) {
-			throw new \Exception(sprintf("Relationship %s does not exist on %s.", lcfirst(studly_case($relation)), get_class($model)));
+		$relationship = Relational::getRelationship( $relation, $model );
+		if ( $relationship === null ) {
+			throw new \Exception( sprintf( "Relationship %s does not exist on %s.", lcfirst( studly_case( $relation ) ), get_class( $model ) ) );
 		}
 		$class = new $relationship['related']();
-		if ($relations) {
-			return self::getRelationalModel($relations[0], $class);
+		if ( $relations ) {
+			return self::getRelationalModel( $relations[0], $class );
 		}
 
-		if (!in_array(Relational::class, class_uses($class))) {
-			throw new \Exception(sprintf("Class %s must use the Trait %s.", get_class($class), Relational::class));
+		if ( ! in_array( Relational::class, class_uses( $class ) ) ) {
+			throw new \Exception( sprintf( "Class %s must use the Trait %s.", get_class( $class ), Relational::class ) );
 		}
-		$class->setAlias($relation);
+		$class->setAlias( $relation );
 
 		return $class;
 	}
@@ -721,8 +708,9 @@ trait Relational {
 	/**
 	 * Handle dynamic method calls into the model and check the call is not for a relationship.
 	 *
-	 * @param  string  $method
-	 * @param  array  $parameters
+	 * @param  string $method
+	 * @param  array $parameters
+	 *
 	 * @return mixed
 	 */
 //	public function __call($method, $parameters)
