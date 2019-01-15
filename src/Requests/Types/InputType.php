@@ -84,12 +84,12 @@ abstract class InputType extends BaseType implements Inputable {
 		}
 
 		//set the value
-		if (!$field['value'] && $model = $this->getRow()->getForm()->getModel()) {
-			$field['value'] = $this->getModelValue($model);
+		if (!$field['value'] && $this->hasModel()) {
+			$field['value'] = $this->getModelValue($this->getName());
 		}
 
 		//set the rules
-		if (!$field['rules']) {
+		if ($field['rules']) {
 			$_rules = [];
 			$rules = $this->getRules();
 			if ($rules) {
@@ -103,6 +103,16 @@ abstract class InputType extends BaseType implements Inputable {
 				$_rules = implode('|', $_rules);
 			}
 			$field['rules'] = $_rules;
+		}
+
+		//set the fillable etc values
+		foreach ([
+			'fillable' => 'isFillable',
+			'guarded' => 'isGuarded',
+			'visible' => 'isVisible',
+			'hidden' => 'isHidden'
+		] as $key => $method) {
+			$field[$key] = call_user_func([$this, $method]);
 		}
 
 		return $field;

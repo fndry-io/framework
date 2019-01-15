@@ -10,6 +10,8 @@ use Illuminate\Contracts\Support\Arrayable;
  */
 abstract class BaseType implements Arrayable {
 
+	protected $json_ignore = [];
+
 	/**
 	 * Type of the input to display
 	 *
@@ -52,6 +54,23 @@ abstract class BaseType implements Arrayable {
 
 		//set all the object properties
 		foreach ($this as $key => $value) {
+
+			if ($key == 'json_ignore' || in_array($key, $this->json_ignore)) {
+				continue;
+			}
+
+			if (is_array($value)) {
+				$_value = [];
+				foreach ($value as $child) {
+					if (is_object($child)) {
+						$_value[] = $child->toArray();
+					} else {
+						$_value[] = $child;
+					}
+				}
+				$value = $_value;
+			}
+
 			$field[$key] = $value;
 		}
 

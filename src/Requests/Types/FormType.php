@@ -10,6 +10,7 @@ use Foundry\Requests\Types\Traits\HasId;
 use Foundry\Requests\Types\Traits\HasName;
 use Foundry\Requests\Types\Traits\HasRules;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 
 /**
@@ -26,6 +27,12 @@ class FormType extends ParentType implements Modelable {
 		HasErrors,
 		HasRules
 		;
+
+	protected $json_ignore = [
+		'model',
+		'inputs',
+		'request'
+	];
 
 	protected $encoding;
 
@@ -72,6 +79,15 @@ class FormType extends ParentType implements Modelable {
 		$this->model;
 	}
 
+	public function attachInputCollection($collection)
+	{
+		/**
+		 * @var Collection $collection
+		 */
+		$this->attachInputs(...array_values($collection->all()));
+		return $this;
+	}
+
 	public function attachInputs(InputType ...$inputs)
 	{
 		if ($this->model) {
@@ -116,75 +132,6 @@ class FormType extends ParentType implements Modelable {
 	}
 
 	/**
-	 * Is the input visible
-	 *
-	 * @param $key
-	 *
-	 * @return bool
-	 */
-	public function isInputVisible($key)
-	{
-		if ($input = $this->getInput($key)) {
-			/**
-			 * @var InputType $input
-			 */
-			if ($input->hasModel()) {
-				$hidden = $input->getModel()->getHidden();
-				$visible = $input->getModel()->getVisible();
-				if (!in_array($input->getName(), $hidden) && in_array($input->getName(), $visible)) {
-					return true;
-				} elseif (in_array($input->getName(), $hidden)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * Is the input hidden
-	 *
-	 * @param $key
-	 *
-	 * @return bool
-	 */
-	public function isInputHidden($key)
-	{
-		if ($input = $this->getInput($key)) {
-			/**
-			 * @var InputType $input
-			 */
-			if ($input->hasModel()) {
-				$hidden = $input->getModel()->getHidden();
-				if (in_array($input->getName(), $hidden)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Is input Guarded
-	 *
-	 * @param $key
-	 *
-	 * @return bool
-	 */
-	public function isInputGuarded($key)
-	{
-		if ($input = $this->getInput($key)) {
-			/**
-			 * @var InputType $input
-			 */
-			if ($input->hasModel()) {
-				return $input->getModel()->isGuarded($input->getName());
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * Is input fillable
 	 *
 	 * @param $key
@@ -194,12 +141,7 @@ class FormType extends ParentType implements Modelable {
 	public function isInputFillable($key)
 	{
 		if ($input = $this->getInput($key)) {
-			/**
-			 * @var InputType $input
-			 */
-			if ($input->hasModel()) {
-				return $input->getModel()->isFillable($input->getName());
-			}
+
 		}
 		return true;
 	}

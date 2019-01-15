@@ -3,10 +3,8 @@
 namespace Foundry\Requests\Types\Traits;
 
 use Foundry\Requests\Types\InputType;
-use Illuminate\Database\Eloquent\Model;
 
 trait HasValue {
-
 
 	/**
 	 * Value
@@ -14,8 +12,6 @@ trait HasValue {
 	 * @var mixed $value
 	 */
 	protected $value = null;
-
-	protected $fillable;
 
 	/**
 	 * @return string
@@ -26,8 +22,10 @@ trait HasValue {
 			return old($this->name);
 		} elseif ($this->value !== null) {
 			return $this->value;
+		} elseif ($this->hasModel()) {
+			return $this->getModelValue($this->name);
 		} else {
-			return $this->getRow()->getForm()->getValue($this->name);
+			return null;
 		}
 	}
 
@@ -45,47 +43,54 @@ trait HasValue {
 
 	public function isFillable()
 	{
-		if ($this->fillable === true) {
-			return true;
+		if ($this->hasModel()) {
+			return $this->getModel()->isFillable($this->getName());
 		} else {
-			return $this->getRow()->getForm()->isFieldFillable($this->name);
+			return $this->fillable;
 		}
 	}
 
 	public function isGuarded()
 	{
-		return $this->getRow()->getForm()->isFieldGuarded($this->name);
+		if ($this->hasModel()) {
+			return $this->getModel()->isGuarded($this->name);
+		}
+		return false;
 	}
 
 	public function isVisible()
 	{
-		return $this->getRow()->getForm()->isFieldVisible($this->name);
+		if ($this->hasModel()) {
+			$hidden = $this->getModel()->getHidden();
+			$visible = $this->getModel()->getVisible();
+			if (!in_array($this->getName(), $hidden) && in_array($this->getName(), $visible)) {
+				return true;
+			} elseif (in_array($this->getName(), $hidden)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public function isHidden()
 	{
-		return $this->getRow()->getForm()->isFieldHidden($this->name);
+		if ($this->hasModel()) {
+			$hidden = $this->getModel()->getHidden();
+			if (in_array($this->getName(), $hidden)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public function isInvalid()
 	{
-		return $this->getRow()->getForm()->isFieldInvalid($this->name);
+		return $this->hasErrors();
 	}
 
-	/**
-	 * Get previously provided value from model
-	 *
-	 * @param Model $model
-	 * @return mixed
-	 */
-	private function getModelValue(Model $model){
+	private function getModelValue($name){
 
-		return $model[$this->getName()];
-	}
-
-	public function makeFillable()
-	{
-		$this->fillable = true;
+		return $this->model->$name;
 	}
 
 }
