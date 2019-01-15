@@ -30,7 +30,7 @@ abstract class BaseType implements Arrayable {
 	 *
 	 * @return InputType
 	 */
-	public function setType($type): InputType
+	public function setType($type = null)
 	{
 		$this->type = $type;
 		return $this;

@@ -22,11 +22,11 @@ trait HasReadonly {
 	}
 
 	/**
-	 * @param string $readonly
+	 * @param bool $readonly
 	 *
 	 * @return InputType
 	 */
-	public function setReadonly(string $readonly): InputType
+	public function setReadonly(bool $readonly = false)
 	{
 		$this->readonly = $readonly;
 

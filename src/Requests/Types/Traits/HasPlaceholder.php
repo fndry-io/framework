@@ -26,7 +26,7 @@ trait HasPlaceholder {
 	 *
 	 * @return InputType
 	 */
-	public function setPlaceholder(string $placeholder): InputType
+	public function setPlaceholder(string $placeholder = null)
 	{
 		$this->placeholder = $placeholder;
 

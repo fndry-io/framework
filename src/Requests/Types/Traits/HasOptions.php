@@ -33,9 +33,9 @@ trait HasOptions {
 	/**
 	 * @param mixed $expanded
 	 *
-	 * @return InputType
+	 * @return $this
 	 */
-	public function setExpanded($expanded):  InputType
+	public function setExpanded(bool $expanded = true)
 	{
 		$this->expanded = $expanded;
 		return $this;
@@ -52,9 +52,9 @@ trait HasOptions {
 	/**
 	 * @param array|\Closure $options
 	 *
-	 * @return InputType
+	 * @return $this
 	 */
-	public function setOptions($options): InputType
+	public function setOptions($options = null)
 	{
 		$this->options = $options;
 		return $this;
@@ -77,7 +77,7 @@ trait HasOptions {
 		return false;
 	}
 
-	public function setEmpty($value) : InputType
+	public function setEmpty($value = null)
 	{
 		$this->empty = $value;
 		return $this;

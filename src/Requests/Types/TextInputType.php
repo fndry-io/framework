@@ -16,7 +16,7 @@ class TextInputType extends InputType{
 
 	protected $multiline = null;
 
-	public function setMultiline(int $number = null): InputType
+	public function setMultiline(int $number = null)
 	{
 		$this->multiline = $number;
 		return $this;

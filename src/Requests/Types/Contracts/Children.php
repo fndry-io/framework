@@ -9,11 +9,11 @@ interface Children {
 	/**
 	 * Add children to the Type
 	 *
-	 * @param BaseType ...$type
+	 * @param BaseType ...$types
 	 *
 	 * @return mixed
 	 */
-	public function addChildren(BaseType &...$type);
+	public function addChildren(BaseType ...$types);
 
 	/**
 	 * Get the children for the Type

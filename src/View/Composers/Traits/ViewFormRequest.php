@@ -15,16 +15,12 @@ trait ViewFormRequest {
 	 * @param View $view The view to update
 	 * @return void
 	 */
-	public function handle(string $class, Request $request, View &$view)
+	public function handle(string $class, Request $request, View &$view, $model = null)
 	{
 		/**
 		 * @var FormRequest $class
 		 */
-		$form = $class::view();
-		$form
-			->setRequest( $request )
-			->setValues( $request->only($class::fields() ) )
-		;
+		$form = $class::view( $request, $model);
 		$view->with([
 			'form' => $form
 		]);

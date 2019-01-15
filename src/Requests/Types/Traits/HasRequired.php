@@ -26,7 +26,7 @@ trait HasRequired {
 	 *
 	 * @return InputType
 	 */
-	public function setRequired(bool $required): InputType
+	public function setRequired(bool $required = true)
 	{
 		$this->required = $required;
 		return $this;

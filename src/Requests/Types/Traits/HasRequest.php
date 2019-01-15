@@ -11,19 +11,19 @@ trait HasRequest {
 	protected $request_id = null;
 
 
-	public function setRequestUrl($url) : InputType
+	public function setRequestUrl(string $url = null)
 	{
 		$this->request_url = $url;
 		return $this;
 	}
 
-	public function setRequestName($name) : InputType
+	public function setRequestName(string $name = null)
 	{
 		$this->request_name = $name;
 		return $this;
 	}
 
-	public function setRequestId($id) : InputType
+	public function setRequestId($id = null)
 	{
 		$this->request_id = $id;
 		return $this;

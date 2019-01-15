@@ -24,6 +24,12 @@ trait HasRules {
 		} else {
 			$this->addRule('nullable');
 		}
+		if (isset($this->min) && $this->min !== null) {
+			$this->addRule('min:' . $this->min);
+		}
+		if (isset($this->max) && $this->max !== null) {
+			$this->addRule('max:' . $this->max);
+		}
 		if (isset($this->options)) {
 			if (is_array($this->options)) {
 				$this->addRule(\Illuminate\Validation\Rule::in($this->getOptions()));
@@ -37,13 +43,15 @@ trait HasRules {
 	 *
 	 * @return $this
 	 */
-	public function setRules($rules = null): InputType
+	public function setRules($rules = null)
 	{
 		if (is_string($rules)) {
 			$rules = explode('|', $rules);
 		}
-		foreach ($rules as $key => $value) {
-			$this->addRule($value, $key);
+		if ($rules){
+			foreach ($rules as $key => $value) {
+				$this->addRule($value, $key);
+			}
 		}
 		$this->rules = $rules;
 		return $this;

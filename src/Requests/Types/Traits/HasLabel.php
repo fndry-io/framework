@@ -25,7 +25,7 @@ trait HasLabel {
 	 *
 	 * @return InputType
 	 */
-	public function setLabel(string $label = null): InputType
+	public function setLabel(string $label = null)
 	{
 		$this->label = $label;
 

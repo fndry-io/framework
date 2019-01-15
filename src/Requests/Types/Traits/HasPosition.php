@@ -26,7 +26,7 @@ trait HasPosition {
 	 *
 	 * @return InputType
 	 */
-	public function setPosition(string $position): InputType
+	public function setPosition(string $position = null)
 	{
 		$this->position = $position;
 

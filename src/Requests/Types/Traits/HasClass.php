@@ -13,7 +13,7 @@ trait HasClass {
 
 	protected $class;
 
-	public function setClass($class) : Type
+	public function setClass($class = null)
 	{
 		$this->class = $class;
 		return $this;

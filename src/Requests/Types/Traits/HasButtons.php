@@ -17,14 +17,14 @@ trait HasButtons {
 	/**
 	 * Adds buttons to the input
 	 *
-	 * @param ButtonType ...$button
+	 * @param ButtonType ...$buttons
 	 *
 	 * @return $this
 	 */
-	public function setButtons(ButtonType &...$button)
+	public function setButtons(ButtonType ...$buttons)
 	{
-		foreach ($button as &$_button) {
-			$this->buttons[] = $_button;
+		foreach ($buttons as $button) {
+			$this->buttons[] = $button;
 		}
 		return $this;
 	}

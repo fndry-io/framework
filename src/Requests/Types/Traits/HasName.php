@@ -26,7 +26,7 @@ trait HasName {
 	 *
 	 * @return InputType
 	 */
-	public function setName(string $name): InputType
+	public function setName(string $name)
 	{
 		$this->name = $name;
 

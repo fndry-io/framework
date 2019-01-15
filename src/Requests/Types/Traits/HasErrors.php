@@ -21,7 +21,7 @@ trait HasErrors {
 	 *
 	 * @return $this
 	 */
-	public function setErrors($errors)
+	public function setErrors($errors = [])
 	{
 		if (is_array($errors)) {
 			$errors = new MessageBag($errors);

@@ -63,7 +63,7 @@ class FormType extends ParentType implements Modelable {
 	    $this->setId($id);
     }
 
-    public function setAction(string $value): FormType
+    public function setAction(string $value = null)
     {
     	$this->action = $value;
     	return $this;
@@ -73,7 +73,7 @@ class FormType extends ParentType implements Modelable {
     	return $this->action;
 	}
 
-	public function setMethod(string $value): FormType
+	public function setMethod(string $value = null)
 	{
 		$this->action = $value;
 		return $this;
@@ -83,7 +83,7 @@ class FormType extends ParentType implements Modelable {
     	$this->method;
 	}
 
-	public function setEncoding($value): FormType
+	public function setEncoding($value = null)
 	{
 		$this->action = $value;
 		return $this;
@@ -93,7 +93,7 @@ class FormType extends ParentType implements Modelable {
     	$this->encoding;
 	}
 
-	public function setModel(Model &$model): FormType
+	public function setModel(Model &$model = null)
 	{
 		$this->model = $model;
 		return $this;
@@ -103,7 +103,7 @@ class FormType extends ParentType implements Modelable {
 		$this->model;
 	}
 
-	public function attachInputs(InputType &...$inputs)
+	public function attachInputs(InputType ...$inputs)
 	{
 		if ($this->model) {
 			foreach ($inputs as &$input) {
@@ -256,7 +256,7 @@ class FormType extends ParentType implements Modelable {
 	 * @param $values
 	 * @return $this
 	 */
-	public function setValues($values)
+	public function setValues($values = [])
 	{
 		foreach ($values as $name => $value) {
 			if ($input = $this->getInput($name)) {
@@ -274,9 +274,9 @@ class FormType extends ParentType implements Modelable {
 	 *
 	 * @return $this
 	 */
-	public function addInputRow(InputType &...$types)
+	public function addInputRow(InputType ...$types)
 	{
-		$this->addChildren((new RowType())->addChildren($types));
+		$this->addChildren((new RowType())->addChildren(...$types));
 		return $this;
 	}
 
@@ -330,7 +330,7 @@ class FormType extends ParentType implements Modelable {
 	 *
 	 * @return $this
 	 */
-	public function setRules($rules)
+	public function setRules($rules = [])
 	{
 		$this->rules = $rules;
 		foreach ($this->rules as $key => $rules) {

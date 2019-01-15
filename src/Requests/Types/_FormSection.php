@@ -72,9 +72,9 @@ class _FormSection {
     /**
      * @param mixed $tab
      *
-     * @return FormSection
+     * @return $this
      */
-    public function setTab($tab): FormSection
+    public function setTab($tab)
     {
         $this->tab = $tab;
 
@@ -85,9 +85,9 @@ class _FormSection {
      * Add an array of rows
      *
      * @param array $rows
-     * @return FormSection
+     * @return $this
      */
-    public function addRows(array $rows) : FormSection
+    public function addRows(array $rows)
     {
         foreach ($rows as $row){
             $this->addRow($row);
@@ -101,7 +101,7 @@ class _FormSection {
      *
      * @return FormView
      */
-    public function getForm() : FormView
+    public function getForm()
     {
         return $this->form;
     }

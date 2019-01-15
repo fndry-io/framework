@@ -29,7 +29,7 @@ trait HasMultiple {
 	 *
 	 * @return $this
 	 */
-	public function setMultiple(int $multiple)
+	public function setMultiple(int $multiple = null)
 	{
 		$this->multiple = $multiple;
 		return $this;

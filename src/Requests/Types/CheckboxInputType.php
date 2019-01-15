@@ -33,7 +33,7 @@ class CheckboxInputType extends InputType{
 		return $this->checked;
 	}
 
-	public function setChecked($checked)
+	public function setChecked(bool $checked = true)
 	{
 		$this->checked = $checked;
 		return $this;

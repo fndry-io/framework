@@ -36,7 +36,7 @@ trait HasValue {
 	 *
 	 * @return InputType
 	 */
-	public function setValue($value): InputType
+	public function setValue($value = null)
 	{
 		$this->value = $value;
 

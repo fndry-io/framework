@@ -28,9 +28,9 @@ trait HasQueryOptions {
 	/**
 	 * @param string $query_param
 	 *
-	 * @return InputType
+	 * @return $this
 	 */
-	public function setQueryParam(string $query_param): InputType
+	public function setQueryParam(string $query_param = null)
 	{
 		$this->query_param = $query_param;
 		return $this;
@@ -39,9 +39,9 @@ trait HasQueryOptions {
 	/**
 	 * @param $url
 	 *
-	 * @return InputType
+	 * @return $this
 	 */
-	public function setUrl($url) : InputType
+	public function setUrl(string $url = null)
 	{
 		$this->url = $url;
 		return $this;

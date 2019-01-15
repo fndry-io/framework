@@ -30,7 +30,7 @@ class NumberInputType extends TextInputType{
 		$this->addRule('numeric');
 	}
 
-	public function setDecimals($decimals = null): NumberInputType
+	public function setDecimals($decimals = null)
 	{
 		$this->decimals = $decimals;
 		return $this;

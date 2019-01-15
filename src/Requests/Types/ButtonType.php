@@ -58,7 +58,7 @@ class ButtonType extends BaseType {
 		return $this->action;
 	}
 
-	public function setAction(string $value): InputType
+	public function setAction(string $value = null)
 	{
 		$this->action = $value;
 		return $this;
@@ -69,7 +69,7 @@ class ButtonType extends BaseType {
 		return $this->query;
 	}
 
-	public function setQuery(array $value): InputType
+	public function setQuery(array $value = null)
 	{
 		$this->query = $value;
 		return $this;
@@ -80,7 +80,7 @@ class ButtonType extends BaseType {
 		return $this->method;
 	}
 
-	public function setMethod(string $value): InputType
+	public function setMethod(string $value = null)
 	{
 		$this->method = $value;
 		return $this;

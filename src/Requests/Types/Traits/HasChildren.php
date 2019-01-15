@@ -10,14 +10,14 @@ trait HasChildren {
 	/**
 	 * Add children to the Type
 	 *
-	 * @param BaseType ...$type
+	 * @param BaseType ...$types
 	 *
 	 * @return $this
 	 */
-	public function addChildren(BaseType &...$type)
+	public function addChildren(BaseType ...$types)
 	{
-		foreach ($type as &$_type) {
-			$this->children[] = $_type;
+		foreach ($types as $type) {
+			$this->children[] = $type;
 		}
 		return $this;
 	}

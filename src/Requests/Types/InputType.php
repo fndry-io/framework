@@ -17,6 +17,7 @@ use Foundry\Requests\Types\Traits\HasRequired;
 use Foundry\Requests\Types\Traits\HasRules;
 use Foundry\Requests\Types\Traits\HasValue;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rule;
 
 /**
  * Class Type
@@ -89,7 +90,19 @@ abstract class InputType extends BaseType implements Inputable {
 
 		//set the rules
 		if (!$field['rules']) {
-			$field['rules'] = $this->getRules();
+			$_rules = [];
+			$rules = $this->getRules();
+			if ($rules) {
+				foreach ($rules as $rule) {
+					if (is_object($rule)) {
+						$_rules[] = $rule->toString();
+					} elseif (is_string($rule)) {
+						$_rules[] = $rule;
+					}
+				}
+				$_rules = implode('|', $_rules);
+			}
+			$field['rules'] = $_rules;
 		}
 
 		return $field;
@@ -100,7 +113,7 @@ abstract class InputType extends BaseType implements Inputable {
 		return $this->model;
 	}
 
-	public function setModel(Model &$model) : InputType
+	public function setModel(Model &$model = null)
 	{
 		$this->model = $model;
 		return $this;

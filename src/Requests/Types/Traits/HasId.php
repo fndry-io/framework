@@ -26,7 +26,7 @@ trait HasId {
 	 *
 	 * @return InputType
 	 */
-	public function setId($id = null): InputType
+	public function setId($id = null)
 	{
 		if ($id == null) {
 			if (method_exists($this, 'getName')) {
