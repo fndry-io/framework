@@ -26,10 +26,7 @@ trait ReadFormRequest {
 		$response = $class::handleRequest( $request, $model );
 
 		if ($response->isSuccess()) {
-			$form = $class::view();
-			$form
-				->setModel($response->getData())
-			;
+			$form = $class::view($request, $response->getData());
 			$view->with([
 				$model_key => $response->getData(),
 				'form' => $form
