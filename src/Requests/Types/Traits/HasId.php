@@ -28,7 +28,7 @@ trait HasId {
 	public function setId( $id = null ) {
 		if ( $id == null ) {
 			if ( method_exists( $this, 'getName' ) ) {
-				$this->id = camel_case( str_slug( $this->getName() ) . 'Type' );
+				$this->id = ucfirst(camel_case( str_slug( str_replace('.', '_', $this->getName()) . '_' . $this->getType() ) ));
 			} else {
 				$this->id = uniqid( 'Id' );
 			}
