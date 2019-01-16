@@ -61,11 +61,11 @@ abstract class BaseType implements Arrayable {
 
 			if ( is_array( $value ) ) {
 				$_value = [];
-				foreach ( $value as $child ) {
+				foreach ( $value as $index => $child ) {
 					if ( is_object( $child ) ) {
-						$_value[] = $child->toArray();
+						$_value[$index] = $child->toArray();
 					} else {
-						$_value[] = $child;
+						$_value[$index] = $child;
 					}
 				}
 				$value = $_value;
