@@ -104,4 +104,14 @@ class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
 		return $this->forms[ $key ];
 	}
 
+	/**
+	 * List all the registered forms
+	 *
+	 * @return array
+	 */
+	public function getList()
+	{
+		return array_keys($this->forms);
+	}
+
 }

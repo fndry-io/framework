@@ -77,14 +77,10 @@ abstract class InputType extends BaseType implements Inputable {
 	 *
 	 * @return array
 	 */
-	public function jsonSerialize(): array {
+	public function jsonSerialize(): array
+	{
 
-		$field = array();
-
-		//set all the object properties
-		foreach ( $this as $key => $value ) {
-			$field[ $key ] = $value;
-		}
+		$field = parent::jsonSerialize();
 
 		//set the value
 		if ( ! $field['value'] && $this->hasModel() ) {

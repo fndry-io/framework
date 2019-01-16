@@ -2,6 +2,7 @@
 
 namespace Foundry\Requests;
 
+use Carbon\Carbon;
 use Foundry\Models\InputCollection;
 use Foundry\Requests\Types\DocType;
 use Foundry\Requests\Types\FormType;
@@ -384,7 +385,12 @@ abstract class FormRequest {
 		foreach ($casts as $key => $cast) {
 			$value = array_get($values, $key);
 			if ($value !== "" && $value !== null) {
-				settype( $value, $cast );
+				if ($cast === 'datetime') {
+					$value = Carbon::createFromTimestampUTC($value);
+				} else {
+					settype( $value, $cast );
+				}
+
 				array_set($values, $key, $value);
 			}
 		}
