@@ -37,7 +37,7 @@ class ChoiceInputType extends InputType {
 		parent::__construct( $name, $label, $required, $value, $position, $rules, $id, $placeholder, $type );
 	}
 
-	public function display() {
+	public function display($value = null) {
 		if ( is_callable( $this->options ) ) {
 			$options = call_user_func( [ $this, $this->options ] );
 		} else {

@@ -16,6 +16,7 @@ use Foundry\Requests\Types\Traits\HasReadonly;
 use Foundry\Requests\Types\Traits\HasRequired;
 use Foundry\Requests\Types\Traits\HasRules;
 use Foundry\Requests\Types\Traits\HasValue;
+use Foundry\Requests\Types\Traits\IsSortable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 
@@ -38,7 +39,9 @@ abstract class InputType extends BaseType implements Inputable {
 		HasPlaceholder,
 		HasHelp,
 		HasReadonly,
-		HasErrors;
+		HasErrors,
+		IsSortable
+	;
 
 	/**
 	 * @var Model
@@ -134,7 +137,7 @@ abstract class InputType extends BaseType implements Inputable {
 		return ! ! ( $this->model );
 	}
 
-	public function display() {
+	public function display($value = null) {
 		$value = $this->getValue();
 		if ( $value === null ) {
 			return '-- ' . __( 'NOT SET' ) . ' ---';

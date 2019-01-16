@@ -15,6 +15,6 @@ interface Inputable {
 
 	public function hasModel(): bool;
 
-	public function display();
+	public function display($value = null);
 
 }
