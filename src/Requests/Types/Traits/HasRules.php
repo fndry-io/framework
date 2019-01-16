@@ -32,7 +32,7 @@ trait HasRules {
 			$this->addRule( 'max:' . $this->max );
 		}
 		if ( isset( $this->options ) ) {
-			if ( is_array( $this->options ) ) {
+			if ( is_array( $this->options ) && !empty($this->options) ) {
 				$this->addRule( \Illuminate\Validation\Rule::in( array_keys($this->getOptions()) ) );
 			}
 		}
