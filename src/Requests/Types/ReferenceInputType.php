@@ -42,7 +42,7 @@ class ReferenceInputType extends ChoiceInputType {
 		string $label,
 		bool $required = true,
 		array $options,
-		string $url,
+		?string $url,
 		bool $multiple,
 		string $request_url,
 		string $request_name,

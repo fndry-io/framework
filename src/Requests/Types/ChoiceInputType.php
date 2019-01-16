@@ -39,7 +39,8 @@ class ChoiceInputType extends InputType {
 
 	public function display($value = null) {
 		if ( is_callable( $this->options ) ) {
-			$options = call_user_func( [ $this, $this->options ] );
+			$call = $this->options;
+			$options = $call();
 		} else {
 			$options = $this->options;
 		}
