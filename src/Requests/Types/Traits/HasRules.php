@@ -33,9 +33,10 @@ trait HasRules {
 		}
 		if ( isset( $this->options ) ) {
 			if ( is_array( $this->options ) ) {
-				$this->addRule( \Illuminate\Validation\Rule::in( $this->getOptions() ) );
+				$this->addRule( \Illuminate\Validation\Rule::in( array_keys($this->getOptions()) ) );
 			}
 		}
+
 
 		return $this->rules;
 	}

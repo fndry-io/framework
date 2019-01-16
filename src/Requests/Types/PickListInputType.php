@@ -26,4 +26,10 @@ class PickListInputType extends ChoiceInputType {
 		                   ->pluck( 'label', 'id' )
 		                   ->toArray();
 	}
+
+	static function cast()
+	{
+		return 'int';
+	}
+
 }

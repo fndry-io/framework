@@ -89,8 +89,9 @@ abstract class FormRequest {
 	 * @return $this
 	 */
 	public function setInputs( $inputs ) {
-		$this->inputs = $inputs;
 
+		$inputs = static::typedValues($inputs);
+		$this->inputs = $inputs;
 		return $this;
 	}
 
@@ -296,9 +297,10 @@ abstract class FormRequest {
 	 *
 	 * @see http://php.net/manual/en/function.settype.php
 	 * @return array
+	 * @todo this should change to casts
 	 */
 	static public function types() {
-		return [];
+		return static::inputCollection()->casts();
 	}
 
 	/**
@@ -378,17 +380,14 @@ abstract class FormRequest {
 	 * @return mixed
 	 */
 	static public function typedValues( $values ) {
-		$cast = static::types();
-		foreach ( $values as $key => $value ) {
-			if ( isset( $cast[ $key ] ) ) {
-				if ( $value === "" || $value === null ) {
-					$values[ $key ] = null;
-				} else {
-					settype( $values[ $key ], $cast[ $key ] );
-				}
+		$casts = static::types();
+		foreach ($casts as $key => $cast) {
+			$value = array_get($values, $key);
+			if ($value !== "" && $value !== null) {
+				settype( $value, $cast );
+				array_set($values, $key, $value);
 			}
 		}
-
 		return $values;
 	}
 
