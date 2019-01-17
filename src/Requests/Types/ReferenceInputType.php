@@ -60,7 +60,7 @@ class ReferenceInputType extends ChoiceInputType {
 		$this->setRequestUrl( $request_url );
 		$this->setRequestName( $request_name );
 		$this->setRequestId( $request_id );
-		$this->setType( 'references' );
+		$this->setType( 'reference' );
 	}
 
 }
