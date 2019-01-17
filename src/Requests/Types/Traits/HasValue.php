@@ -3,6 +3,8 @@
 namespace Foundry\Requests\Types\Traits;
 
 use Foundry\Requests\Types\InputType;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 trait HasValue {
 
@@ -85,7 +87,26 @@ trait HasValue {
 	}
 
 	private function getModelValue( $name ) {
-		return object_get( $this->model, $name );
+		$value = object_get( $this->model, $name );
+		if (is_object($value)) {
+			if ($value instanceof Model) {
+				$value = $value->getKey();
+			} elseif ($value instanceof Collection) {
+				//if the type is a checkbox, radio, select, then we need to display these and set their value accordingly
+				if (in_array($this->type, ['checkbox', 'radio', 'select'])) {
+					/**
+					 * @var Collection $value
+					 */
+					foreach ($value as $key => $item) {
+						if (is_object($item) && $item instanceof Model) {
+							$value->offsetSet($key, $item->getKey());
+						}
+					}
+				}
+				$value = $value->toArray();
+			}
+		}
+		return $value;
 	}
 
 }

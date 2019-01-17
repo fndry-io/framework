@@ -14,12 +14,12 @@ trait HasMultiple {
 	/**
 	 * @var bool $multiple Used to determine if we allow multiple selections (collections, chechbox vs radio, or select vs select[multiple]
 	 */
-	protected $multiple;
+	protected $multiple = false;
 
 	/**
 	 * @return bool
 	 */
-	public function getMultiple(): int {
+	public function getMultiple(): bool {
 		return $this->multiple;
 	}
 
@@ -28,7 +28,7 @@ trait HasMultiple {
 	 *
 	 * @return $this
 	 */
-	public function setMultiple( int $multiple = null ) {
+	public function setMultiple( bool $multiple = null ) {
 		$this->multiple = $multiple;
 
 		return $this;

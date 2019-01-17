@@ -14,7 +14,7 @@ trait HasOptions {
 	/**
 	 * @var bool Determines if the options are expanded, such as in a series of checkboxes or radios
 	 */
-	protected $expanded;
+	protected $expanded = false;
 
 	/**
 	 * @var mixed The empty option. Null or false for none. True for default text or a string for the displayed text
@@ -24,7 +24,7 @@ trait HasOptions {
 	/**
 	 * @return mixed
 	 */
-	public function isExpanded() {
+	public function isExpanded() : bool {
 		return $this->expanded;
 	}
 
