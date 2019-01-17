@@ -192,7 +192,7 @@ abstract class FormRequest {
 	 *
 	 * @return array
 	 */
-	public function getRules() {
+	public function getRules( ) {
 		return $this->rules;
 	}
 
@@ -208,7 +208,7 @@ abstract class FormRequest {
 	 * @return array
 	 */
 	static public function rules( Model $model = null ): array {
-		return static::inputCollection()->rules();
+		return static::inputCollection( $model )->rules( );
 	}
 
 
