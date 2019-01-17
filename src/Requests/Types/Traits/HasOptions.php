@@ -2,8 +2,6 @@
 
 namespace Foundry\Requests\Types\Traits;
 
-use Foundry\Requests\Types\InputType;
-
 trait HasOptions {
 
 	use HasMultiple;

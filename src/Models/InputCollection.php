@@ -2,6 +2,7 @@
 
 namespace Foundry\Models;
 
+use Foundry\Requests\Types\Contracts\Inputable;
 use Illuminate\Support\Collection;
 
 class InputCollection extends Collection {
@@ -25,6 +26,12 @@ class InputCollection extends Collection {
 		}
 
 		return $casts;
+	}
+
+	public function insert($key, Inputable $type)
+	{
+		$type->setName($key);
+		$this->put($key, $type);
 	}
 
 }
