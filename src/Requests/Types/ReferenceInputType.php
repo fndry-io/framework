@@ -33,7 +33,7 @@ class ReferenceInputType extends ChoiceInputType {
 		string $name,
 		string $label,
 		bool $required = true,
-		array $options,
+		?array $options,
 		$value = null,
 		string $position = 'full',
 		string $rules = null,

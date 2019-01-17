@@ -22,7 +22,7 @@ class ChoiceInputType extends InputType {
 		bool $required = true,
 		bool $expanded,
 		bool $multiple,
-		array $options,
+		?array $options,
 		$value = null,
 		string $position = 'full',
 		string $rules = null,
