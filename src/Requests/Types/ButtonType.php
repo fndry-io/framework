@@ -6,6 +6,7 @@ use Foundry\Requests\Types\Traits\HasClass;
 use Foundry\Requests\Types\Traits\HasId;
 use Foundry\Requests\Types\Traits\HasLabel;
 use Foundry\Requests\Types\Traits\HasTitle;
+use Foundry\Requests\Types\Traits\HasAction;
 
 /**
  * Class Type
@@ -17,7 +18,9 @@ class ButtonType extends BaseType {
 	use HasId,
 		HasLabel,
 		HasClass,
-		HasTitle;
+		HasTitle,
+		HasAction
+		;
 
 	/**
 	 * The form row this field belongs to
@@ -27,12 +30,6 @@ class ButtonType extends BaseType {
 	protected $row;
 
 	protected $title;
-
-	protected $action;
-
-	protected $method;
-
-	protected $query;
 
 	public function __construct(
 		string $label,
@@ -53,35 +50,6 @@ class ButtonType extends BaseType {
 	}
 
 
-	public function getAction() {
-		return $this->action;
-	}
-
-	public function setAction( string $value = null ) {
-		$this->action = $value;
-
-		return $this;
-	}
-
-	public function getQuery() {
-		return $this->query;
-	}
-
-	public function setQuery( array $value = null ) {
-		$this->query = $value;
-
-		return $this;
-	}
-
-	public function getMethod() {
-		return $this->method;
-	}
-
-	public function setMethod( string $value = null ) {
-		$this->method = $value;
-
-		return $this;
-	}
 
 
 }

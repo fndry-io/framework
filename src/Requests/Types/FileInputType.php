@@ -1,6 +1,7 @@
 <?php
 
 namespace Foundry\Requests\Types;
+use Foundry\Requests\Types\Traits\HasAction;
 
 
 /**
@@ -10,8 +11,11 @@ namespace Foundry\Requests\Types;
  */
 class FileInputType extends InputType {
 
+	use HasAction;
+
 	public function __construct(
 		string $name,
+		string $action,
 		string $label = null,
 		bool $required = true,
 		string $value = null,
@@ -22,5 +26,6 @@ class FileInputType extends InputType {
 	) {
 		$type = 'file';
 		parent::__construct( $name, $label, $required, $value, $position, $rules, $id, $placeholder, $type );
+		$this->setAction($action);
 	}
 }
