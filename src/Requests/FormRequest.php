@@ -386,7 +386,7 @@ abstract class FormRequest {
 			$value = array_get($values, $key);
 			if ($value !== "" && $value !== null) {
 				if ($cast === 'datetime') {
-					$value = Carbon::createFromTimestampUTC($value);
+					$value = Carbon::parse($value, 'UTC');
 				} else {
 					settype( $value, $cast );
 				}
