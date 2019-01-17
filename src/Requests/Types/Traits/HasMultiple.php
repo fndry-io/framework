@@ -35,7 +35,7 @@ trait HasMultiple {
 	}
 
 	public function isMultiple(): bool {
-		return ( $this->multiple && $this->multiple > 1 );
+		return $this->multiple;
 	}
 
 }

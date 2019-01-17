@@ -10,7 +10,15 @@ class InputCollection extends Collection {
 	public function rules() {
 		$rules = [];
 		foreach ( $this->all() as $item ) {
-			$rules[ $item->getName() ] = $item->getRules();
+			if ($item->getType() === 'checkbox' && $item->isMultiple()) {
+				if ($item->isRequired()) {
+					$rules[ $item->getName() ] = 'array';
+				}
+				$rules[ $item->getName() . '.*' ] = $item->getRules();
+			} else {
+				$rules[ $item->getName() ] = $item->getRules();
+			}
+
 		}
 
 		return $rules;
