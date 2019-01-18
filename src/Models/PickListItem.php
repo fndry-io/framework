@@ -58,11 +58,16 @@ class PickListItem extends Model {
 		'updated_at'
 	];
 
+	public function __construct( array $attributes = [] ) {
+		parent::__construct( $attributes );
+		$this->table = config('foundry.pick-list-items.table');
+	}
+
 	/**
 	 * Get the list
 	 */
 	public function list() {
-		return $this->belongsTo( PickList::class, 'pick_list_id' );
+		return $this->belongsTo( config('foundry.pick-lists.model'), 'pick_list_id' );
 	}
 
 }

@@ -2,8 +2,6 @@
 
 namespace Foundry\Models\Fields;
 
-use Foundry\Models\PickListItem;
-
 /**
  * Interface Pick List Options
  *
@@ -21,7 +19,7 @@ abstract class PickListField extends ChoiceField {
 	 * @return array
 	 */
 	static function list( $identifier ): array {
-		return PickListItem::query()
+		return config('foundry.pick-list-items.model')::query()
 		                   ->select( [ 'pick_list_items.*' ] )
 		                   ->join( 'pick_lists', 'pick_list_items.pick_list_id', '=', 'pick_lists.id' )
 		                   ->where( 'pick_list_items.status', 1 )

@@ -2,8 +2,6 @@
 
 namespace Foundry\Requests\Types;
 
-use Foundry\Models\PickListItem;
-
 
 class PickListInputType extends ChoiceInputType {
 
@@ -15,8 +13,7 @@ class PickListInputType extends ChoiceInputType {
 	 * @return array
 	 */
 	static function list( $identifier ): array {
-		//todo change this to use a config variable instead for the model name
-		return PickListItem::query()
+		return config('foundry.pick-list-items.model')::query()
 		                   ->select( [ 'pick_list_items.*' ] )
 		                   ->join( 'pick_lists', 'pick_list_items.pick_list_id', '=', 'pick_lists.id' )
 		                   ->where( 'pick_list_items.status', 1 )

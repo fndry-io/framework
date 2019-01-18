@@ -23,7 +23,7 @@ class CheckboxInputType extends InputType {
 		string $id = null,
 		string $placeholder = null
 	) {
-		$type = 'checkbox';
+		$type = 'switch';
 		parent::__construct( $name, $label, $required, $value, $position, $rules, $id, $placeholder, $type );
 
 		$this->setChecked( $checked );
@@ -38,4 +38,5 @@ class CheckboxInputType extends InputType {
 
 		return $this;
 	}
+
 }

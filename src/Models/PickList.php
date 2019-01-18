@@ -52,16 +52,17 @@ class PickList extends Model {
 		'updated_at'
 	];
 
-	public $relationships = [
-		'hasMany' => [
-			'items' => PickListItem::class
-		]
-	];
+
+	public function __construct( array $attributes = [] ) {
+		$this->table = config('foundry.pick-lists.table');
+		parent::__construct( $attributes );
+
+	}
 
 	/**
 	 * Get list items
 	 */
 	public function items() {
-		return $this->hasMany( PickListItem::class );
+		return $this->hasMany( config('foundry.pick-list-items.model') )->orderBy('status', 'DESC')->orderBy('label', 'ASC');
 	}
 }

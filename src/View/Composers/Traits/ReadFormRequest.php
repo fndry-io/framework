@@ -30,7 +30,7 @@ trait ReadFormRequest {
 			$form = $class::view( $request, $response->getData() );
 			$view->with( [
 				$model_key => $response->getData(),
-				'form'     => $form
+				'view'     => $form
 			] );
 		} else {
 			abort( $response->getCode(), $response->getMessage() );

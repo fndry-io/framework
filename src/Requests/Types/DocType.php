@@ -26,4 +26,9 @@ class DocType extends ParentType {
 		$this->setType( 'doc' );
 	}
 
+	static function withChildren( BaseType ...$children )
+	{
+		return ( new static() )->addChildren( ...$children );
+	}
+
 }

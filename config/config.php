@@ -14,5 +14,15 @@ return [
         'table' => 'settings'
     ],
 
+    'pick-lists' => [
+	    'model' => \Foundry\Models\PickList::class,
+	    'table' => 'pick_lists'
+    ],
+
+    'pick-list-items' => [
+	    'model' => \Foundry\Models\PickListItem::class,
+	    'table' => 'pick_list_items'
+    ],
+
 
 ];

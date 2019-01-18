@@ -22,6 +22,11 @@ trait HasOptions {
 	protected $empty;
 
 	/**
+	 * @var mixed the default value or values selected
+	 */
+	protected $default;
+
+	/**
 	 * @return mixed
 	 */
 	public function isExpanded() : bool {
@@ -98,6 +103,17 @@ trait HasOptions {
 
 	public function hasEmptyOption() {
 		return ! ! ( $this->empty );
+	}
+
+	public function setDefault($value)
+	{
+		$this->default = $value;
+		return $this;
+	}
+
+	public function getDefault()
+	{
+		return $this->default;
 	}
 
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\Models;
+namespace Foundry\Models\Fields;
 
-use Foundry\Requests\Types\InputType;
+use Foundry\Requests\Types\Contracts\Inputable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,8 +19,8 @@ interface FieldType {
 	 *
 	 * @param Model $model
 	 *
-	 * @return InputType
+	 * @return Inputable
 	 */
-	static function input( Model $model = null ): InputType;
+	static function input( Model &$model = null ): Inputable;
 
 }

@@ -3,7 +3,7 @@
 namespace Foundry\Models\Fields;
 
 use Foundry\Requests\Types\Contracts\Inputable;
-use Foundry\Requests\Types\InputType;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Interface Field
@@ -17,8 +17,10 @@ interface Field {
 	/**
 	 * The input type for displaying on a page
 	 *
-	 * @return Inputable|InputType
+	 * @param Model $model
+	 *
+	 * @return Inputable
 	 */
-	static function input(): Inputable;
+	static function input( Model &$model = null ): Inputable;
 
 }
