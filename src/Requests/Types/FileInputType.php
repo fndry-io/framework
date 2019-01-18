@@ -15,14 +15,14 @@ class FileInputType extends InputType {
 
 	public function __construct(
 		string $name,
-		string $action,
-		string $label = null,
+		string $label,
 		bool $required = true,
 		string $value = null,
 		string $position = 'full',
 		string $rules = null,
 		string $id = null,
-		string $placeholder = null
+		string $placeholder = null,
+        string $action = null
 	) {
 		$type = 'file';
 		parent::__construct( $name, $label, $required, $value, $position, $rules, $id, $placeholder, $type );
