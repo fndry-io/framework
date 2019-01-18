@@ -13,7 +13,13 @@ class RowType extends ParentType {
 		$this->setType( 'row' );
 	}
 
+	//TODO remove references to this across the projects
 	static function withInputs( InputType ...$inputs ) {
 		return ( new static() )->addChildren( ...$inputs );
 	}
+
+	static function withChildren( BaseType ...$inputs ) {
+		return ( new static() )->addChildren( ...$inputs );
+	}
+
 }

@@ -9,6 +9,18 @@ use Illuminate\Http\Request;
 
 trait ReadFormRequest {
 
+	protected $request;
+
+	/**
+	 * BrowseFormRequest constructor.
+	 *
+	 * @param Request $request
+	 */
+	public function __construct(Request $request)
+	{
+		$this->request = $request;
+	}
+
 	/**
 	 * Bind data to the view.
 	 *
