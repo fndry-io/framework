@@ -92,12 +92,20 @@ class FormType extends ParentType implements Modelable {
 		$this->encoding;
 	}
 
+	/**
+	 * @param Model|null $model
+	 *
+	 * @return $this
+	 */
 	public function setModel( Model &$model = null ) {
 		$this->model = $model;
 
 		return $this;
 	}
 
+	/**
+	 * @return Model
+	 */
 	public function getModel(): Model {
 		$this->model;
 	}

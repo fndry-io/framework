@@ -49,14 +49,6 @@ trait HasValue {
 		return true;
 	}
 
-	public function isGuarded() {
-		if ( $this->hasModel() ) {
-			return $this->getModel()->isGuarded( $this->name );
-		}
-
-		return false;
-	}
-
 	public function isVisible() {
 		if ( $this->hasModel() ) {
 			$hidden  = $this->getModel()->getHidden();
@@ -78,7 +70,6 @@ trait HasValue {
 				return true;
 			}
 		}
-
 		return false;
 	}
 

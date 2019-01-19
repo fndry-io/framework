@@ -9,6 +9,8 @@ interface Inputable {
 
 	public function getName(): string;
 
+	public function setName(string $name);
+
 	public function setModel( Model &$model = null );
 
 	public function getModel(): Model;

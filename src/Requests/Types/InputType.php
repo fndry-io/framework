@@ -18,7 +18,6 @@ use Foundry\Requests\Types\Traits\HasRules;
 use Foundry\Requests\Types\Traits\HasValue;
 use Foundry\Requests\Types\Traits\IsSortable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\Rule;
 
 /**
  * Class Type
@@ -108,7 +107,6 @@ abstract class InputType extends BaseType implements Inputable {
 		foreach (
 			[
 				'fillable' => 'isFillable',
-				'guarded'  => 'isGuarded',
 				'visible'  => 'isVisible',
 				'hidden'   => 'isHidden'
 			] as $key => $method
@@ -119,16 +117,27 @@ abstract class InputType extends BaseType implements Inputable {
 		return $field;
 	}
 
+	/**
+	 * @return Model
+	 */
 	public function getModel(): Model {
 		return $this->model;
 	}
 
+	/**
+	 * @param Model|null $model
+	 *
+	 * @return $this
+	 */
 	public function setModel( Model &$model = null ) {
 		$this->model = $model;
 
 		return $this;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function hasModel(): bool {
 		return ! ! ( $this->model );
 	}

@@ -38,14 +38,17 @@ class ChoiceInputType extends InputType {
 	}
 
 	public function display($value = null) {
+
+		if ($value === null) {
+			$value = $this->getValue();
+		}
+
 		if ( is_callable( $this->options ) ) {
 			$call = $this->options;
-			$options = $call();
+			$options = $call(null, $value);
 		} else {
 			$options = $this->options;
 		}
-
-		$value = $this->getValue();
 
 		if ( $value === '' || $value === null || ( $this->multiple && empty( $value ) ) ) {
 			return '-- ' . __( 'NOT SET' ) . ' ---';
