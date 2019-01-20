@@ -97,4 +97,17 @@ class Setting extends Model {
 		'saved' => SettingSaved::class,
 	];
 
+	/**
+	 * Get the original description for a setting
+	 *
+	 * @return mixed|string
+	 */
+	public function getDescriptionAttribute()
+	{
+		$class = $this->model;
+		$settings = call_user_func([$class, 'settings']);
+		$s = isset($settings[$this->domain.'.'.$this->name]) ? $settings[$this->domain.'.'.$this->name]: [];
+		return isset($s['description'])? $s['description'] : 'N/A';
+	}
+
 }

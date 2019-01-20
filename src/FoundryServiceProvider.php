@@ -82,10 +82,10 @@ class FoundryServiceProvider extends ServiceProvider {
 		/**
 		 * Register the FormRequestHandler Facade and link it to the FormRequestHandler Class
 		 */
-		$this->app->singleton( \Foundry\Facades\FormRequestHandler::class, function () {
+		$this->app->singleton( 'Foundry\Facades\FormRequestHandler', function () {
 			return new FormRequestHandler();
 		} );
-		$this->app->alias( \Foundry\Facades\FormRequestHandler::class, 'form-request-handler' );
+		$this->app->alias( 'Foundry\Facades\FormRequestHandler', 'form-request-handler' );
 
 	}
 

@@ -14,9 +14,12 @@ use Foundry\Models\InputCollection;
  */
 trait HasFieldInputCollection {
 
-	public function inputs( array $names, $collection = null ): InputCollection {
+	public function inputs( array $names = null, $collection = null ): InputCollection {
 		if ( $collection ) {
 			$collection = $collection . '.';
+		}
+		if ($names === null) {
+			$names = array_keys(static::$inputs);
 		}
 		$inputs = new InputCollection();
 		foreach ( $names as $key => $value ) {
@@ -40,7 +43,8 @@ trait HasFieldInputCollection {
 				 */
 				$field = static::$inputs[ $value ];
 				$input = $field::input( $this );
-				$key   = $collection . $input->getName();
+				//set to the given name from the static::inputs
+				$key   = $collection . $value;
 
 				$input->setName( $key );
 				$inputs->offsetSet( $key, $input );

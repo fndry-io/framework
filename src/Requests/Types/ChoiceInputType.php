@@ -51,16 +51,15 @@ class ChoiceInputType extends InputType {
 		}
 
 		if ( $value === '' || $value === null || ( $this->multiple && empty( $value ) ) ) {
-			return '-- ' . __( 'NOT SET' ) . ' ---';
+			return null;
 		}
 
 		if ( empty( $options ) ) {
 			return $value;
 		}
 
-		if ( ! $this->multiple ) {
-			$value = (array) $value;
-		}
+		//make sure it is an array
+		$value = (array) $value;
 		$values = [];
 		foreach ( $value as $key ) {
 			if ( isset( $options[ $key ] ) ) {

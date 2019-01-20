@@ -19,7 +19,7 @@ trait IsReadRequest {
 	 * {@inheritdoc}
 	 */
 	public function handle(): Response {
-		$response = $this->validate();
+		$response = $this->validate(false, true);
 		if ( $response->isSuccess() ) {
 			if ( $model = $this->getModel() ) {
 				return Response::success( $model );

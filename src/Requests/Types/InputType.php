@@ -51,7 +51,7 @@ abstract class InputType extends BaseType implements Inputable {
 		string $name,
 		string $label = null,
 		bool $required = true,
-		string $value = null,
+		$value = null,
 		string $position = 'full',
 		string $rules = null,
 		string $id = null,
@@ -144,10 +144,6 @@ abstract class InputType extends BaseType implements Inputable {
 
 	public function display($value = null) {
 		$value = $this->getValue();
-		if ( $value === null ) {
-			return '-- ' . __( 'NOT SET' ) . ' ---';
-		} else {
-			return $value;
-		}
+		return $value;
 	}
 }
