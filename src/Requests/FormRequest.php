@@ -249,7 +249,7 @@ abstract class FormRequest {
 	/**
 	 * Returns the service for this form
 	 *
-	 * @return Service
+	 * @return string
 	 */
 	static abstract function service();
 
