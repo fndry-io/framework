@@ -3,6 +3,7 @@
 namespace Foundry\Requests;
 
 use Foundry\Exceptions\FormRequestException;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * FormRequestHandler
@@ -51,14 +52,16 @@ class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
 	 *
 	 * @param $key
 	 * @param $request
-	 * @param $id
+	 * @param Model|string|int $id
 	 *
 	 * @return Response
 	 * @throws FormRequestException
 	 */
 	public function handle( $key, $request, $id = null ): Response {
 		$form = $this->getForm( $key );
-		if ( $id ) {
+		if ( is_object($id) ) {
+			$model = $id;
+		} elseif ( $id ) {
 			$model = $form::model( $id );
 		} else {
 			$model = null;
