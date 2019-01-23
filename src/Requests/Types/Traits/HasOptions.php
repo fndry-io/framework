@@ -47,7 +47,12 @@ trait HasOptions {
 	/**
 	 * @return array
 	 */
-	public function getOptions(): array {
+	public function getOptions($value = null): array {
+
+		if ( is_callable( $this->options ) ) {
+			$call = $this->options;
+			$this->options = $call(null, $value);
+		}
 		return $this->options;
 	}
 

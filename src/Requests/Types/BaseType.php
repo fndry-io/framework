@@ -2,6 +2,7 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Requests\Types\Contracts\Choosable;
 use Foundry\Requests\Types\Contracts\Inputable;
 use Illuminate\Contracts\Support\Arrayable;
 
@@ -81,6 +82,10 @@ abstract class BaseType implements Arrayable {
 
 	public function isInputType() {
 		return $this instanceof Inputable;
+	}
+
+	public function isChoiceType() {
+		return $this instanceof Choosable;
 	}
 
 

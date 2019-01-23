@@ -51,6 +51,11 @@ class FormType extends ParentType implements Modelable {
 	protected $inputs;
 
 	/**
+	 * @var bool If the form should display inline
+	 */
+	protected $inline;
+
+	/**
 	 * FormType constructor.
 	 *
 	 * @param $name
@@ -299,6 +304,16 @@ class FormType extends ParentType implements Modelable {
 		return $this;
 	}
 
+
+	public function setInline(bool $value = true){
+		$this->inline = true;
+		return $this;
+	}
+
+	public function isInline()
+	{
+		return $this->inline;
+	}
 
 	/**
 	 * @param $name

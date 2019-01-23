@@ -2,6 +2,7 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Requests\Types\Contracts\Choosable;
 use Foundry\Requests\Types\Traits\HasMinMax;
 use Foundry\Requests\Types\Traits\HasOptions;
 
@@ -11,7 +12,7 @@ use Foundry\Requests\Types\Traits\HasOptions;
  * @package Foundry\Requests\Types
  * @todo Update ChoiceType and others of a similar nature to rather use traits for the additional properties and methods
  */
-class ChoiceInputType extends InputType {
+class ChoiceInputType extends InputType implements Choosable {
 
 	use HasOptions;
 	use HasMinMax;
@@ -43,12 +44,7 @@ class ChoiceInputType extends InputType {
 			$value = $this->getValue();
 		}
 
-		if ( is_callable( $this->options ) ) {
-			$call = $this->options;
-			$options = $call(null, $value);
-		} else {
-			$options = $this->options;
-		}
+		$options = $this->getOptions($value);
 
 		if ( $value === '' || $value === null || ( $this->multiple && empty( $value ) ) ) {
 			return null;

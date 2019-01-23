@@ -5,6 +5,7 @@ namespace Foundry\View\Composers\Traits;
 use Foundry\Requests\Contracts\ColumnInterface;
 use Foundry\Requests\FormRequest;
 use Foundry\Requests\Types\DocType;
+use Foundry\Requests\Types\ResetButtonType;
 use Foundry\Requests\Types\SubmitButtonType;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -52,20 +53,29 @@ trait BrowseFormRequest {
 	 * @param $response
 	 */
 	protected function view( string $class, Request $request, View &$view, $response = null ): void {
+		/**
+		 * @var FormType $form
+		 */
 		$form = $class::form( $request, null );
-		$form
-			->setMethod( 'GET' )
-			->setButtons(
-				( new SubmitButtonType( __( 'Filter' ), $form->getName() ) )
-			);
+		$doctype = null;
+		if ($inputs = $form->getInputs()) {
+			$form
+				->setMethod( 'GET' )
+				->setButtons(
+					( new SubmitButtonType( __( 'Filter' ), $form->getAction() ) )
+					//,( new ResetButtonType( __( 'Reset' ), $form->getAction() ) )
+				);
 
-		if ( $response && ! $response->isSuccess() ) {
-			$form->setErrors( $response->getError() );
+			if ( $response && ! $response->isSuccess() ) {
+				$form->setErrors( $response->getError() );
+			}
+			$form->addChildren(...array_values($inputs));
+			$doctype = DocType::withChildren( $form );
 		}
 
 		$view->with( [
 			'data' => ($response) ? $response->getData() : null,
-			'form' => DocType::withChildren( $form )
+			'form' => $doctype
 		] );
 		if ( method_exists( $class, 'columns' ) ) {
 			$view->with( 'columns', $class::columns() );
