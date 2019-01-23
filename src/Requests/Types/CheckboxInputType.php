@@ -1,6 +1,7 @@
 <?php
 
 namespace Foundry\Requests\Types;
+use Foundry\Requests\Types\Traits\HasOptions;
 
 
 /**
@@ -9,6 +10,8 @@ namespace Foundry\Requests\Types;
  * @package Foundry\Requests\Types
  */
 class CheckboxInputType extends InputType {
+
+	use HasOptions;
 
 	protected $checked;
 
@@ -37,6 +40,30 @@ class CheckboxInputType extends InputType {
 		$this->checked = $checked;
 
 		return $this;
+	}
+
+	public function display($value = null) {
+
+		if ($value === null) {
+			$value = $this->getValue();
+		}
+
+		$options = $this->getOptions($value);
+
+		if ( $value === '' || $value === null || ( $this->multiple && empty( $value ) ) ) {
+			return null;
+		}
+
+		if ( empty( $options ) ) {
+			return $value;
+		}
+
+		//make sure it is an array
+		if ( isset( $options[ $value ] ) ) {
+			return $options[ $value ];
+		} else {
+			return $value;
+		}
 	}
 
 }
