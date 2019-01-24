@@ -1,6 +1,7 @@
 <?php
 
 namespace Foundry\Requests\Types;
+use Foundry\Requests\Types\Contracts\Choosable;
 use Foundry\Requests\Types\Traits\HasOptions;
 
 
@@ -9,7 +10,7 @@ use Foundry\Requests\Types\Traits\HasOptions;
  *
  * @package Foundry\Requests\Types
  */
-class CheckboxInputType extends InputType {
+class CheckboxInputType extends InputType implements Choosable {
 
 	use HasOptions;
 
