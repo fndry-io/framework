@@ -111,7 +111,9 @@ class FoundryServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	protected function registerMigrations(): void {
-		$this->loadMigrationsFrom( __DIR__ . '/../database/migrations' );
+
+		//TODO this should publish them, not run them
+		//$this->loadMigrationsFrom( __DIR__ . '/../database/migrations' );
 
 	}
 }

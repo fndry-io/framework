@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Models\Contracts;
+namespace Foundry\Models\Traits;
 
 use Illuminate\Support\Facades\Auth;
 

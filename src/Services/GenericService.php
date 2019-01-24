@@ -52,7 +52,7 @@ abstract class GenericService extends FoundryService {
 			$closure( $query );
 		}
 
-		return Response::success( $query->paginate( setting( 'okinus_system.default_pagination', 20 ) ) );
+		return Response::success( $query->paginate( setting( 'system.default_pagination', 20 ) ) );
 	}
 
 	/**
