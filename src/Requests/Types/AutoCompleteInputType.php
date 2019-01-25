@@ -2,6 +2,7 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Requests\Types\Traits\HasOptions;
 use Foundry\Requests\Types\Traits\HasQueryOptions;
 
 
@@ -10,19 +11,19 @@ use Foundry\Requests\Types\Traits\HasQueryOptions;
  *
  * @package Foundry\Requests\Types
  */
-class AutoCompleteInputType extends ChoiceInputType {
+class AutoCompleteInputType extends TextInputType {
 
 	use HasQueryOptions;
+	use HasOptions;
 
 	/**
 	 * AutoCompleteType constructor.
 	 *
 	 * @param string $name The field name
 	 * @param string $label
-	 * @param array $options The options to display if not doing a url fetch for them
-	 * @param string $url The url to fetch the list of available options from
-	 * @param bool $multiple
 	 * @param bool $required
+	 * @param string $url The url to fetch the list of available options from
+	 * @param array $options The options to display if not doing a url fetch for them
 	 * @param null $value
 	 * @param string $position
 	 * @param string|null $rules
@@ -34,9 +35,8 @@ class AutoCompleteInputType extends ChoiceInputType {
 		string $name,
 		string $label,
 		bool $required = true,
-		array $options,
-		string $url,
-		bool $multiple,
+		?string $url,
+		array $options = [],
 		$value = null,
 		string $position = 'full',
 		string $rules = null,
@@ -44,9 +44,39 @@ class AutoCompleteInputType extends ChoiceInputType {
 		string $placeholder = null,
 		string $query_param = 'q'
 	) {
-		parent::__construct( $name, $label, $required, false, $multiple, $options, $value, $position, $rules, $id, $placeholder );
+		parent::__construct( $name, $label, $required, $value, $position, $rules, $id, $placeholder, 'autocomplete' );
 		$this->setUrl( $url );
 		$this->setQueryParam( $query_param );
-		$this->setType( 'autocomplete' );
+	}
+
+	public function display($value = null) {
+
+		if ($value === null) {
+			$value = $this->getValue();
+		}
+
+		$options = $this->getOptions($value);
+
+		if ( $value === '' || $value === null || ( $this->multiple && empty( $value ) ) ) {
+			return null;
+		}
+
+		if ( empty( $options ) ) {
+			return $value;
+		}
+
+		//make sure it is an array
+		$value = (array) $value;
+		$values = [];
+		foreach ( $value as $key ) {
+			if ( isset( $options[ $key ] ) ) {
+				$values[] = $options[ $key ];
+			}
+		}
+		if ( count( $values ) === 1 ) {
+			return $values[0];
+		} else {
+			return $values;
+		}
 	}
 }

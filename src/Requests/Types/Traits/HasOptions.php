@@ -9,7 +9,7 @@ trait HasOptions {
 	/**
 	 * @var array|\Closure $options Available options
 	 */
-	protected $options;
+	protected $options = [];
 
 	/**
 	 * @var bool Determines if the options are expanded, such as in a series of checkboxes or radios
