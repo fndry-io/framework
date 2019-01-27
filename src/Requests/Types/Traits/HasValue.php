@@ -41,37 +41,6 @@ trait HasValue {
 		return $this;
 	}
 
-	public function isFillable() {
-		if ( $this->hasModel() ) {
-			return $this->getModel()->isFillable( $this->getName() );
-		}
-
-		return true;
-	}
-
-	public function isVisible() {
-		if ( $this->hasModel() ) {
-			$hidden  = $this->getModel()->getHidden();
-			$visible = $this->getModel()->getVisible();
-			if ( ! in_array( $this->getName(), $hidden ) && in_array( $this->getName(), $visible ) ) {
-				return true;
-			} elseif ( in_array( $this->getName(), $hidden ) ) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	public function isHidden() {
-		if ( $this->hasModel() ) {
-			$hidden = $this->getModel()->getHidden();
-			if ( in_array( $this->getName(), $hidden ) ) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 	public function isInvalid() {
 		return $this->hasErrors();

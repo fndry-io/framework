@@ -40,6 +40,11 @@ abstract class BaseType implements Arrayable {
 		return $this;
 	}
 
+	public function isType($type)
+	{
+		return ($this->type === $type);
+	}
+
 	public function toArray() {
 		return $this->jsonSerialize();
 	}

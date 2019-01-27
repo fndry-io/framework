@@ -11,5 +11,5 @@ interface Modelable {
 
 	public function getModel(): Model;
 
-	public function attachInputs( InputType ...$input_types );
+	public function attachInputs( Inputable ...$input_types );
 }

@@ -2,6 +2,7 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Requests\Types\Contracts\Inputable;
 use Foundry\Requests\Types\Contracts\Modelable;
 use Foundry\Requests\Types\Traits\HasButtons;
 use Foundry\Requests\Types\Traits\HasClass;
@@ -124,7 +125,7 @@ class FormType extends ParentType implements Modelable {
 		return $this;
 	}
 
-	public function attachInputs( InputType ...$inputs ) {
+	public function attachInputs( Inputable ...$inputs ) {
 		if ( $this->model ) {
 			foreach ( $inputs as &$input ) {
 				if ( ! $input->hasModel() ) {
@@ -217,11 +218,11 @@ class FormType extends ParentType implements Modelable {
 	/**
 	 * Create a row and add inputs to it
 	 *
-	 * @param InputType[] $types The inputs to add
+	 * @param Inputable[] $types The inputs to add
 	 *
 	 * @return $this
 	 */
-	public function addInputRow( InputType ...$types ) {
+	public function addInputRow( Inputable ...$types ) {
 		$this->addChildren( ( new RowType() )->addChildren( ...$types ) );
 
 		return $this;

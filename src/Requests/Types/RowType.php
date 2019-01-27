@@ -2,6 +2,8 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Requests\Types\Contracts\Inputable;
+
 /**
  * Class FormRow
  *
@@ -14,7 +16,7 @@ class RowType extends ParentType {
 	}
 
 	//TODO remove references to this across the projects
-	static function withInputs( InputType ...$inputs ) {
+	static function withInputs( Inputable ...$inputs ) {
 		return ( new static() )->addChildren( ...$inputs );
 	}
 

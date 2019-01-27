@@ -9,6 +9,7 @@ use Foundry\Requests\Types\Traits\HasErrors;
 use Foundry\Requests\Types\Traits\HasHelp;
 use Foundry\Requests\Types\Traits\HasId;
 use Foundry\Requests\Types\Traits\HasLabel;
+use Foundry\Requests\Types\Traits\HasModel;
 use Foundry\Requests\Types\Traits\HasName;
 use Foundry\Requests\Types\Traits\HasPlaceholder;
 use Foundry\Requests\Types\Traits\HasPosition;
@@ -39,13 +40,10 @@ abstract class InputType extends BaseType implements Inputable {
 		HasHelp,
 		HasReadonly,
 		HasErrors,
-		IsSortable
+		IsSortable,
+		HasModel
 	;
 
-	/**
-	 * @var Model
-	 */
-	protected $model;
 
 	public function __construct(
 		string $name,
@@ -117,30 +115,7 @@ abstract class InputType extends BaseType implements Inputable {
 		return $field;
 	}
 
-	/**
-	 * @return Model
-	 */
-	public function getModel(): Model {
-		return $this->model;
-	}
 
-	/**
-	 * @param Model|null $model
-	 *
-	 * @return $this
-	 */
-	public function setModel( Model &$model = null ) {
-		$this->model = $model;
-
-		return $this;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function hasModel(): bool {
-		return ! ! ( $this->model );
-	}
 
 	public function display($value = null) {
 		$value = $this->getValue();

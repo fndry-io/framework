@@ -5,8 +5,8 @@ namespace Foundry\Core\Services;
 use Foundry\Requests\FormRequest;
 use Foundry\Requests\Response;
 use Foundry\Services\Service as FoundryService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 
 /**
  * Generic Service
