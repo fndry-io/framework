@@ -43,16 +43,7 @@ trait HasReference {
 	 */
 	public function jsonSerialize(): array {
 
-		//Do we have a reference
-		//Is it a string, meaning we need to locate it on the current model
-		$reference = $this->getReference();
-		if ($reference && is_string($reference)) {
-			if ($this->hasModel() && $reference = object_get($this->getModel(), $reference)) {
-				$this->reference = $reference;
-			} else {
-				$this->reference = null;
-			}
-		}
+		$this->reference = $this->getReferenceObject();
 		return parent::jsonSerialize();
 	}
 
@@ -72,6 +63,17 @@ trait HasReference {
 			return true;
 		}
 		return false;
+	}
+
+	public function getReferenceObject()
+	{
+		//Do we have a reference
+		//Is it a string, meaning we need to locate it on the current model
+		$reference = $this->getReference();
+		if ($reference && is_string($reference) && $this->hasModel() && $reference = object_get($this->getModel(), $reference)) {
+			return $reference;
+		}
+		return null;
 	}
 
 	public function getRouteParams() : array

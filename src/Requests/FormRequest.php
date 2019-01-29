@@ -578,7 +578,7 @@ abstract class FormRequest {
 	 * @return mixed|null
 	 */
 	public function input( $key, $default = null ) {
-		return isset( $this->inputs[ $key ] ) ? $this->inputs[ $key ] : $default;
+		return data_get($this->inputs, $key, $default);
 	}
 
 
