@@ -4,6 +4,7 @@ namespace Foundry\Requests\Types;
 
 use Foundry\Requests\Types\Contracts\Choosable;
 use Foundry\Requests\Types\Contracts\Inputable;
+use Foundry\Requests\Types\Traits\HasConditions;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
@@ -12,6 +13,8 @@ use Illuminate\Contracts\Support\Arrayable;
  * @package Foundry\Requests\Types
  */
 abstract class BaseType implements Arrayable {
+
+	use HasConditions;
 
 	protected $json_ignore = [];
 

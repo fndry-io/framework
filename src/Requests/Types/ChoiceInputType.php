@@ -17,6 +17,8 @@ class ChoiceInputType extends InputType implements Choosable {
 	use HasOptions;
 	use HasMinMax;
 
+	protected $inline;
+
 	public function __construct(
 		string $name,
 		string $label = null,
@@ -36,6 +38,18 @@ class ChoiceInputType extends InputType implements Choosable {
 		$type = $expanded ? $multiple ? 'checkbox' : 'radio' : 'select';
 
 		parent::__construct( $name, $label, $required, $value, $position, $rules, $id, $placeholder, $type );
+	}
+
+
+	public function setInline($value = true)
+	{
+		$this->inline = $value;
+		return $this;
+	}
+
+	public function getInline()
+	{
+		return $this->inline;
 	}
 
 	public function display($value = null) {
