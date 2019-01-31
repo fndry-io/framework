@@ -38,6 +38,7 @@ trait HasRules {
 
 				if (isset($this->multiple) && $this->multiple) {
 					$this->addRule( function ($attribute, $values, $fail) use ($options) {
+						$values = (array) $values;
 						foreach ($values as $value) {
 							if (!in_array($value, $options)) {
 								$fail($attribute.' is invalid.');
