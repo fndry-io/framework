@@ -33,7 +33,20 @@ trait HasRules {
 		}
 		if ( isset( $this->options ) ) {
 			if ( is_array( $this->options ) && !empty($this->options) ) {
-				$this->addRule( \Illuminate\Validation\Rule::in( array_keys($this->getOptions()) ) );
+
+				$options = array_keys($this->getOptions());
+
+				if (isset($this->multiple) && $this->multiple) {
+					$this->addRule( function ($attribute, $values, $fail) use ($options) {
+						foreach ($values as $value) {
+							if (!in_array($value, $options)) {
+								$fail($attribute.' is invalid.');
+							}
+						}
+					} );
+				} else {
+					$this->addRule( \Illuminate\Validation\Rule::in( $options ) );
+				}
 			}
 		}
 

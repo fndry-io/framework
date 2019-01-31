@@ -16,6 +16,11 @@ trait HasValue {
 	protected $value = null;
 
 	/**
+	 * @var mixed the default value or values selected
+	 */
+	protected $default;
+
+	/**
 	 * @return string
 	 */
 	public function getValue() {
@@ -39,6 +44,18 @@ trait HasValue {
 		$this->value = $value;
 
 		return $this;
+	}
+
+
+	public function setDefault($value)
+	{
+		$this->default = $value;
+		return $this;
+	}
+
+	public function getDefault()
+	{
+		return $this->default;
 	}
 
 
@@ -68,5 +85,7 @@ trait HasValue {
 		}
 		return $value;
 	}
+
+
 
 }

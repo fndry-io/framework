@@ -16,7 +16,7 @@ abstract class BaseType implements Arrayable {
 
 	use HasConditions;
 
-	protected $json_ignore = [];
+	protected $json_ignore = ['model'];
 
 	/**
 	 * Type of the input to display

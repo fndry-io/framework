@@ -357,20 +357,91 @@ abstract class FormRequest {
 	 *
 	 * @return array
 	 */
-	static function only( $keys, $inputs ) {
+	static function only( $keys, $input ) {
 		$results = [];
 
-		$placeholder = new \stdClass();
+		$placeholder = new \stdClass;
 
-		foreach ( is_array( $keys ) ? $keys : [ $keys ] as $key ) {
-			$value = data_get( $inputs, $key, $placeholder );
+		foreach (is_array($keys) ? $keys : func_get_args() as $key) {
+			$value = static::data_get($input, $key, $placeholder);
 
-			if ( $value !== $placeholder ) {
-				Arr::set( $results, $key, $value );
+			if ($value !== $placeholder) {
+				Arr::set($results, $key, $value);
 			}
 		}
 
-		return $results;
+		return static::array_correct($results);
+	}
+
+	static function array_correct($array)
+	{
+		$_array = [];
+		foreach ($array as $key => $value) {
+			if ($key === '*') {
+				//the keys now are the keys for each value inside the array
+				$_value = [];
+				foreach ($value as $k => $values) {
+					if (is_array($values)) {
+						foreach ($values as $index => $v) {
+							$_value[$index][$k] = $v;
+						}
+					} else  {
+						$_value[$k] = $values;
+					}
+				}
+				$_array = $_value;
+			} elseif (is_array($value)) {
+				$_array[$key] = static::array_correct($value);
+			} else {
+				$_array[$key] = $value;
+			}
+		}
+		return $_array;
+	}
+
+	/**
+	 * Get an item from an array or object using "dot" notation.
+	 *
+	 * @param  mixed   $target
+	 * @param  string|array|int  $key
+	 * @param  mixed   $default
+	 * @return mixed
+	 */
+	static function data_get($target, $key, $default = null)
+	{
+		if (is_null($key)) {
+			return $target;
+		}
+
+		$key = is_array($key) ? $key : explode('.', $key);
+
+		while (! is_null($segment = array_shift($key))) {
+			if ($segment === '*') {
+				if ($target instanceof Collection) {
+					$target = $target->all();
+				} elseif (! is_array($target)) {
+					return value($default);
+				}
+
+				$result = [];
+
+				foreach ($target as $item) {
+					$result[] = data_get($item, $key);
+				}
+
+				return $result;
+			}
+
+			if (Arr::accessible($target) && Arr::exists($target, $segment)) {
+				$target = $target[$segment];
+			} elseif (is_object($target) && isset($target->{$segment})) {
+				$target = $target->{$segment};
+			} else {
+				return value($default);
+			}
+		}
+
+		return $target;
 	}
 
 	/**
