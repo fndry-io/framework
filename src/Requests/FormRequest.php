@@ -458,7 +458,7 @@ abstract class FormRequest {
 			if ($value !== "" && $value !== null) {
 				if ($cast === 'datetime') {
 					$value = Carbon::parse($value, 'UTC');
-				} if ($cast === 'array_int') {
+				}elseif ($cast === 'array_int') {
 					$value = array_map(function($item){
 						return (int) $item;
 					}, $value);
