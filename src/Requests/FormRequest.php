@@ -390,7 +390,7 @@ abstract class FormRequest {
 					}
 				}
 				$_array = $_value;
-			} elseif (is_array($value)) {
+			} elseif (is_array($value) && Arr::isAssoc($value)) {
 				$_array[$key] = static::array_correct($value);
 			} else {
 				$_array[$key] = $value;
@@ -458,6 +458,10 @@ abstract class FormRequest {
 			if ($value !== "" && $value !== null) {
 				if ($cast === 'datetime') {
 					$value = Carbon::parse($value, 'UTC');
+				} if ($cast === 'array_int') {
+					$value = array_map(function($item){
+						return (int) $item;
+					}, $value);
 				} else {
 					settype( $value, $cast );
 				}

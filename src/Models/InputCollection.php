@@ -28,7 +28,7 @@ class InputCollection extends Collection {
 		$casts = [];
 		foreach ( $this->all() as $item ) {
 			if (method_exists($item, 'cast')) {
-				$casts[ $item->getName() ] = call_user_func([$item, 'cast']);
+				$casts[ $item->getName() ] = call_user_func([$item, 'cast'], $item);
 			}
 
 		}

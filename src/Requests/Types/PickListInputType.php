@@ -24,9 +24,13 @@ class PickListInputType extends ChoiceInputType {
 		                   ->toArray();
 	}
 
-	static function cast()
+	static function cast($item)
 	{
-		return 'int';
+		if ($item->isMultiple()) {
+			return 'array_int';
+		} else {
+			return 'int';
+		}
 	}
 
 }
