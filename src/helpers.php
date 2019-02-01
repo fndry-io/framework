@@ -91,3 +91,21 @@ if ( ! function_exists( 'plugin_path' ) ) {
 
 	}
 }
+
+if ( ! function_exists( 'get_UTC_offset' ) ) {
+	/**
+	 * Gets the utc offset for a given php timezone
+	 *
+	 * @param $timezone
+	 *
+	 * @return string
+	 */
+	function get_UTC_offset( $timezone ) {
+		$current      = timezone_open( $timezone );
+		$utcTime      = new \DateTime( 'now', new \DateTimeZone( 'UTC' ) );
+		$offsetInSecs = $current->getOffset( $utcTime );
+		$hoursAndSec  = gmdate( 'H:i', abs( $offsetInSecs ) );
+
+		return stripos( $offsetInSecs, '-' ) === false ? "+{$hoursAndSec}" : "-{$hoursAndSec}";
+	}
+}
