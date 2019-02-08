@@ -69,7 +69,7 @@ trait Sluggify {
 			return $slug;
 		}
 		// Just append numbers until we find one not used.
-		for ( $i = 1; $i <= 100; $i ++ ) {
+		for ( $i = 1; $i <= 1000; $i ++ ) {
 			$newSlug = $slug . '-' . $i;
 			if ( ! $allSlugs->contains( $field, $newSlug ) ) {
 				return $newSlug;
