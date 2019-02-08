@@ -461,11 +461,10 @@ abstract class FormRequest {
 				}elseif ($cast === 'array_int') {
 					$value = array_map(function($item){
 						return (int) $item;
-					}, $value);
+					}, (array) $value);
 				} else {
 					settype( $value, $cast );
 				}
-
 				array_set($values, $key, $value);
 			}
 		}
