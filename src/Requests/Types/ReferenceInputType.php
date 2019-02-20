@@ -61,7 +61,9 @@ class ReferenceInputType extends TextInputType implements Referencable {
 	public function display( $value = null ) {
 		$reference = $this->getReference();
 		if (is_object($reference) || ($this->hasModel() && $reference = object_get($this->getModel(), $reference))) {
-			return $reference->label;
+			if (is_object($reference)) {
+				return $reference->label;
+			}
 		}
 		return null;
 	}
