@@ -11,7 +11,7 @@ class ExtraProcessor {
 			'user_id' => auth()->user() ? auth()->user()->id : null,
 			'ip' => request()->server('REMOTE_ADDR'),
 			'user_agent' => request()->server('HTTP_USER_AGENT'),
-			'session' => request()->session() ? request()->session()->getId(): null
+			'session' => request()->hasSession() ? request()->session()->getId(): null
 		];
 		return $record;
 	}
