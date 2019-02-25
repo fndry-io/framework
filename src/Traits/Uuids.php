@@ -11,7 +11,16 @@ trait Uuids {
 	 */
 	public static function bootUuids() {
 		static::creating( function ( $model ) {
-			$model->uuid = Uuid::generate()->string;
+			$model->{$model->getUuidName()} = Uuid::generate()->string;
 		} );
+	}
+
+	public function getUuidName()
+	{
+		if ($this->uuidKey) {
+			return $this->uuidKey;
+		} else {
+			return 'uuid';
+		}
 	}
 }
