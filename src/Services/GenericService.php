@@ -34,7 +34,7 @@ abstract class GenericService extends FoundryService {
 	/**
 	 * {@inheritdoc}
 	 */
-	static function model( $id ): Model {
+	static function model( $id ) {
 		return static::modelClass()::query()->where( 'id', $id )->first();
 	}
 
