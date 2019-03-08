@@ -11,7 +11,7 @@ class ExtraProcessor {
 			$record['extra'] = [
 				'path' => request()->fullUrl(),
 				'origin' => request()->headers->get('origin'),
-				'user_id' => request()->hasSession() ? auth()->user()->id : null,
+				'user_id' => (request()->hasSession() && auth()->user()) ? auth()->user()->id : null,
 				'ip' => request()->server('REMOTE_ADDR'),
 				'user_agent' => request()->server('HTTP_USER_AGENT'),
 				'session' => request()->hasSession() ? request()->session()->getId(): null

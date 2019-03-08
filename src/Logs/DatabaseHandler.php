@@ -21,7 +21,12 @@ class DatabaseHandler extends AbstractProcessingHandler
 	 */
 	protected function write(array $record)
 	{
-		Log::saveRecord($record);
+		try {
+			Log::saveRecord($record);
+		} catch (\Exception $e) {
+			//ignore the exception as this will go to the normal log
+		}
+
 		// Queue implementation
 		//event(new LogEvent($record));
 	}
