@@ -27,6 +27,7 @@ class Log extends Model {
 		'result',
 		'level',
 		'description',
+		'url',
 		'origin',
 		'user_id',
 		'ip',

@@ -19,6 +19,7 @@ class CreateLogsTable extends Migration
 	        $table->enum('result', ['success', 'neutral', 'failure']);
 	        $table->enum('level', ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'])->index();
 	        $table->text('description')->nullable();
+	        $table->text('url')->nullable();
 	        $table->string('origin', 200)->nullable();
 	        $table->integer('user_id')->nullable()->index();
 	        $table->ipAddress('ip')->nullable();
