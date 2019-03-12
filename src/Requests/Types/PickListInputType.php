@@ -5,6 +5,8 @@ namespace Foundry\Requests\Types;
 
 class PickListInputType extends ChoiceInputType {
 
+    static $cast = 'int';
+
     /**
      * The input options
      *
@@ -14,7 +16,10 @@ class PickListInputType extends ChoiceInputType {
      * @param string $label
      * @return array
      */
-    static function list( $identifier , $key = 'id', $label='label'): array {
+    static function list( $identifier , $key = 'id', $label='label', $cast = 'int'): array {
+
+        self::$cast = $cast;
+
         return config('foundry.pick-list-items.model')::query()
             ->select( [ 'pick_list_items.*' ] )
             ->join( 'pick_lists', 'pick_list_items.pick_list_id', '=', 'pick_lists.id' )
@@ -27,12 +32,12 @@ class PickListInputType extends ChoiceInputType {
     }
 
     static function cast($item)
-	{
-		if ($item->isMultiple()) {
-			return 'array_int';
-		} else {
-			return 'int';
-		}
-	}
+    {
+        if ($item->isMultiple()) {
+            return 'array_int';
+        } else {
+            return self::$cast;
+        }
+    }
 
 }
