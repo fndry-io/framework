@@ -3,6 +3,7 @@
 namespace Foundry\Requests;
 
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 
 /**
  * Foundry Simple Response Object
@@ -105,8 +106,12 @@ class Response {
 		return $this->code;
 	}
 
-	public function getData() {
-		return $this->data;
+	public function getData($key = null, $default = null) {
+		if ($key) {
+			return Arr::get($this->data, $key, $default);
+		} else {
+			return $this->data;
+		}
 	}
 
 	public function getMessage() {
