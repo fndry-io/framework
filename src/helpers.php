@@ -109,3 +109,11 @@ if ( ! function_exists( 'get_UTC_offset' ) ) {
 		return stripos( $offsetInSecs, '-' ) === false ? "+{$hoursAndSec}" : "-{$hoursAndSec}";
 	}
 }
+
+if ( ! function_exists( 'view_component' ) ) {
+	function view_component( $name, $params ) {
+		return app('view-component-handler')->handle($name, $params);
+	}
+}
+
+

@@ -31,7 +31,7 @@ class FormType extends ParentType implements Modelable {
 
 	protected $json_ignore = [
 		'model',
-		'inputs',
+//		'inputs',
 		'request'
 	];
 

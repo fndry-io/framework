@@ -8,6 +8,8 @@ use Foundry\Models\Listeners\SettingSaved;
 use Foundry\Providers\ConsoleServiceProvider;
 use Foundry\Providers\EventServiceProvider;
 use Foundry\Requests\FormRequestHandler;
+use Foundry\View\Components\ViewComponentHandler;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 
@@ -87,6 +89,14 @@ class FoundryServiceProvider extends ServiceProvider {
 		} );
 		$this->app->alias( 'Foundry\Facades\FormRequestHandler', 'form-request-handler' );
 
+		/**
+		 * Register the ViewComponentHandler Facade and link it to the FormRequestHandler Class
+		 */
+		$this->app->singleton( 'Foundry\Facades\ViewComponentHandler', function () {
+			return new ViewComponentHandler($this->app->get('request'));
+		} );
+		$this->app->alias( 'Foundry\Facades\ViewComponentHandler', 'view-component-handler' );
+
 	}
 
 	/**
@@ -116,4 +126,5 @@ class FoundryServiceProvider extends ServiceProvider {
 		//$this->loadMigrationsFrom( __DIR__ . '/../database/migrations' );
 
 	}
+
 }

@@ -9,6 +9,7 @@ use Foundry\Requests\Types\Traits\HasErrors;
 use Foundry\Requests\Types\Traits\HasHelp;
 use Foundry\Requests\Types\Traits\HasId;
 use Foundry\Requests\Types\Traits\HasLabel;
+use Foundry\Requests\Types\Traits\HasMask;
 use Foundry\Requests\Types\Traits\HasModel;
 use Foundry\Requests\Types\Traits\HasName;
 use Foundry\Requests\Types\Traits\HasPlaceholder;
@@ -41,7 +42,8 @@ abstract class InputType extends BaseType implements Inputable {
 		HasReadonly,
 		HasErrors,
 		IsSortable,
-		HasModel
+		HasModel,
+		HasMask
 	;
 
 
