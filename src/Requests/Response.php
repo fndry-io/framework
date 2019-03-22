@@ -61,16 +61,17 @@ class Response {
 		return new Response( $data, true, 200, null, $message );
 	}
 
-	/**
-	 * Error response
-	 *
-	 * @param $error
-	 * @param $code
-	 *
-	 * @return Response
-	 */
-	static function error( $error, $code ) {
-		return new Response( [], false, $code, $error );
+    /**
+     * Error response
+     *
+     * @param $error
+     * @param $code
+     *
+     * @param array $data
+     * @return Response
+     */
+	static function error( $error, $code , $data = []) {
+		return new Response( $data, false, $code, $error );
 	}
 
 	/**
