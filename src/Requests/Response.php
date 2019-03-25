@@ -51,7 +51,7 @@ class Response {
 	}
 
 	/**
-	 * Response
+	 * Success response
 	 *
 	 * @param array $data
 	 *
@@ -61,7 +61,18 @@ class Response {
 		return new Response( $data, true, 200, null, $message );
 	}
 
-    /**
+	/**
+	 * Redirect response
+	 *
+	 * @param array $data
+	 *
+	 * @return Response
+	 */
+	static function redirect( $data = [], $message = null ) {
+		return new Response( $data, true, 301, null, $message );
+	}
+
+	/**
      * Error response
      *
      * @param $error
@@ -123,7 +134,7 @@ class Response {
 		return json_encode( $this->jsonSerialize() );
 	}
 
-	public function redirect( RedirectResponse $redirect ) {
+	public function redirectResponse( RedirectResponse $redirect ) {
 		if ( $this->getCode() == 422 ) {
 			$redirect->withErrors( $this->getError() );
 		} else {

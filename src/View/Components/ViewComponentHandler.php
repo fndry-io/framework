@@ -38,10 +38,7 @@ class ViewComponentHandler implements \Foundry\Contracts\ViewComponentHandler {
 	public function register( $class, $key = null ) {
 		if ( is_array( $class ) ) {
 			foreach ( $class as $_class ) {
-				if ( $key == null ) {
-					$key = forward_static_call( [ $_class, 'name' ] );
-				}
-				$this->registerComponent( $_class, $key );
+				$this->registerComponent( $_class, forward_static_call( [ $_class, 'name' ] ) );
 			}
 		} else {
 			$this->registerComponent( $class, $key );
