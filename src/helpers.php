@@ -161,3 +161,15 @@ if ( ! function_exists( 'auth_user' ) ) {
 		return null;
 	}
 }
+
+
+if ( ! function_exists( 'array_from_object' ) ) {
+	function array_from_object( $object, array $keys ) {
+		$_object = [];
+		foreach ($keys as $key) {
+			\Illuminate\Support\Arr::set($_object, $key, object_get($object, $key));
+		}
+		return $_object;
+	}
+}
+
