@@ -116,4 +116,20 @@ if ( ! function_exists( 'view_component' ) ) {
 	}
 }
 
+if ( ! function_exists( 'phone_number_format' ) ) {
+	function phone_number_format( $number, $pattern = "/^1?(\d{3})(\d{3})(\d{4})$/", $replacement = "($1)-$2-$3" ) {
+		// Allow only Digits, remove all other characters.
+		$number = preg_replace( "/[^\d]/", "", $number );
 
+		// get number length.
+		$length = strlen( $number );
+
+		// if number = 10
+		if ( $length == 10 ) {
+			$number = preg_replace( $pattern, $replacement, $number );
+		}
+
+		return $number;
+
+	}
+}

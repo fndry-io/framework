@@ -19,7 +19,7 @@ class AddButtonType extends ButtonType {
 		string $id = null
 	) {
 		$type = 'add';
-		parent::__construct( $name, $label, $action, $title, $query, $method, $id, $type );
+		parent::__construct( $label, $action, $title, $query, $method, $id, $type );
 	}
 
 }

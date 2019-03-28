@@ -25,7 +25,6 @@ class ButtonType extends BaseType {
 	/**
 	 * The form row this field belongs to
 	 *
-	 * @var FormRow $row
 	 */
 	protected $row;
 
@@ -33,7 +32,7 @@ class ButtonType extends BaseType {
 
 	public function __construct(
 		string $label,
-		string $action,
+		string $action = null,
 		string $title = null,
 		array $query = [],
 		string $method = 'GET',

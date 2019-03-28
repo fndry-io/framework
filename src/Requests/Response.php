@@ -64,12 +64,12 @@ class Response {
 	/**
 	 * Redirect response
 	 *
-	 * @param array $data
+	 * @param string $url
 	 *
 	 * @return Response
 	 */
-	static function redirect( $data = [], $message = null ) {
-		return new Response( $data, true, 301, null, $message );
+	static function redirect( $url, $message = null ) {
+		return new Response( $url, true, 301, null, $message );
 	}
 
 	/**
