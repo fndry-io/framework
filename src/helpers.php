@@ -133,3 +133,31 @@ if ( ! function_exists( 'phone_number_format' ) ) {
 
 	}
 }
+
+
+if ( ! function_exists( 'auth_guard_can' ) ) {
+	function auth_guard_can( $guard, $ability ) {
+		$guard = (array) $guard;
+		foreach ($guard as $_guard) {
+			if ( \Illuminate\Support\Facades\Auth::guard($_guard)->user() && \Illuminate\Support\Facades\Auth::guard($_guard)->user()->can($ability)) {
+				return true;
+			}
+		}
+		return false;
+	}
+}
+
+if ( ! function_exists( 'auth_user' ) ) {
+	function auth_user( $guard = null) {
+		if ($guard == null) {
+			$guard = array_keys(config('auth.guards'));
+		}
+		$guards = (array) $guard;
+		foreach ($guards as $guard) {
+			if ($user = auth()->guard($guard)->user()) {
+				return $user;
+			}
+		}
+		return null;
+	}
+}

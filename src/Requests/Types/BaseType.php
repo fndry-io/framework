@@ -6,6 +6,7 @@ use Foundry\Requests\Types\Contracts\Choosable;
 use Foundry\Requests\Types\Contracts\Inputable;
 use Foundry\Requests\Types\Traits\HasConditions;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Arr;
 
 /**
  * Class Type
@@ -49,9 +50,14 @@ abstract class BaseType implements Arrayable {
 	}
 
 
-	public function getData()
+	public function getData($key = null, $default = null)
 	{
-		return $this->data;
+		if ($key) {
+			return Arr::get($this->data, $key, $default);
+		} else {
+			return $this->data;
+		}
+
 	}
 
 	/**
@@ -102,6 +108,8 @@ abstract class BaseType implements Arrayable {
 					}
 				}
 				$value = $_value;
+			} elseif ( is_callable( $value ) ) {
+				$value = call_user_func($value);
 			}
 
 			$field[ $key ] = $value;
