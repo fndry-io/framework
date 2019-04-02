@@ -2,8 +2,9 @@
 
 namespace Foundry\Models\Traits;
 
-use Foundry\Models\FieldType;
+use Foundry\Models\Fields\FieldType;
 use Foundry\Models\InputCollection;
+use Foundry\Requests\Types\Contracts\Inputable;
 
 /**
  * Trait HasInputCollection
@@ -52,5 +53,19 @@ trait HasFieldInputCollection {
 		}
 
 		return $inputs;
+	}
+
+	public function input($name) : Inputable
+	{
+		if (!isset(self::$inputs[$name])) {
+			throw new \Exception(sprintf('Input %s not found on Model %s', $name, static::class));
+		}
+
+		/**
+		 * @var FieldType $field
+		 */
+		$field = self::$inputs[ $name ];
+		$input = $field::input( $this );
+		return $input->setModel($this);
 	}
 }
