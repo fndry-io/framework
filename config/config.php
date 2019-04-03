@@ -24,5 +24,10 @@ return [
 	    'table' => 'pick_list_items'
     ],
 
+    'state' => [
+	    'model' => \Foundry\Models\State::class,
+	    'table' => 'states'
+    ],
+
 
 ];

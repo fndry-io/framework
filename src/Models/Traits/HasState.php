@@ -14,5 +14,15 @@ trait HasState {
 		$this->save();
 	}
 
+	public function setToStateCode($code, $message = null)
+	{
+		$class = config('foundry.state.model');
+		$state = new $class();
+		$state->code = $code;
+		$state->message = $message;
+		$state->stateable()->associate($this);
+		$state->save();
+		return $state;
+	}
 
 }
