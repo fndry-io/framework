@@ -19,7 +19,7 @@ class MoneyInputType extends NumberInputType {
 
 	public function display( $value = null ) {
 		if ($value) {
-			$value = number_format($value, 2);
+			$value = number_format((float) $value, 2);
 		} else {
 			$value = "--";
 		}
