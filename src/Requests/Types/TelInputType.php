@@ -14,6 +14,10 @@ class TelInputType extends InputType {
 
 	use HasMinMax;
 
+	protected $pattern = "/^1?(\d{3})(\d{3})(\d{4})$/";
+
+	protected $replacement = "($1)-$2-$3";
+
 	public function __construct(
 		string $name,
 		string $label = null,
@@ -27,4 +31,12 @@ class TelInputType extends InputType {
 		$type = 'tel';
 		parent::__construct( $name, $label, $required, $value, $position, $rules, $id, $placeholder, $type );
 	}
+
+	public function display( $value = null ) {
+		if ($value) {
+			$value = phone_number_format($this->pattern, $this->replacement);
+		}
+		return $value;
+	}
+
 }

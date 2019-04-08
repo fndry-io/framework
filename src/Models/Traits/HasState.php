@@ -14,12 +14,12 @@ trait HasState {
 		$this->save();
 	}
 
-	public function setToStateCode($code, $message = null)
+	public function setToStateCode($code, $comment = null)
 	{
 		$class = config('foundry.state.model');
 		$state = new $class();
 		$state->code = $code;
-		$state->message = $message;
+		$state->comment = $comment;
 		$state->stateable()->associate($this);
 		$state->save();
 		return $state;
