@@ -144,4 +144,9 @@ class Response {
 		return $redirect;
 	}
 
+	public function toJsonResponse()
+	{
+		return response()->json($this->jsonSerialize());
+	}
+
 }
