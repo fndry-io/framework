@@ -19,7 +19,7 @@ abstract class BaseType implements Arrayable {
 
     protected $json_ignore = ['model', 'not_callable'];
 
-    protected $not_callable = ['type'];
+    protected $not_callable = ['type', 'url', 'URL'];
 
 	/**
 	 * Type of the input to display
@@ -111,7 +111,7 @@ abstract class BaseType implements Arrayable {
 				}
 				$value = $_value;
 			} elseif ( is_callable( $value ) ) {
-                if(!in_array($key, $this->not_callable)){
+                if(!in_array($key, $this->not_callable) && !in_array($value, $this->not_callable)){
                     $value = call_user_func($value);
                 }
 			}
