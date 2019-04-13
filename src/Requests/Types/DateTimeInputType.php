@@ -16,6 +16,8 @@ class DateTimeInputType extends InputType {
 	use HasMinMax;
 	use HasDateFormat;
 
+	protected $format = "Y-m-d H:i:s";
+
 	public function __construct(
 		string $name,
 		string $label = null,
