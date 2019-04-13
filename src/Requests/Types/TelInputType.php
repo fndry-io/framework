@@ -33,6 +33,9 @@ class TelInputType extends InputType {
 	}
 
 	public function display( $value = null ) {
+		if ($value == null) {
+			$value = $this->getValue();
+		}
 		if ($value) {
 			$value = phone_number_format($value, $this->pattern, $this->replacement);
 		}

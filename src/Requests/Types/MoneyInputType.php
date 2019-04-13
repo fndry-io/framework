@@ -18,6 +18,9 @@ class MoneyInputType extends NumberInputType {
 	}
 
 	public function display( $value = null ) {
+		if ($value == null) {
+			$value = $this->getValue();
+		}
 		if ($value) {
 			$value = number_format((float) $value, 2);
 		} else {
