@@ -2,6 +2,7 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Requests\Types\Traits\HasDateFormat;
 use Foundry\Requests\Types\Traits\HasMinMax;
 
 
@@ -13,6 +14,9 @@ use Foundry\Requests\Types\Traits\HasMinMax;
 class DateInputType extends InputType {
 
 	use HasMinMax;
+	use HasDateFormat;
+
+	protected $format = "Y-m-d";
 
 	public function __construct(
 		string $name,

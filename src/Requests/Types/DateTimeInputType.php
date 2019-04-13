@@ -2,6 +2,7 @@
 
 namespace Foundry\Requests\Types;
 
+use Foundry\Requests\Types\Traits\HasDateFormat;
 use Foundry\Requests\Types\Traits\HasMinMax;
 
 
@@ -13,6 +14,7 @@ use Foundry\Requests\Types\Traits\HasMinMax;
 class DateTimeInputType extends InputType {
 
 	use HasMinMax;
+	use HasDateFormat;
 
 	public function __construct(
 		string $name,
