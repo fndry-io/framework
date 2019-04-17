@@ -72,7 +72,9 @@ trait HasReference {
 		$reference = $this->getReference();
 		if ($reference && is_string($reference) && $this->hasModel() && $reference = object_get($this->getModel(), $reference)) {
 			return $reference;
-		}
+		}elseif (is_object($reference))
+            return $reference;
+
 		return null;
 	}
 
