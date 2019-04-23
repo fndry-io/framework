@@ -19,7 +19,7 @@ abstract class BaseType implements Arrayable {
 
     protected $json_ignore = ['model', 'not_callable'];
 
-    protected $not_callable = ['type', 'url', 'URL'];
+    protected $not_callable = ['type', 'url', 'file'];
 
 	/**
 	 * Type of the input to display
