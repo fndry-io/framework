@@ -111,7 +111,7 @@ abstract class BaseType implements Arrayable {
 				}
 				$value = $_value;
 			} elseif ( is_callable( $value ) ) {
-                if(!in_array(strtolower($key), $this->not_callable) && !in_array(strtolower($value), $this->not_callable)){
+                if(!in_array(is_string($key)? strtolower($key): $key, $this->not_callable) && !in_array(is_string($value)? strtolower($value) : $value, $this->not_callable)){
                     $value = call_user_func($value);
                 }
 			}
