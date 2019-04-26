@@ -17,9 +17,7 @@ abstract class BaseType implements Arrayable {
 
 	use HasConditions;
 
-    protected $json_ignore = ['model', 'not_callable'];
-
-    protected $not_callable = ['type', 'url', 'file'];
+    protected $json_ignore = ['model'];
 
 	/**
 	 * Type of the input to display
@@ -110,10 +108,8 @@ abstract class BaseType implements Arrayable {
 					}
 				}
 				$value = $_value;
-			} elseif ( is_callable( $value ) ) {
-                if(!in_array(strtolower($key), $this->not_callable) && !in_array($value, $this->not_callable)){
-                    $value = call_user_func($value);
-                }
+			} elseif ( $value instanceof \Closure) {
+				$value = call_user_func($value);
 			}
 
 			$field[ $key ] = $value;
