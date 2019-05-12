@@ -2,9 +2,6 @@
 
 namespace Foundry\Core\Providers;
 
-use Foundry\Core\Console\Commands\GenerateModelCommand;
-use Foundry\Core\Console\Commands\GeneratePluginCommand;
-use Foundry\Core\Console\Commands\GenerateServiceCommand;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -22,17 +19,13 @@ class ConsoleServiceProvider extends ServiceProvider {
 	 *
 	 * @var array
 	 */
-	protected $commands = [
-		GenerateModelCommand::class,
-		GenerateServiceCommand::class,
-		GeneratePluginCommand::class,
-	];
+	protected $commands = [];
 
 	/**
 	 * Register the commands.
 	 */
 	public function register() {
-		$this->commands( $this->commands );
+		//$this->commands( $this->commands );
 	}
 
 	/**
