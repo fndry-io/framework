@@ -2,13 +2,13 @@
 
 namespace Foundry\Core;
 
-use Foundry\Config\SettingRepository;
-use Foundry\Contracts\Repository;
-use Foundry\Models\Listeners\SettingSaved;
-use Foundry\Providers\ConsoleServiceProvider;
-use Foundry\Providers\EventServiceProvider;
-use Foundry\Requests\FormRequestHandler;
-use Foundry\View\Components\ViewComponentHandler;
+use Foundry\Core\Config\SettingRepository;
+use Foundry\Core\Contracts\Repository;
+use Foundry\Core\Models\Listeners\SettingSaved;
+use Foundry\Core\Providers\ConsoleServiceProvider;
+use Foundry\Core\Providers\EventServiceProvider;
+use Foundry\Core\Requests\FormRequestHandler;
+use Foundry\Core\View\Components\ViewComponentHandler;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 
