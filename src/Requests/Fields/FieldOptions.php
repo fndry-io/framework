@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Core\Models\Fields;
+namespace Foundry\Core\Requests\Fields;
 
 /**
  * Interface Options

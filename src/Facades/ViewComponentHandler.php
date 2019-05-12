@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Facade;
  * Class ViewComponentHandler
  *
  * @package Foundry\Facades
- * @see \Foundry\Contracts\ViewComponentHandler
+ * @see \Foundry\Core\Contracts\ViewComponentHandler
  */
 class ViewComponentHandler extends Facade {
 	protected static function getFacadeAccessor() {

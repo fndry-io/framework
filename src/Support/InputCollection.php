@@ -1,9 +1,8 @@
 <?php
 
-namespace Foundry\Core\Models;
+namespace Foundry\Core\Support;
 
 use Foundry\Core\Requests\Types\Contracts\Inputable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class InputCollection extends Collection {
@@ -23,17 +22,6 @@ class InputCollection extends Collection {
 		}
 
 		return $rules;
-	}
-
-	public function setModel(Model &$model)
-	{
-		foreach ($this->items as $item) {
-			/**
-			 * @var Inputable $item
-			 */
-			$item->setModel($model);
-		}
-		return $this;
 	}
 
 	public function casts() {

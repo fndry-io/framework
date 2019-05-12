@@ -2,6 +2,7 @@
 
 namespace Foundry\Core\Logs;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Monolog\Formatter\NormalizerFormatter;
 
@@ -47,8 +48,8 @@ class DatabaseFormatter extends NormalizerFormatter {
 		if (!empty($context)) {
 			$fills = array_merge($record['context'], $fills);
 		}
-		$fills['type'] = array_has($context, 'type') ? $context['type'] : self::LOG;
-		$fills['result'] = array_has($context, 'result')  ? $context['result'] : self::NEUTRAL;
+		$fills['type'] = Arr::has($context, 'type') ? $context['type'] : self::LOG;
+		$fills['result'] = Arr::has($context, 'result')  ? $context['result'] : self::NEUTRAL;
 		return $fills;
 	}
 }
