@@ -1,0 +1,32 @@
+<?php
+
+namespace Foundry\Core\Requests\Contracts;
+
+use Foundry\Core\Models\InputCollection;
+use Foundry\Core\Requests\Types\DocType;
+use Foundry\Core\Requests\Types\FormType;
+
+interface ViewableFormRequestInterface {
+
+	/**
+	 * @param null $id The ID of the entity for the request
+	 *
+	 * @return FormType
+	 */
+	static function form($id = null) : FormType;
+
+	/**
+	 * @param null $id The ID of the entity for the request
+	 *
+	 * @return DocType
+	 */
+	static function view($id = null) : DocType;
+
+	/**
+	 * The set of input classes for the request
+	 *
+	 * @return InputCollection
+	 */
+	static function inputs() : InputCollection;
+
+}

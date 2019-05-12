@@ -3,6 +3,7 @@
 namespace Foundry\Core\Requests;
 
 use Foundry\Core\Exceptions\FormRequestException;
+use Foundry\Core\Requests\Contracts\ViewableFormRequestInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,28 +16,32 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package Foundry\Requests
  */
-class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
+class FormRequestHandler implements \Foundry\Core\Contracts\FormRequestHandler {
 
 	protected $forms;
 
 	/**
 	 * Register a form request class
 	 *
-	 * @param string $class The class name
+	 * @param array|string $class The class name
 	 *
 	 * @return void
 	 * @throws FormRequestException
 	 */
-	public function register( $class, $key = null ) {
-		if ( is_array( $class ) ) {
-			foreach ( $class as $_class ) {
-				$this->registerForm( $_class );
-			}
-		} else {
-			$this->registerForm( $class, $key );
+	public function register( $class ) {
+
+		$class = (array) $class;
+		foreach ( $class as $_class ) {
+			$this->registerForm( $_class );
 		}
 	}
 
+	/**
+	 * @param $class
+	 * @param null $key
+	 *
+	 * @throws FormRequestException
+	 */
 	protected function registerForm( $class, $key = null ) {
 		if ( $key == null ) {
 			$key = forward_static_call( [ $class, 'name' ] );
@@ -58,16 +63,9 @@ class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
 	 * @throws FormRequestException
 	 */
 	public function handle( $key, $request, $id = null ): Response {
-		$form = $this->getForm( $key );
-		if ( is_object($id) ) {
-			$model = $id;
-		} elseif ( $id ) {
-			$model = $form::model( $id );
-		} else {
-			$model = null;
-		}
+		$form = $this->getFormRequest( $key );
 
-		return $form::handleRequest( $request, $model );
+		return $form->handle( $id );
 	}
 
 	/**
@@ -81,14 +79,14 @@ class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
 	 * @throws FormRequestException
 	 */
 	public function view( $key, $request, $id = null ): Response {
-		$form = $this->getForm( $key );
-		if ( $id ) {
-			$model = $form::model( $id );
-		} else {
-			$model = null;
-		}
+		$class = $this->getFormRequestClass( $key );
 
-		return $form::handleFormViewRequest( $request, $model );
+		if ($class instanceof ViewableFormRequestInterface) {
+			$view = $class::view( $id );
+			return Response::success($view);
+		} else {
+			throw new FormRequestException(sprintf('Requested form %s must be an instance of ViewableFormRequestInterface to be viewable', $class));
+		}
 	}
 
 	/**
@@ -99,7 +97,25 @@ class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
 	 * @return FormRequest
 	 * @throws FormRequestException
 	 */
-	protected function getForm( $key ): string {
+	protected function getFormRequest( $key ): string {
+
+		/**
+		 * @var FormRequest $class
+		 */
+		$class = $this->getFormRequestClass( $key );
+
+		return $class::createFromGlobals();
+	}
+
+	/**
+	 * Get the form request class
+	 *
+	 * @param $key
+	 *
+	 * @return string
+	 * @throws FormRequestException
+	 */
+	protected function getFormRequestClass( $key ): string {
 		if ( ! isset( $this->forms[ $key ] ) ) {
 			throw new FormRequestException( sprintf( "Form %s not registered", $key ) );
 		}
@@ -112,9 +128,8 @@ class FormRequestHandler implements \Foundry\Contracts\FormRequestHandler {
 	 *
 	 * @return array
 	 */
-	public function getList()
-	{
-		return array_keys($this->forms);
+	public function getList() {
+		return array_keys( $this->forms );
 	}
 
 }
