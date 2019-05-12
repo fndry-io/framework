@@ -2,9 +2,9 @@
 
 namespace Foundry\Core\Services;
 
-use Foundry\Requests\FormRequest;
-use Foundry\Requests\Response;
-use Foundry\Services\Service as FoundryService;
+use Foundry\Core\Requests\FormRequest;
+use Foundry\Core\Requests\Response;
+use Foundry\Core\Services\Service as FoundryService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 

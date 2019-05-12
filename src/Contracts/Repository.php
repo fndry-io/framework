@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Contracts;
+namespace Foundry\Core\Contracts;
 
 
 interface Repository {

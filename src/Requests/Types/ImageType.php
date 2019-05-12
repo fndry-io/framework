@@ -1,15 +1,15 @@
 <?php
 
-namespace Foundry\Requests\Types;
+namespace Foundry\Core\Requests\Types;
 
-use Foundry\Requests\Types\Contracts\Inputable;
-use Foundry\Requests\Types\Traits\HasClass;
-use Foundry\Requests\Types\Traits\HasHelp;
-use Foundry\Requests\Types\Traits\HasId;
-use Foundry\Requests\Types\Traits\HasLabel;
-use Foundry\Requests\Types\Traits\HasModel;
-use Foundry\Requests\Types\Traits\HasName;
-use Foundry\Requests\Types\Traits\HasValue;
+use Foundry\Core\Requests\Types\Contracts\Inputable;
+use Foundry\Core\Requests\Types\Traits\HasClass;
+use Foundry\Core\Requests\Types\Traits\HasHelp;
+use Foundry\Core\Requests\Types\Traits\HasId;
+use Foundry\Core\Requests\Types\Traits\HasLabel;
+use Foundry\Core\Requests\Types\Traits\HasModel;
+use Foundry\Core\Requests\Types\Traits\HasName;
+use Foundry\Core\Requests\Types\Traits\HasValue;
 use Illuminate\Database\Eloquent\Model;
 
 /**

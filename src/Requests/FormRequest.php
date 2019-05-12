@@ -1,13 +1,13 @@
 <?php
 
-namespace Foundry\Requests;
+namespace Foundry\Core\Requests;
 
 use Carbon\Carbon;
-use Foundry\Models\InputCollection;
-use Foundry\Requests\Types\DocType;
-use Foundry\Requests\Types\FormType;
-use Foundry\Requests\Types\FormView;
-use Foundry\Services\Service;
+use Foundry\Core\Models\InputCollection;
+use Foundry\Core\Requests\Types\DocType;
+use Foundry\Core\Requests\Types\FormType;
+use Foundry\Core\Requests\Types\FormView;
+use Foundry\Core\Services\Service;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;

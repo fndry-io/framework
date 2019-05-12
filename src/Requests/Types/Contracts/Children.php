@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\Requests\Types\Contracts;
+namespace Foundry\Core\Requests\Types\Contracts;
 
-use Foundry\Requests\Types\BaseType;
+use Foundry\Core\Requests\Types\BaseType;
 
 interface Children {
 

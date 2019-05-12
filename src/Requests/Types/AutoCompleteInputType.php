@@ -1,9 +1,9 @@
 <?php
 
-namespace Foundry\Requests\Types;
+namespace Foundry\Core\Requests\Types;
 
-use Foundry\Requests\Types\Traits\HasOptions;
-use Foundry\Requests\Types\Traits\HasQueryOptions;
+use Foundry\Core\Requests\Types\Traits\HasOptions;
+use Foundry\Core\Requests\Types\Traits\HasQueryOptions;
 
 
 /**

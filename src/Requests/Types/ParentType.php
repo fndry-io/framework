@@ -1,9 +1,9 @@
 <?php
 
-namespace Foundry\Requests\Types;
+namespace Foundry\Core\Requests\Types;
 
-use Foundry\Requests\Types\Contracts\Children;
-use Foundry\Requests\Types\Traits\HasChildren;
+use Foundry\Core\Requests\Types\Contracts\Children;
+use Foundry\Core\Requests\Types\Traits\HasChildren;
 
 abstract class ParentType extends BaseType implements Children {
 

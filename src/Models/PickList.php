@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Models;
+namespace Foundry\Core\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;

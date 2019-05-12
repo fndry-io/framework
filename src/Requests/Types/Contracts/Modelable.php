@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\Requests\Types\Contracts;
+namespace Foundry\Core\Requests\Types\Contracts;
 
-use Foundry\Requests\Types\InputType;
+use Foundry\Core\Requests\Types\InputType;
 use Illuminate\Database\Eloquent\Model;
 
 interface Modelable {

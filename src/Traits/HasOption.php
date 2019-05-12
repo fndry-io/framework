@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\Traits;
+namespace Foundry\Core\Traits;
 
-use Foundry\Models\Option;
+use Foundry\Core\Models\Option;
 use Illuminate\Database\Query\Builder;
 
 /**

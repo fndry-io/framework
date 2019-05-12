@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Requests;
+namespace Foundry\Core\Requests;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;

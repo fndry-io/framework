@@ -1,9 +1,9 @@
 <?php
 
-namespace Foundry\Seeders;
+namespace Foundry\Core\Seeders;
 
 use Illuminate\Database\Seeder;
-use Foundry\Config\SettingRepository;
+use Foundry\Core\Config\SettingRepository;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Artisan;
 

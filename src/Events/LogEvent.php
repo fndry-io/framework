@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Events;
+namespace Foundry\Core\Events;
 
 use Illuminate\Queue\SerializesModels;
 

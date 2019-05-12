@@ -1,19 +1,11 @@
 {
     "name": "foundry/core",
     "description": "Foundry Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": ["foundry", "framework", "laravel"],
     "license": "MIT",
-    "type": "project",
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/fndry-io/laravel-plugins.git"
-        }
-    ],
+    "type": "foundry-core",
     "require": {
         "php": "^7.1",
-        "nwidart/laravel-modules":"dev-features",
-        "lavary/laravel-menu": "^1.7",
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
@@ -24,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Foundry\\": "src/"
+            "Foundry\\Core\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -32,13 +24,13 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Foundry\\Tests\\": "tests/"
+            "Foundry\\Core\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Foundry\\FoundryServiceProvider"
+                "Foundry\\Core\\FoundryServiceProvider"
             ],
             "aliases": {
 

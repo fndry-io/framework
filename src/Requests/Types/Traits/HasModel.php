@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Requests\Types\Traits;
+namespace Foundry\Core\Requests\Types\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 

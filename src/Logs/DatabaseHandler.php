@@ -1,9 +1,9 @@
 <?php
 
-namespace Foundry\Logs;
+namespace Foundry\Core\Logs;
 
-use Foundry\Events\LogEvent;
-use Foundry\Models\Log;
+use Foundry\Core\Events\LogEvent;
+use Foundry\Core\Models\Log;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 

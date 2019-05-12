@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\Requests;
+namespace Foundry\Core\Requests;
 
-use Foundry\Exceptions\FormRequestException;
+use Foundry\Core\Exceptions\FormRequestException;
 use Illuminate\Database\Eloquent\Model;
 
 /**

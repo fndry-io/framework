@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Logs;
+namespace Foundry\Core\Logs;
 
 use Monolog\Logger;
 

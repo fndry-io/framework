@@ -1,10 +1,10 @@
 <?php
 
-namespace Foundry\Models\Listeners;
+namespace Foundry\Core\Models\Listeners;
 
-use Foundry\Config\SettingRepository;
-use Foundry\Models\Setting;
-use Foundry\Models\Events\SettingSaved as Event;
+use Foundry\Core\Config\SettingRepository;
+use Foundry\Core\Models\Setting;
+use Foundry\Core\Models\Events\SettingSaved as Event;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 

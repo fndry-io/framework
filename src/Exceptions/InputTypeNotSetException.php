@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Exceptions;
+namespace Foundry\Core\Exceptions;
 
 class InputTypeNotSetException extends \Exception {
 

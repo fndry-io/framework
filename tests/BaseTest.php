@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Tests;
+namespace Foundry\Core\Tests;
 
 use PHPUnit\Framework\TestCase;
 

@@ -1,17 +1,17 @@
 <?php
 
-namespace Foundry\Requests\Types;
+namespace Foundry\Core\Requests\Types;
 
-use Foundry\Requests\Types\Contracts\Inputable;
-use Foundry\Requests\Types\Contracts\Referencable;
-use Foundry\Requests\Types\Traits\HasHelp;
-use Foundry\Requests\Types\Traits\HasLabel;
-use Foundry\Requests\Types\Traits\HasModel;
-use Foundry\Requests\Types\Traits\HasName;
-use Foundry\Requests\Types\Traits\HasReference;
-use Foundry\Requests\Types\Traits\HasRoute;
-use Foundry\Requests\Types\Traits\HasValue;
-use Foundry\Requests\Types\Traits\IsSortable;
+use Foundry\Core\Requests\Types\Contracts\Inputable;
+use Foundry\Core\Requests\Types\Contracts\Referencable;
+use Foundry\Core\Requests\Types\Traits\HasHelp;
+use Foundry\Core\Requests\Types\Traits\HasLabel;
+use Foundry\Core\Requests\Types\Traits\HasModel;
+use Foundry\Core\Requests\Types\Traits\HasName;
+use Foundry\Core\Requests\Types\Traits\HasReference;
+use Foundry\Core\Requests\Types\Traits\HasRoute;
+use Foundry\Core\Requests\Types\Traits\HasValue;
+use Foundry\Core\Requests\Types\Traits\IsSortable;
 
 /**
  * Class RelatableType

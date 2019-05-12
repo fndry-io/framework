@@ -1,11 +1,11 @@
 <?php
 
-namespace Foundry\Requests\Traits;
+namespace Foundry\Core\Requests\Traits;
 
-use Foundry\Models\InputCollection;
-use Foundry\Requests\Response;
-use Foundry\Requests\Types\DocType;
-use Foundry\Requests\Types\FormType;
+use Foundry\Core\Models\InputCollection;
+use Foundry\Core\Requests\Response;
+use Foundry\Core\Requests\Types\DocType;
+use Foundry\Core\Requests\Types\FormType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 

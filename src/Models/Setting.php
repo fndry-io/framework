@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\Models;
+namespace Foundry\Core\Models;
 
-use Foundry\Models\Events\SettingSaved;
+use Foundry\Core\Models\Events\SettingSaved;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

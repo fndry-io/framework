@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Requests\Types;
+namespace Foundry\Core\Requests\Types;
 
 /**
  * Class AddButtonType

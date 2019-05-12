@@ -1,10 +1,10 @@
 <?php
 
-namespace Foundry\Requests\Types;
+namespace Foundry\Core\Requests\Types;
 
-use Foundry\Requests\Types\Contracts\Choosable;
-use Foundry\Requests\Types\Traits\HasMinMax;
-use Foundry\Requests\Types\Traits\HasOptions;
+use Foundry\Core\Requests\Types\Contracts\Choosable;
+use Foundry\Core\Requests\Types\Traits\HasMinMax;
+use Foundry\Core\Requests\Types\Traits\HasOptions;
 
 /**
  * Class ChoiceType

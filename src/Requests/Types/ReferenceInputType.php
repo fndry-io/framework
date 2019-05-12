@@ -1,13 +1,13 @@
 <?php
 
-namespace Foundry\Requests\Types;
+namespace Foundry\Core\Requests\Types;
 
-use Foundry\Requests\Types\Contracts\Referencable;
-use Foundry\Requests\Types\Traits\HasButtons;
-use Foundry\Requests\Types\Traits\HasOptions;
-use Foundry\Requests\Types\Traits\HasQueryOptions;
-use Foundry\Requests\Types\Traits\HasReference;
-use Foundry\Requests\Types\Traits\HasRoute;
+use Foundry\Core\Requests\Types\Contracts\Referencable;
+use Foundry\Core\Requests\Types\Traits\HasButtons;
+use Foundry\Core\Requests\Types\Traits\HasOptions;
+use Foundry\Core\Requests\Types\Traits\HasQueryOptions;
+use Foundry\Core\Requests\Types\Traits\HasReference;
+use Foundry\Core\Requests\Types\Traits\HasRoute;
 
 /**
  * Class ReferenceType

@@ -1,24 +1,24 @@
 <?php
 
-namespace Foundry\Requests\Types;
+namespace Foundry\Core\Requests\Types;
 
-use Foundry\Requests\Types\Contracts\Inputable;
-use Foundry\Requests\Types\Traits\HasButtons;
-use Foundry\Requests\Types\Traits\HasClass;
-use Foundry\Requests\Types\Traits\HasErrors;
-use Foundry\Requests\Types\Traits\HasHelp;
-use Foundry\Requests\Types\Traits\HasId;
-use Foundry\Requests\Types\Traits\HasLabel;
-use Foundry\Requests\Types\Traits\HasMask;
-use Foundry\Requests\Types\Traits\HasModel;
-use Foundry\Requests\Types\Traits\HasName;
-use Foundry\Requests\Types\Traits\HasPlaceholder;
-use Foundry\Requests\Types\Traits\HasPosition;
-use Foundry\Requests\Types\Traits\HasReadonly;
-use Foundry\Requests\Types\Traits\HasRequired;
-use Foundry\Requests\Types\Traits\HasRules;
-use Foundry\Requests\Types\Traits\HasValue;
-use Foundry\Requests\Types\Traits\IsSortable;
+use Foundry\Core\Requests\Types\Contracts\Inputable;
+use Foundry\Core\Requests\Types\Traits\HasButtons;
+use Foundry\Core\Requests\Types\Traits\HasClass;
+use Foundry\Core\Requests\Types\Traits\HasErrors;
+use Foundry\Core\Requests\Types\Traits\HasHelp;
+use Foundry\Core\Requests\Types\Traits\HasId;
+use Foundry\Core\Requests\Types\Traits\HasLabel;
+use Foundry\Core\Requests\Types\Traits\HasMask;
+use Foundry\Core\Requests\Types\Traits\HasModel;
+use Foundry\Core\Requests\Types\Traits\HasName;
+use Foundry\Core\Requests\Types\Traits\HasPlaceholder;
+use Foundry\Core\Requests\Types\Traits\HasPosition;
+use Foundry\Core\Requests\Types\Traits\HasReadonly;
+use Foundry\Core\Requests\Types\Traits\HasRequired;
+use Foundry\Core\Requests\Types\Traits\HasRules;
+use Foundry\Core\Requests\Types\Traits\HasValue;
+use Foundry\Core\Requests\Types\Traits\IsSortable;
 use Illuminate\Database\Eloquent\Model;
 
 /**

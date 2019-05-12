@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\View\Composers\Traits;
+namespace Foundry\Core\View\Composers\Traits;
 
-use Foundry\Requests\FormRequest;
+use Foundry\Core\Requests\FormRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;

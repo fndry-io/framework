@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\Models;
+namespace Foundry\Core\Models;
 
-use Foundry\Requests\Types\Contracts\Inputable;
+use Foundry\Core\Requests\Types\Contracts\Inputable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 

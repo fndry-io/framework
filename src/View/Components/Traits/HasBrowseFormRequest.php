@@ -1,13 +1,13 @@
 <?php
 
-namespace Foundry\View\Components\Traits;
+namespace Foundry\Core\View\Components\Traits;
 
-use Foundry\Requests\Contracts\ColumnInterface;
-use Foundry\Requests\FormRequest;
-use Foundry\Requests\Types\DocType;
-use Foundry\Requests\Types\FormType;
-use Foundry\Requests\Types\ResetButtonType;
-use Foundry\Requests\Types\SubmitButtonType;
+use Foundry\Core\Requests\Contracts\ColumnInterface;
+use Foundry\Core\Requests\FormRequest;
+use Foundry\Core\Requests\Types\DocType;
+use Foundry\Core\Requests\Types\FormType;
+use Foundry\Core\Requests\Types\ResetButtonType;
+use Foundry\Core\Requests\Types\SubmitButtonType;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 

@@ -1,7 +1,7 @@
 <?php
 
-namespace Foundry\Requests\Types;
-use Foundry\Requests\Types\Traits\HasAction;
+namespace Foundry\Core\Requests\Types;
+use Foundry\Core\Requests\Types\Traits\HasAction;
 
 
 /**

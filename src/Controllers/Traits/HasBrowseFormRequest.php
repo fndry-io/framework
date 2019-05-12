@@ -1,11 +1,11 @@
 <?php
 
-namespace Foundry\Controllers\Traits;
+namespace Foundry\Core\Controllers\Traits;
 
-use Foundry\Requests\FormRequest;
-use Foundry\Requests\Types\DocType;
-use Foundry\Requests\Types\FormType;
-use Foundry\Requests\Types\SubmitButtonType;
+use Foundry\Core\Requests\FormRequest;
+use Foundry\Core\Requests\Types\DocType;
+use Foundry\Core\Requests\Types\FormType;
+use Foundry\Core\Requests\Types\SubmitButtonType;
 use Illuminate\Http\Request;
 
 trait HasBrowseFormRequest {

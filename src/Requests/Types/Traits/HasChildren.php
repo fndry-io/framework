@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\Requests\Types\Traits;
+namespace Foundry\Core\Requests\Types\Traits;
 
-use Foundry\Requests\Types\BaseType;
+use Foundry\Core\Requests\Types\BaseType;
 
 trait HasChildren {
 

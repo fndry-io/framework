@@ -1,9 +1,9 @@
 <?php
 
-namespace Foundry\Listeners;
+namespace Foundry\Core\Listeners;
 
-use Foundry\Events\LogEvent;
-use Foundry\Models\Log;
+use Foundry\Core\Events\LogEvent;
+use Foundry\Core\Models\Log;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class LogEventListener implements ShouldQueue {

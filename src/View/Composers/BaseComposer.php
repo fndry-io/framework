@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\View\Composers;
+namespace Foundry\Core\View\Composers;
 
 use Illuminate\Http\Request;
 

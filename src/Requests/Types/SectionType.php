@@ -1,11 +1,11 @@
 <?php
 
-namespace Foundry\Requests\Types;
+namespace Foundry\Core\Requests\Types;
 
-use Foundry\Requests\Types\Traits\HasClass;
-use Foundry\Requests\Types\Traits\HasDescription;
-use Foundry\Requests\Types\Traits\HasId;
-use Foundry\Requests\Types\Traits\HasTitle;
+use Foundry\Core\Requests\Types\Traits\HasClass;
+use Foundry\Core\Requests\Types\Traits\HasDescription;
+use Foundry\Core\Requests\Types\Traits\HasId;
+use Foundry\Core\Requests\Types\Traits\HasTitle;
 
 /**
  * Class Type

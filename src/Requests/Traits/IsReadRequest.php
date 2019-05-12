@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\Requests\Traits;
+namespace Foundry\Core\Requests\Traits;
 
-use Foundry\Requests\Response;
+use Foundry\Core\Requests\Response;
 use Illuminate\Database\Eloquent\Model;
 
 trait IsReadRequest {

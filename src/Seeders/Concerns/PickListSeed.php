@@ -1,9 +1,9 @@
 <?php
 
-namespace Foundry\Seeders\Concerns;
+namespace Foundry\Core\Seeders\Concerns;
 
-use Foundry\Models\PickList;
-use Foundry\Models\PickListItem;
+use Foundry\Core\Models\PickList;
+use Foundry\Core\Models\PickListItem;
 
 trait PickListSeed {
 

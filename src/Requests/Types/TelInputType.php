@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\Requests\Types;
+namespace Foundry\Core\Requests\Types;
 
-use Foundry\Requests\Types\Traits\HasMinMax;
+use Foundry\Core\Requests\Types\Traits\HasMinMax;
 
 
 /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\View\Components;
+namespace Foundry\Core\View\Components;
 
-use Foundry\Exceptions\ViewComponentException;
+use Foundry\Core\Exceptions\ViewComponentException;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Symfony\Component\Finder\Exception\AccessDeniedException;

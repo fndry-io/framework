@@ -1,10 +1,10 @@
 <?php
 
-namespace Foundry\Requests\Types;
+namespace Foundry\Core\Requests\Types;
 
-use Foundry\Requests\Types\Contracts\Choosable;
-use Foundry\Requests\Types\Contracts\Inputable;
-use Foundry\Requests\Types\Traits\HasConditions;
+use Foundry\Core\Requests\Types\Contracts\Choosable;
+use Foundry\Core\Requests\Types\Contracts\Inputable;
+use Foundry\Core\Requests\Types\Traits\HasConditions;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 

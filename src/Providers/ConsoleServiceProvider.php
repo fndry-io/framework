@@ -1,10 +1,10 @@
 <?php
 
-namespace Foundry\Providers;
+namespace Foundry\Core\Providers;
 
-use Foundry\Console\Commands\GenerateModelCommand;
-use Foundry\Console\Commands\GeneratePluginCommand;
-use Foundry\Console\Commands\GenerateServiceCommand;
+use Foundry\Core\Console\Commands\GenerateModelCommand;
+use Foundry\Core\Console\Commands\GeneratePluginCommand;
+use Foundry\Core\Console\Commands\GenerateServiceCommand;
 use Illuminate\Support\ServiceProvider;
 
 /**

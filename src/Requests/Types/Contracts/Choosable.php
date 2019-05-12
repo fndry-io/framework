@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Requests\Types\Contracts;
+namespace Foundry\Core\Requests\Types\Contracts;
 
 interface Choosable {
 

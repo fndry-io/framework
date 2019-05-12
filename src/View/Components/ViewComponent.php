@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\View\Components;
+namespace Foundry\Core\View\Components;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;

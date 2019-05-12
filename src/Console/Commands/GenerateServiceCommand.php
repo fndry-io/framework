@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Console\Commands;
+namespace Foundry\Core\Console\Commands;
 
 use Illuminate\Support\Str;
 use Nwidart\Modules\Support\Config\GenerateConfigReader;

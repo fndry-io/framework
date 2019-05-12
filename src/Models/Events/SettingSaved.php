@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Models\Events;
+namespace Foundry\Core\Models\Events;
 
 class SettingSaved {
 

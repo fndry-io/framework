@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Traits;
+namespace Foundry\Core\Traits;
 
 use Illuminate\Support\Collection;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Foundry\Requests\Types;
+namespace Foundry\Core\Requests\Types;
 
-use Foundry\Requests\Types\Traits\HasClass;
-use Foundry\Requests\Types\Traits\HasId;
+use Foundry\Core\Requests\Types\Traits\HasClass;
+use Foundry\Core\Requests\Types\Traits\HasId;
 
 /**
  * Class Content Type

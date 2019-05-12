@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Services;
+namespace Foundry\Core\Services;
 
 use Illuminate\Database\Eloquent\Model;
 

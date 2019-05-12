@@ -1,11 +1,11 @@
 <?php
 
-namespace Foundry\Requests\Types;
+namespace Foundry\Core\Requests\Types;
 
-use Foundry\Requests\Types\Traits\HasButtons;
-use Foundry\Requests\Types\Traits\HasMinMax;
-use Foundry\Requests\Types\Traits\HasMultiple;
-use Foundry\Requests\Types\Traits\HasName;
+use Foundry\Core\Requests\Types\Traits\HasButtons;
+use Foundry\Core\Requests\Types\Traits\HasMinMax;
+use Foundry\Core\Requests\Types\Traits\HasMultiple;
+use Foundry\Core\Requests\Types\Traits\HasName;
 
 class CollectionType extends ParentType {
 

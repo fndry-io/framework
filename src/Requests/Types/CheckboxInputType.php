@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\Requests\Types;
-use Foundry\Requests\Types\Contracts\Choosable;
-use Foundry\Requests\Types\Traits\HasOptions;
+namespace Foundry\Core\Requests\Types;
+use Foundry\Core\Requests\Types\Contracts\Choosable;
+use Foundry\Core\Requests\Types\Traits\HasOptions;
 
 
 /**

@@ -6,7 +6,7 @@
  * Time: 1:20 PM
  */
 
-namespace Foundry\Requests\Types\Traits;
+namespace Foundry\Core\Requests\Types\Traits;
 
 
 trait HasClass {

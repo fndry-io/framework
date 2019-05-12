@@ -6,7 +6,7 @@
  * Time: 2:16 PM
  */
 
-namespace Foundry\Requests\Types\Traits;
+namespace Foundry\Core\Requests\Types\Traits;
 
 
 trait HasMultiple {

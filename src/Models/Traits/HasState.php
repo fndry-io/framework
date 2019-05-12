@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Models\Traits;
+namespace Foundry\Core\Models\Traits;
 
 trait HasState {
 

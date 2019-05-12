@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Models\Contracts;
+namespace Foundry\Core\Models\Contracts;
 
 use Illuminate\Database\Eloquent\Builder;
 

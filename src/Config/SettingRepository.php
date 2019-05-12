@@ -1,10 +1,10 @@
 <?php
 
-namespace Foundry\Config;
+namespace Foundry\Core\Config;
 
 use ArrayAccess;
 use Illuminate\Support\Arr;
-use Foundry\Contracts\Repository;
+use Foundry\Core\Contracts\Repository;
 
 class SettingRepository implements Repository, ArrayAccess {
 	/**

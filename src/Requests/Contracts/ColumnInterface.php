@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\Requests\Contracts;
+namespace Foundry\Core\Requests\Contracts;
 
-use Foundry\Models\InputCollection;
+use Foundry\Core\Models\InputCollection;
 
 interface ColumnInterface {
 

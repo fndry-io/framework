@@ -1,8 +1,8 @@
 <?php
 
-namespace Foundry\Models\Fields;
+namespace Foundry\Core\Models\Fields;
 
-use Foundry\Requests\Types\Contracts\Inputable;
+use Foundry\Core\Requests\Types\Contracts\Inputable;
 use Illuminate\Database\Eloquent\Model;
 
 /**

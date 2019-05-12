@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Models\Fields;
+namespace Foundry\Core\Models\Fields;
 
 /**
  * Interface Pick List Options

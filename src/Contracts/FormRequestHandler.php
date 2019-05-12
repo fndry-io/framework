@@ -1,9 +1,9 @@
 <?php
 
-namespace Foundry\Contracts;
+namespace Foundry\Core\Contracts;
 
-use Foundry\Requests\FormRequest;
-use Foundry\Requests\Response;
+use Foundry\Core\Requests\FormRequest;
+use Foundry\Core\Requests\Response;
 
 interface FormRequestHandler {
 

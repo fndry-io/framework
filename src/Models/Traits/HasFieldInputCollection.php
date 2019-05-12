@@ -1,10 +1,10 @@
 <?php
 
-namespace Foundry\Models\Traits;
+namespace Foundry\Core\Models\Traits;
 
-use Foundry\Models\Fields\FieldType;
-use Foundry\Models\InputCollection;
-use Foundry\Requests\Types\Contracts\Inputable;
+use Foundry\Core\Models\Fields\FieldType;
+use Foundry\Core\Models\InputCollection;
+use Foundry\Core\Requests\Types\Contracts\Inputable;
 
 /**
  * Trait HasInputCollection

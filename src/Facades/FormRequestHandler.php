@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry\Facades;
+namespace Foundry\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

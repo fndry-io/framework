@@ -1,6 +1,6 @@
 <?php
 
-namespace Foundry;
+namespace Foundry\Core;
 
 use Foundry\Config\SettingRepository;
 use Foundry\Contracts\Repository;
@@ -9,7 +9,6 @@ use Foundry\Providers\ConsoleServiceProvider;
 use Foundry\Providers\EventServiceProvider;
 use Foundry\Requests\FormRequestHandler;
 use Foundry\View\Components\ViewComponentHandler;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,14 +26,6 @@ class FoundryServiceProvider extends ServiceProvider {
 	public function boot() {
 
 		$this->registerNamespaces();
-
-		if ( $this->app->runningInConsole() ) {
-			$this->registerMigrations();
-
-			$this->publishes( [
-				__DIR__ . '/../database/migrations' => database_path( 'migrations' ),
-			], 'foundry-migrations' );
-		}
 	}
 
 	/**
@@ -48,19 +39,7 @@ class FoundryServiceProvider extends ServiceProvider {
 	/**
 	 * Register package's namespaces.
 	 */
-	protected function registerNamespaces() {
-		$moduleConfigPath = __DIR__ . '/../config/modules.php';
-		$configPath       = __DIR__ . '/../config/config.php';
-
-		$this->mergeConfigFrom( $moduleConfigPath, 'modules' );
-		$this->mergeConfigFrom( $configPath, 'foundry' );
-
-		$this->publishes( [
-			$moduleConfigPath => config_path( 'modules.php' ),
-			$configPath       => config_path( 'foundry.php' )
-		], 'config' );
-
-	}
+	protected function registerNamespaces() {}
 
 	/**
 	 * Register the service provider.
@@ -103,9 +82,7 @@ class FoundryServiceProvider extends ServiceProvider {
 	 * Get the services provided by the provider.
 	 *
 	 */
-	public function provides(): void {
-
-	}
+	public function provides(): void {}
 
 	/**
 	 * Register providers.
@@ -113,18 +90,6 @@ class FoundryServiceProvider extends ServiceProvider {
 	protected function registerProviders(): void {
 		$this->app->register( ConsoleServiceProvider::class );
 		$this->app->register( EventServiceProvider::class );
-	}
-
-	/**
-	 * Register Passport's migration files.
-	 *
-	 * @return void
-	 */
-	protected function registerMigrations(): void {
-
-		//TODO this should publish them, not run them
-		//$this->loadMigrationsFrom( __DIR__ . '/../database/migrations' );
-
 	}
 
 }
