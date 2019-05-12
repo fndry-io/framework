@@ -2,9 +2,9 @@
 
 namespace Foundry\Core\Requests\Contracts;
 
-use Foundry\Core\Models\InputCollection;
 use Foundry\Core\Requests\Types\DocType;
 use Foundry\Core\Requests\Types\FormType;
+use Foundry\Core\Support\InputCollection;
 
 interface ViewableFormRequestInterface {
 
