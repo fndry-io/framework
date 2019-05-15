@@ -4,7 +4,7 @@ namespace Foundry\Core\Requests\Contracts;
 
 use Foundry\Core\Requests\Types\DocType;
 use Foundry\Core\Requests\Types\FormType;
-use Foundry\Core\Support\InputCollection;
+use Foundry\Core\Support\InputTypeCollection;
 
 interface ViewableFormRequestInterface {
 
@@ -25,8 +25,8 @@ interface ViewableFormRequestInterface {
 	/**
 	 * The set of input classes for the request
 	 *
-	 * @return InputCollection
+	 * @return InputTypeCollection
 	 */
-	static function inputs() : InputCollection;
+	static function inputs() : InputTypeCollection;
 
 }
