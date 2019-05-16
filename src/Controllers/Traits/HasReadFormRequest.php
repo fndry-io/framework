@@ -24,27 +24,16 @@ trait HasReadFormRequest {
 		/**
 		 * @var FormRequest $class
 		 */
-        /**
-         * @var FormRequest $class
-         */
         $response = $class::handleRequest( $request, $model );
 
         if ( $response->isSuccess() ) {
             $form = $class::view( $request, $response->getData() );
             return [
                 $model_key => $response->getData(),
-                'view'     => $form,
-                'code'     => $response->getCode(),
-                'error'    => $response->getMessage()
+                'view'     => $form
             ];
         } else {
-            return [
-                $model_key => null,
-                'view' => null,
-                'code' => $response->getCode(),
-                'error' => $response->getMessage()
-            ];
-            //abort( $response->getCode(), $response->getMessage() );
+			abort( $response->getCode(), $response->getMessage() );
         }
 	}
 

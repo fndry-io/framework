@@ -82,7 +82,7 @@ abstract class InputType extends BaseType implements Inputable {
 		$field = parent::jsonSerialize();
 
 		//set the value
-		if ( ! $field['value'] && $this->hasModel() ) {
+		if ( $field['value'] === null && $this->hasModel() ) {
 			$field['value'] = $this->getModelValue( $this->getName() );
 		}
 

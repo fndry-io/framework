@@ -28,12 +28,7 @@ trait HasBrowseFormRequest {
 		if ( $response->isSuccess() ) {
 			return $this->handleBrowseResponse( $class, $request, $response );
 		} else {
-            return [
-                'form' => null,
-                'data' => null,
-                'code' => $response->getCode(),
-                'error' => $response->getMessage()
-            ];
+			abort( $response->getCode(), $response->getMessage() );
 		}
 	}
 
@@ -74,8 +69,6 @@ trait HasBrowseFormRequest {
 		if ( method_exists( $class, 'columns' ) ) {
 			$data['columns'] = $class::columns();
 		}
-
-		$data['code'] = 200;
 
 		return $data;
 	}

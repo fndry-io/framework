@@ -45,7 +45,7 @@ trait ReadFormRequest {
 				'view'     => $form
 			] );
 		} else {
-			abort( $response->getCode(), $response->getMessage() );
+			$view->setPath(resource_path('view/blank.blade.php'));
 		}
 	}
 
