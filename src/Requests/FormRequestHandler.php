@@ -81,11 +81,12 @@ class FormRequestHandler implements \Foundry\Core\Contracts\FormRequestHandler {
 	public function view( $key, $request, $id = null ): Response {
 		$class = $this->getFormRequestClass( $key );
 
-		if ($class instanceof ViewableFormRequestInterface) {
+		if ( $class instanceof ViewableFormRequestInterface ) {
 			$view = $class::view( $id );
-			return Response::success($view);
+
+			return Response::success( $view );
 		} else {
-			throw new FormRequestException(sprintf('Requested form %s must be an instance of ViewableFormRequestInterface to be viewable', $class));
+			throw new FormRequestException( sprintf( 'Requested form %s must be an instance of ViewableFormRequestInterface to be viewable', $class ) );
 		}
 	}
 
@@ -128,7 +129,7 @@ class FormRequestHandler implements \Foundry\Core\Contracts\FormRequestHandler {
 	 *
 	 * @return array
 	 */
-	public function getList() {
+	public function forms(): array {
 		return array_keys( $this->forms );
 	}
 

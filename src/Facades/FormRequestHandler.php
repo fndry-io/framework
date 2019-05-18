@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Facade;
  * @see \Foundry\Core\Contracts\FormRequestHandler
  *
  * @method Response handle($key, $request, $id = null) Handle the request
- * @method static Response view($key, $request, $id = null) Return a DocType of the Request for rendering it
+ * @method Response view($key, $request, $id = null) Return a DocType of the Request for rendering it
+ * @method array forms() Returns a list of the registered forms
  */
 class FormRequestHandler extends Facade {
 	protected static function getFacadeAccessor() {

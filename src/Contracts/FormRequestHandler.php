@@ -34,4 +34,11 @@ interface FormRequestHandler {
 	 */
 	public function view( $name, $request ): Response;
 
+	/**
+	 * The list of registered forms
+	 *
+	 * @return array
+	 */
+	public function forms(): array;
+
 }
