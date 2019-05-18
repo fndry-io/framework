@@ -43,7 +43,6 @@ abstract class InputType extends BaseType implements Inputable {
 		HasReadonly,
 		HasErrors,
 		IsSortable,
-		HasModel,
 		HasEntity,
 		HasMask
 	;
@@ -83,7 +82,7 @@ abstract class InputType extends BaseType implements Inputable {
 		$field = parent::jsonSerialize();
 
 		//set the value
-		if ( ! $field['value'] && $this->hasModel() ) {
+		if ( ! $field['value'] && $this->hasEntity() ) {
 			$field['value'] = $this->getModelValue( $this->getName() );
 		}
 

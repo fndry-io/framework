@@ -26,6 +26,8 @@ abstract class BaseType implements Arrayable {
 	 */
 	protected $type;
 
+	protected $cast = 'string';
+
 	/**
 	 * @var array|null A store for additional information
 	 */
@@ -41,7 +43,7 @@ abstract class BaseType implements Arrayable {
 	/**
 	 * @param mixed $type
 	 *
-	 * @return InputType
+	 * @return BaseType|InputType
 	 */
 	public function setType( $type = null ) {
 		$this->type = $type;
@@ -49,6 +51,23 @@ abstract class BaseType implements Arrayable {
 		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getCast(): string {
+		return $this->cast;
+	}
+
+	/**
+	 * @param string $cast
+	 *
+	 * @return BaseType|InputType
+	 */
+	public function setCast( string $cast ): void {
+		$this->cast = $cast;
+
+		return $this;
+	}
 
 	public function getData($key = null, $default = null)
 	{

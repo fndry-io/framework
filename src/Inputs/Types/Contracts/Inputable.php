@@ -2,8 +2,7 @@
 
 namespace Foundry\Core\Inputs\Types\Contracts;
 
-
-use Illuminate\Database\Eloquent\Model;
+use Foundry\System\Entities\Entity;
 
 interface Inputable {
 
@@ -11,11 +10,14 @@ interface Inputable {
 
 	public function setName(string $name);
 
-	public function setModel( Model &$model = null );
+	public function setEntity( Entity &$entity = null );
 
-	public function getModel(): Model;
+	/**
+	 * @return null|Entity
+	 */
+	public function getEntity();
 
-	public function hasModel(): bool;
+	public function hasEntity(): bool;
 
 	public function display($value = null);
 

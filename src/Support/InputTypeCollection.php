@@ -9,6 +9,18 @@ use Illuminate\Support\Collection;
 
 class InputTypeCollection extends Collection {
 
+	static public function fromTypes($types)
+	{
+		$collection = new static();
+		foreach ($types as $type) {
+			/**
+			 * @var Inputable $type
+			 */
+			$collection->put($type->getName(), $type);
+		}
+		return $collection;
+	}
+
 	public function rules() {
 		$rules = [];
 		foreach ( $this->all() as $item ) {

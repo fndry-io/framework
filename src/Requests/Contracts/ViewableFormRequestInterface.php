@@ -2,31 +2,19 @@
 
 namespace Foundry\Core\Requests\Contracts;
 
-use Foundry\Core\Requests\Types\DocType;
-use Foundry\Core\Requests\Types\FormType;
-use Foundry\Core\Support\InputTypeCollection;
+use Foundry\Core\Inputs\Types\DocType;
+use Foundry\Core\Inputs\Types\FormType;
 
 interface ViewableFormRequestInterface {
 
 	/**
-	 * @param null $id The ID of the entity for the request
-	 *
 	 * @return FormType
 	 */
-	static function form($id = null) : FormType;
+	public function form() : FormType;
 
 	/**
-	 * @param null $id The ID of the entity for the request
-	 *
 	 * @return DocType
 	 */
-	static function view($id = null) : DocType;
-
-	/**
-	 * The set of input classes for the request
-	 *
-	 * @return InputTypeCollection
-	 */
-	static function inputs() : InputTypeCollection;
+	public function view() : DocType;
 
 }

@@ -2,15 +2,15 @@
 
 namespace Foundry\Core\Inputs\Types;
 
+use Foundry\Core\Inputs\Types\Contracts\Entityable;
 use Foundry\Core\Inputs\Types\Contracts\Inputable;
-use Foundry\Core\Inputs\Types\Contracts\Modelable;
 use Foundry\Core\Inputs\Types\Traits\HasButtons;
 use Foundry\Core\Inputs\Types\Traits\HasClass;
 use Foundry\Core\Inputs\Types\Traits\HasErrors;
 use Foundry\Core\Inputs\Types\Traits\HasId;
 use Foundry\Core\Inputs\Types\Traits\HasName;
 use Foundry\Core\Inputs\Types\Traits\HasRules;
-use Illuminate\Database\Eloquent\Model;
+use Foundry\System\Entities\Entity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -20,17 +20,18 @@ use Illuminate\Support\Collection;
  *
  * @package Foundry\Requests\Types
  */
-class FormType extends ParentType implements Modelable {
+class FormType extends ParentType implements Entityable {
 
 	use HasName,
 		HasClass,
 		HasId,
 		HasButtons,
 		HasErrors,
-		HasRules;
+		HasRules
+	;
 
 	protected $json_ignore = [
-		'model',
+		'entity',
 //		'inputs',
 		'request'
 	];
@@ -42,9 +43,9 @@ class FormType extends ParentType implements Modelable {
 	protected $encoding;
 
 	/**
-	 * @var Model
+	 * @var Entity
 	 */
-	protected $model;
+	protected $entity;
 
 	/**
 	 * @var InputType[]
@@ -99,21 +100,21 @@ class FormType extends ParentType implements Modelable {
 	}
 
 	/**
-	 * @param Model|null $model
+	 * @param Entity|null $entity
 	 *
 	 * @return $this
 	 */
-	public function setModel( Model &$model = null ) {
-		$this->model = $model;
+	public function setEntity( Entity &$entity = null ) {
+		$this->entity = $entity;
 
 		return $this;
 	}
 
 	/**
-	 * @return Model
+	 * @return Entity
 	 */
-	public function getModel(): Model {
-		$this->model;
+	public function getEntity(): Entity {
+		$this->entity;
 	}
 
 	public function attachInputCollection( $collection ) {
@@ -126,13 +127,13 @@ class FormType extends ParentType implements Modelable {
 	}
 
 	public function attachInputs( Inputable ...$inputs ) {
-		if ( $this->model ) {
+		if ( $this->entity ) {
 			foreach ( $inputs as &$input ) {
-				if ( ! $input->hasModel() ) {
+				if ( ! $input->hasEntity() ) {
 					/**
 					 * @var InputType $input
 					 */
-					$input->setModel( $this->model );
+					$input->setEntity( $this->entity );
 				}
 			}
 		}
@@ -183,15 +184,15 @@ class FormType extends ParentType implements Modelable {
 	}
 
 	/**
-	 * Get the value for a given key on the model
+	 * Get the value for a given key on the entity
 	 *
 	 * @param $key
 	 *
 	 * @return mixed|null
 	 */
 	public function getValue( $key ) {
-		if ( $this->model ) {
-			return object_get( $this->model, $key );
+		if ( $this->entity ) {
+			return object_get( $this->entity, $key );
 		}
 
 		return null;
