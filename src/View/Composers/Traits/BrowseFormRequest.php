@@ -42,7 +42,7 @@ trait BrowseFormRequest {
 		if ( $response->isSuccess() ) {
 			$this->view( $class, $request, $view, $response );
 		} else {
-			abort( $response->getCode(), $response->getMessage() );
+			$view->setPath(resource_path('view/blank.blade.php'));
 		}
 	}
 
