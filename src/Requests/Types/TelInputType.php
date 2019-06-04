@@ -15,6 +15,7 @@ class TelInputType extends InputType {
 	use HasMinMax;
 
 	protected $pattern = "/^1?(\d{3})(\d{3})(\d{4})$/";
+    protected $mask = '(999)-999-9999';
 
 	protected $replacement = "($1)-$2-$3";
 
