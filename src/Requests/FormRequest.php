@@ -660,4 +660,15 @@ abstract class FormRequest {
 	}
 
 
+    /**
+     * Check if data should only be loaded via Ajax Request
+     *
+     * @return bool
+     */
+    public function load(){
+
+        $ajax = $this->request['ajaxOnly'];
+
+        return $ajax === null || $ajax === false;
+    }
 }
