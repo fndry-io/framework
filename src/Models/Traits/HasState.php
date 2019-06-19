@@ -9,8 +9,9 @@ trait HasState {
 		return static::getStateLabels()[$key];
 	}
 
-	public function setState($state_id) {
+	public function setState($state_id,  $code) {
 		$this->state_id = $state_id;
+		$this->state_code = $code;
 		$this->save();
 	}
 
