@@ -8,7 +8,7 @@ interface Stateable {
 
 	static function getStateLabel($key) : string;
 
-	public function setState($state);
+	public function setState($state, $code);
 
 	public function states();
 
