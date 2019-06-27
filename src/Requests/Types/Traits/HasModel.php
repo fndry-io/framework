@@ -92,9 +92,11 @@ trait HasModel {
                 $hide = in_array($annotations[$i], $hidden);
 
                 if(!$hide){
-                    $related = $relations[$annotations[$i]];
-                    $hidden = $related->getHidden();
-                    $hide = in_array($annotations[$j], $hidden);
+                    if (isset($relations[$annotations[$i]])){
+                        $related = $relations[$annotations[$i]];
+                        $hidden = $related->getHidden();
+                        $hide = in_array($annotations[$j], $hidden);
+                    }
                 }
 
             }
