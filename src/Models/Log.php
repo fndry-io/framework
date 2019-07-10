@@ -51,9 +51,13 @@ class Log extends Model {
 	 */
 	static public function saveRecord($record)
 	{
-		$log = new static();
-		$log->fill($record['formatted']);
-		return $log->save();
+        $log = new static();
+        $errors = $record['formatted'];
+
+        $log->fill($record['formatted']);
+        $log->url = isset($errors['path'])? $errors['path'] : null;
+
+        return $log->save();
 	}
 
 
