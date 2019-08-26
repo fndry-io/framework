@@ -2,14 +2,12 @@
 
 namespace Foundry\Requests\Types;
 
-
-
 /**
  * Class EditorInputType
  *
  * @package Foundry\Requests\Types
  */
-class EditorInputType extends InputType {
+class MailableHtmlEditorInputType extends HtmlEditorInputType {
 
     public function __construct(
         string $name,
@@ -21,7 +19,7 @@ class EditorInputType extends InputType {
         string $id = null,
         string $placeholder = null
     ) {
-        $type = 'editor';
+        $type = 'mailable-html-editor';
         parent::__construct( $name, $label, $required, $value, $position, $rules, $id, $placeholder, $type );
     }
 }
