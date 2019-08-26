@@ -3,6 +3,7 @@
 namespace Foundry\Requests\Types;
 
 use Foundry\Requests\Types\Contracts\Inputable;
+use Foundry\Requests\Types\Traits\Ajax\HasAjaxCallbacks;
 use Foundry\Requests\Types\Traits\HasButtons;
 use Foundry\Requests\Types\Traits\HasClass;
 use Foundry\Requests\Types\Traits\HasErrors;
@@ -43,7 +44,8 @@ abstract class InputType extends BaseType implements Inputable {
 		HasErrors,
 		IsSortable,
 		HasModel,
-		HasMask
+		HasMask,
+        HasAjaxCallbacks
 	;
 
 

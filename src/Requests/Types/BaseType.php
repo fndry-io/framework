@@ -110,7 +110,9 @@ abstract class BaseType implements Arrayable {
 				$value = $_value;
 			} elseif ( $value instanceof \Closure) {
 				$value = call_user_func($value);
-			}
+			} elseif (is_object($value) && method_exists($value, 'toArray')){
+			    $value = $value->toArray();
+            }
 
 			$field[ $key ] = $value;
 		}
