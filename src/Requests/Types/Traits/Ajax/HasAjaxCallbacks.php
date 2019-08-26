@@ -9,33 +9,37 @@ trait HasAjaxCallbacks {
      * @var Callback
      * Url and methods to call on valid input value
      */
-	protected $valid;
+	protected $valid_ajax_callback;
 
     /**
      * @var Callback
      * Url and methods to call on invalid input value
      *
      */
-	protected $invalid;
+	protected $invalid_ajax_callback;
 
 
-	public function setValidCallback(string $action, string $method = null)
+	public function setValidAjaxCallback(string $action, string $method = null)
     {
-        $this->valid = new Callback($action, $method);
+        $this->valid_ajax_callback = new Callback($action, $method? $method: "GET");
+
+        return $this;
     }
 
-	public function getValidCallback()
+	public function getValidAjaxCallback()
     {
-        return $this->valid;
+        return $this->valid_ajax_callback;
     }
 
-    public function setInvalidCallback(string $action, string $method = null)
+    public function setInvalidAjaxCallback(string $action, string $method = null)
     {
-        $this->invalid = new Callback($action, $method);
+        $this->invalid_ajax_callback = new Callback($action, $method);
+
+        return $this;
     }
 
-    public function getInvalidCallback()
+    public function getInvalidAjaxCallback()
     {
-        return $this->invalid;
+        return $this->invalid_ajax_callback;
     }
 }
