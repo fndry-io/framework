@@ -11,6 +11,7 @@ use Foundry\Requests\Types\Traits\HasModel;
 use Foundry\Requests\Types\Traits\HasName;
 use Foundry\Requests\Types\Traits\HasTitle;
 use Foundry\Requests\Types\Traits\HasValue;
+use Foundry\Requests\Types\Traits\IsSortable;
 
 /**
  * Class LinkType
@@ -26,7 +27,8 @@ class LinkType extends BaseType implements Inputable {
         HasName,
         HasModel,
         HasValue,
-        HasHelp
+        HasHelp,
+        IsSortable
 		;
 
 	/**
