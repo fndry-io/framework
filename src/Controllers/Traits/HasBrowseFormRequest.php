@@ -50,20 +50,22 @@ trait HasBrowseFormRequest {
 
         $data = [];
 
-        if ($inputs = $form->getInputs()) {
-            $form
-                ->setMethod( 'GET' )
-                ->setButtons(
-                    ( new SubmitButtonType( __( 'Filter' ), $form->getAction() ) )
-                //,( new ResetButtonType( __( 'Reset' ), $form->getAction() ) )
-                );
+        $form
+            ->setMethod( 'GET' )
+            ->setButtons(
+                ( new SubmitButtonType( __( 'Filter' ), $form->getAction() ) )
+            //,( new ResetButtonType( __( 'Reset' ), $form->getAction() ) )
+            );
 
-            if ( $response && ! $response->isSuccess() ) {
-                $form->setErrors( $response->getError() );
-            }
-            $form->addChildren(...array_values($inputs));
-            $doctype = DocType::withChildren( $form );
+        if ( $response && ! $response->isSuccess() ) {
+            $form->setErrors( $response->getError() );
         }
+
+        if ($inputs = $form->getInputs()) {
+            $form->addChildren(...array_values($inputs));
+        }
+
+        $doctype = DocType::withChildren( $form );
 
         $data['form'] = $doctype;
         $data['data'] = ($response) ? $response->getData() : null;
