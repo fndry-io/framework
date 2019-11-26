@@ -94,7 +94,8 @@ trait HasModel {
                 if(!$hide){
                     if (isset($relations[$annotations[$i]])){
                         $related = $relations[$annotations[$i]];
-                        $hidden = $related->getHidden();
+                        $hidden = method_exists($related, 'getHidden')?
+                            $related->getHidden(): [];
                         $hide = in_array($annotations[$j], $hidden);
                     }
                 }
