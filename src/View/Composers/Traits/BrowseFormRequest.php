@@ -60,8 +60,10 @@ trait BrowseFormRequest {
         $form = $class::form( $request, null );
         $doctype = null;
         $form
-            ->setMethod( 'GET' )
-            ->setButtons(
+            ->setMethod( 'GET' );
+
+        if($form->getAction())
+            $form->setButtons(
                 ( new SubmitButtonType( __( 'Filter' ), $form->getAction() ) )
             //,( new ResetButtonType( __( 'Reset' ), $form->getAction() ) )
             );
