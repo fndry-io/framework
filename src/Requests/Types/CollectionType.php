@@ -9,14 +9,36 @@ use Foundry\Requests\Types\Traits\HasName;
 
 class CollectionType extends ParentType {
 
-	use HasMinMax,
-		HasMultiple,
-		HasButtons,
-		HasName;
+    /**
+     * //todo refactor to its own class
+     * @var null
+     */
+    protected $manageList = null;
 
-	public function __construct( $name ) {
-		$this->setName( $name );
-		$this->setType( 'collection' );
-	}
+    use HasMinMax,
+        HasMultiple,
+        HasButtons,
+        HasName;
+
+    public function __construct( $name ) {
+        $this->setName( $name );
+        $this->setType( 'collection' );
+    }
+
+    /**
+     * @param array $config
+     * @return CollectionType
+     */
+    public function setManageList(array $config)
+    {
+        $this->manageList = $config;
+
+        return $this;
+    }
+
+    public function getManageList()
+    {
+        return $this->manageList;
+    }
 
 }
