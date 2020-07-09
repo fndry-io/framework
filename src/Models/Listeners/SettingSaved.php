@@ -50,7 +50,8 @@ class SettingSaved {
 		/**@var $setting Setting */
 		foreach ( $settings as $setting ) {
 
-			$value = $setting->value ? $setting->value : $setting->default;
+            $value = ($setting->value !== null || $setting->value !== '') ?
+                $setting->value : $setting->default;
 
 			settype( $value, isset( $setting->type ) ? $setting->type : 'string' );
 
