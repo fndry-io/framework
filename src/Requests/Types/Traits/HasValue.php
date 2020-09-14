@@ -15,6 +15,12 @@ trait HasValue {
 	 */
 	protected $value = null;
 
+    /**
+     * Test fillable value
+     * @var
+     */
+    protected $fillable_value;
+
 	/**
 	 * @var mixed the default value or values selected
 	 */
@@ -58,6 +64,11 @@ trait HasValue {
 		return $this->default;
 	}
 
+    public function setFillableValue($value)
+    {
+        $this->fillable_value = $value;
+        return $this;
+    }
 
 	public function isInvalid() {
 		return $this->hasErrors();
