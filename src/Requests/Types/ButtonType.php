@@ -30,6 +30,8 @@ class ButtonType extends BaseType {
 
 	protected $title;
 
+    protected $confirm_message;
+
 	public function __construct(
 		string $label,
 		string $action = null,
@@ -48,7 +50,15 @@ class ButtonType extends BaseType {
 		$this->setId( $id );
 	}
 
+    public function setConfirmMessage($message)
+    {
+        $this->confirm_message = $message;
+        return $this;
+    }
 
-
+    public function getConfirmMessage()
+    {
+        return $this->confirm_message;
+    }
 
 }
